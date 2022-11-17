@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserService {
             throw new NotValidRequestException("Not valid request");
         }
         final UserDTO userDTO = jwtUtils.parseRefreshToken(refresh);
-        final String hashToken = String.valueOf(refresh.hashCode());
-        final String tokenRedis = redisRepository.getValue(userDTO.getEmail());
+        /*final String hashToken = String.valueOf(refresh.hashCode());
+        final String tokenRedis = redisRepository.getValue(userDTO.getEmail());*/
         // TODO add redis
-        if(jwtUtils.validateRefreshToken(refresh) && hashToken.equals(tokenRedis)){
+        if(jwtUtils.validateRefreshToken(refresh)/* && hashToken.equals(tokenRedis)*/){
             final String newRefreshToken = jwtUtils.generateRefreshToken(userDTO);
-            redisRepository.save(userDTO.getEmail(),String.valueOf(newRefreshToken.hashCode()));
+            /*redisRepository.save(userDTO.getEmail(),String.valueOf(newRefreshToken.hashCode()));*/
             final String newAccessToken = jwtUtils.generateAccessToken(userDTO);
             return new JwtDTO(newAccessToken,newRefreshToken);
         }
