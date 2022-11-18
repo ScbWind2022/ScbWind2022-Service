@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  db:
+    image: "postgres:13"
+    container_name: "db"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
+      - "POSTGRES_DB=postgres"
+  discovery-service:
+    build: ./discovery-service/
+    hostname: "mainserver"
+    container_name: "main-server"
+    ports:
+      - 8761:8761
+    environment:
+      - "eureka.client.serviceUrl.defaultZone=http://mainserver:8761/eureka/"
+  user-service:
+    build: ./user-service/
+    container_name: "user-service"
+    depends_on:
+      - db
+      - discovery-service
+    environment:
+      - "eureka.client.serviceUrl.defaultZone=http://mainserver:8761/eureka/"
+      - "spring.datasource.url=jdbc:postgresql://db:5432/postgres"
+  auth-service:
+    build: ./auth-service/
+    container_name: "auth-service"
+    depends_on:
+      - discovery-service
+    ports:
+      - 8083:8083
+    environment:
+      - "eureka.client.serviceUrl.defaultZone=http://mainserver:8761/eureka/"
