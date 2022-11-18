@@ -5,5 +5,5 @@ WORKDIR /home/app
 RUN mvn -q clean package
 
 FROM openjdk:11
-COPY --from=build /home/app/target/gateway-0.0.1-SNAPSHOT.jar gateway.jar
-ENTRYPOINT ["java","-jar","gateway.jar"]
+COPY --from=build /home/app/target/discovery-service-0.0.1-SNAPSHOT.jar discovery.jar
+ENTRYPOINT ["java","-jar","discovery.jar"]
