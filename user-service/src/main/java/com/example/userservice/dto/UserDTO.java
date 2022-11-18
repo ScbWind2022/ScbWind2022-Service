@@ -13,6 +13,8 @@ public class UserDTO {
     private String email;
     private String password;
     private String firstName;
+    private boolean accepted;
+    private boolean banned;
     private RoleDTO[] roles;
 
     public UserDTO(String email, RoleDTO[] roles) {
