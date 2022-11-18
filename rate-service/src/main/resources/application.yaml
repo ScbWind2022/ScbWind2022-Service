@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: rateservice
+eureka:
+  client:
+    service-url:
+      default-zone: "http://localhost:8761/eureka"
+    fetch-registry: true
+    register-with-eureka: true
+grpc:
+  server:
+    port: 0
