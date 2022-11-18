@@ -49,7 +49,7 @@ public class UserServiceApplication implements CommandLineRunner {
 		userRepository.save(user);
 		userRepository.save(user1);
 		userRepository.acceptedUserById(user.getId());
-		
+
 
 	}
 }
