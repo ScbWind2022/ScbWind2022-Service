@@ -2,7 +2,6 @@ package com.example.userservice.repository;
 
 import com.example.userservice.model.Check;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface CheckRepository {
@@ -12,5 +11,5 @@ public interface CheckRepository {
     List<Check> getCheksByUserEmail(String email);
     Check getCheckByIdAndUserEmail(Long check_id,String email);
     boolean updateEnableByIdAndUserEmail(Long check_id,String email,boolean bol);
-    void changeSumByEmailAndId(Long chek_id, String email, BigDecimal sum);
+    void changeSumById(Long chek_id, Integer sum);
 }

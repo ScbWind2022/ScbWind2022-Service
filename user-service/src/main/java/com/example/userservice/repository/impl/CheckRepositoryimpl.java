@@ -48,7 +48,7 @@ public class CheckRepositoryimpl implements CheckRepository {
     public List<Check> getCheksByUserEmail(String email) {
         try {
             final List<Check> checks = em.createQuery("SELECT c FROM Check c " +
-                            "LEFT JOIN c.user AS cu WHERE LOWER(cu.email) = ?1", Check.class)
+                            "LEFT JOIN FETCH c.user AS cu WHERE LOWER(cu.email) = ?1", Check.class)
                     .setParameter(1,email.toLowerCase())
                     .getResultList();
             return checks;
@@ -85,11 +85,10 @@ public class CheckRepositoryimpl implements CheckRepository {
 
     @Override
     @Transactional
-    public void changeSumByEmailAndId(Long chek_id, String email, BigDecimal sum) {
-        em.createQuery("UPDATE Check c SET c.count = ?1 WHERE c.id = ?2 AND LOWER(c.user.email) = ?3")
+    public void changeSumById(Long chek_id, Integer sum) {
+        em.createQuery("UPDATE Check c SET c.count = ?1 WHERE c.id = ?2")
                 .setParameter(1,sum)
                 .setParameter(2,chek_id)
-                .setParameter(3,sum)
                 .executeUpdate();
     }
 }

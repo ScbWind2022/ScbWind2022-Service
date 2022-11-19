@@ -67,6 +67,9 @@ public class JwtUtils {
         } catch (NullPointerException n){
             System.out.println(n.getMessage());
             return false;
+        } catch (ExpiredJwtException ex){
+            System.out.println(ex.getMessage());
+            return false;
         }
     }
     public boolean validateRefreshToken(final String refreshToken){

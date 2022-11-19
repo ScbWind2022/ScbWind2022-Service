@@ -3,7 +3,9 @@ package com.example.authservice.utils;
 import com.example.authservice.dto.*;
 import com.example.authservice.dto.maindto.CheckDto;
 import com.example.authservice.dto.maindto.UserDTO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DtoUtils {
     public UserDTO toUserDTO(final CreateUserRequest createUserRequest){
         final UserDTO userDTO = UserDTO.builder()
@@ -35,6 +37,7 @@ public class DtoUtils {
     }
     public AccountResponseDto toAccountResponseDto(final CheckDto checkDto){
         final AccountResponseDto accountResponseDto = AccountResponseDto.builder()
+                .id(checkDto.getId())
                 .sum(checkDto.getSum())
                 .userId(checkDto.getUserId())
                 .currencyName(checkDto.getCurrencyName())

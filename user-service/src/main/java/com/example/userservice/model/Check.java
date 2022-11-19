@@ -24,7 +24,7 @@ public class Check {
     private LocalDateTime dateCreate;
     @UpdateTimestamp
     private LocalDateTime dateUpdate;
-    private BigDecimal count;
+    private Integer count;
     private String currencyName;
     private String currencyEngName;
     private String currencyId;

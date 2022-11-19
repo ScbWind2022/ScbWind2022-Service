@@ -17,6 +17,6 @@ public class AccountResponseDto {
     private String currencyName;
     private String currencyEngName;
     private String currencyCharCode;
-    private BigDecimal sum;
+    private String sum;
     private boolean enabled;
 }

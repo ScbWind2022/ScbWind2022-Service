@@ -3,6 +3,7 @@ package com.example.authservice.grpcClient.impl;
 import Grpc.Check;
 import Grpc.CheckServiceGrpc;
 import com.example.authservice.dto.maindto.CheckDto;
+import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.grpcClient.CheckGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
@@ -19,11 +20,11 @@ public class CheckGrpcClientImpl implements CheckGrpcClient {
     private CheckServiceGrpc.CheckServiceFutureStub futureStub;
     private final Gson gson = new Gson();
     @Override
-    public CheckDto[] getCheckByEmail(CheckDto checkDto) {
+    public CheckDto[] getCheckByEmail(UserDTO userDTO) {
         try {
             final ListenableFuture<Check.getCheckByUserEmailResponse> response = futureStub.getCheckByEmail(
                     Check.getCheckByUserEmailRequest.newBuilder()
-                            .setRequest(gson.toJson(checkDto)).build());
+                            .setRequest(gson.toJson(userDTO)).build());
             final Check.getCheckByUserEmailResponse res = response.get();
             return gson.fromJson(res.getResponse(), CheckDto[].class);
         } catch (InterruptedException e) {

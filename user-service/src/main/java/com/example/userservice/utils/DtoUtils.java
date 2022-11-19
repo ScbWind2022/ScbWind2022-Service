@@ -20,9 +20,12 @@ public class DtoUtils {
         final UserDTO userDTO = UserDTO.builder()
                 .id(String.valueOf(user.getId()))
                 .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .password(user.getPassword())
                 .accepted(user.isAccepted())
                 .banned(user.isBanned())
+                .phone(user.getPhone())
                 .roles(roles)
                 .build();
         return userDTO;
@@ -32,6 +35,9 @@ public class DtoUtils {
                 .id(String.valueOf(user.getId()))
                 .email(user.getEmail())
                 .accepted(user.isAccepted())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phone(user.getPhone())
                 .banned(user.isBanned())
                 .build();
         return userDTO;
@@ -45,6 +51,8 @@ public class DtoUtils {
     public User userDTOToUser(final UserDTO userDTO){
         final User user = User.builder()
                 .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .phone(userDTO.getPhone())
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())
                 .build();
@@ -56,7 +64,7 @@ public class DtoUtils {
                 .currencyId(check.getCurrencyId())
                 .currencyName(check.getCurrencyName())
                 .currencyCharCode(check.getCurrencyCharCode())
-                .sum(check.getCount())
+                .sum(String.valueOf(check.getCount()))
                 .enable(check.isEnabled())
                 .build();
         return checkDto;

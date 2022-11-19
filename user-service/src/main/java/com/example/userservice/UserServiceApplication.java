@@ -1,21 +1,18 @@
 package com.example.userservice;
 
-import com.example.userservice.dto.CheckDto;
-import com.example.userservice.dto.UserDTO;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
+import com.example.userservice.repository.CheckRepository;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.CheckService;
 import com.google.gson.Gson;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 
 @SpringBootApplication
@@ -25,6 +22,8 @@ public class UserServiceApplication implements CommandLineRunner {
 	private RoleRepository roleRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private CheckRepository checkRepository;
 	@Autowired
 	private CheckService checkService;
 	private final Gson gson = new Gson();

@@ -18,7 +18,7 @@ public class CheckDto {
     private String currencyId;
     private String currencyName;
     private String currencyEngName;
-    private BigDecimal sum;
+    private String sum;
     private String userEmail;
     private boolean enable;
 }

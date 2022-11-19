@@ -15,4 +15,6 @@ public interface UserRepository {
     void acceptedUserById(Long id);
     void bannedUserById(Long id);
     void removeBannedUserById(Long id);
+    void openSession(String email);
+    void closeSession(String email);
 }

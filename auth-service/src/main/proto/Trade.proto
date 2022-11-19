@@ -1,0 +1,22 @@
+syntax = "proto3";
+option java_package = "Grpc";
+
+message openSessionRequest{
+  string request = 1;
+}
+message openSessionResponse{
+  string response = 1;
+  int32 status = 2;
+}
+message closeSessionRequest{
+  string request = 1;
+}
+message closeSessionResponse{
+  string response = 1;
+  int32 status = 2;
+}
+
+service TradeService{
+  rpc openSession(openSessionRequest) returns(openSessionResponse);
+  rpc closeSession(closeSessionRequest) returns(closeSessionResponse);
+}

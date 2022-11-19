@@ -9,10 +9,7 @@ import com.example.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -78,11 +75,19 @@ public class UserController {
     public ResponseEntity<UserResponse> getProfileAccountUser(Principal principal){
         return new ResponseEntity<>(userService.getInfoUserByEmail(principal.getName()),HttpStatus.OK);
     }
-    @PostMapping(value = "/enable")
+    @PostMapping(value = "/check/enable")
     public ResponseEntity<String> enableCheckByEmailAndId(@RequestBody UserEnableRequest userEnableRequest,
                                                              Principal principal){
         return new ResponseEntity<>(checkService.changeEnabledByEmailAndId(
                 userEnableRequest, principal.getName()),HttpStatus.OK);
+    }
+    @GetMapping(value = "/profile")
+    public ResponseEntity<UserProfileResponse> getUserProfileResponse(Principal principal){
+        final UserProfileResponse userProfileResponse = UserProfileResponse.builder()
+                .user(userService.getInfoUserByEmail(principal.getName()))
+                .accounts(checkService.getCheckWithUserByEmail(principal.getName()))
+                .build();
+        return new ResponseEntity<>(userProfileResponse,HttpStatus.OK);
     }
 
     /*@PostMapping(value = "/getrefreshtoken")
