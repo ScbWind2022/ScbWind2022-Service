@@ -137,6 +137,19 @@ paths:
       responses:
         '200':
           description: OK
+  /api/v1/users/profile:
+    get:
+      summary: Получить профиль текущего пользователя
+      operationId: getUserProfile
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
   /api/v1/users/enable:
     post:
       summary: Активация / блокирование пользователя
@@ -247,24 +260,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountResponse'
-  /api/v1/accounts/sum/:
-    patch:
-      summary: Изменить сумму на счете
-      operationId: updateAccountSum
+  /api/v1/accounts/operation:
+    post:
+      summary: Выполнение операции по счету - пополнение счета пользователем, снятие денег, изменение остатка в результате торговых операций в пределах торговой сессии
+      operationId: operateAccount
       tags:
         - account
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountSumRequest'
+              $ref: '#/components/schemas/AccountOperationRequest'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+  /api/v1/accounts/operation/list:
+    post:
+      summary: Список операций по счету за период
+      operationId: accountOperateList
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationListRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountOperationResponse'
   /api/v1/accounts/enable:
     post:
       summary: Активация / блокирование счета пользователя
@@ -282,7 +315,7 @@ paths:
 
   /api/v1/rate/current:
     post:
-      summary: текущий курс валюты
+      summary: Текущий курс валюты
       operationId: getCurrencyRate
       tags:
         - rate
@@ -300,6 +333,79 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CurrencyRateResponse'
+  /api/v1/rate/range:
+    post:
+      summary: Курсы валюты за период
+      operationId: getCurrencyRateRange
+      tags:
+        - rate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentCurrencyRateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrencyRateResponse'
+
+  /api/v1/trade/session:
+    post:
+      summary: Начало или окончание сессии торговли валютой
+      operationId: operateTradeSession
+      tags:
+        - trade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradeSessionRequest'
+      responses:
+        '200':
+          description: OK
+  /api/v1/trade/operation:
+    post:
+      summary: Выполнение торговой операции с валютой валютой
+      operationId: operateTrade
+      tags:
+        - trade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradeOperationRequest'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradeOperationResponse'
+  /api/v1/trade/operation/list:
+    post:
+      summary: Список торговых операций по счету за период
+      operationId: tradeOperationList
+      tags:
+        - trade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationListRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TradeOperationResponse'
 
 
 components:
@@ -468,6 +574,17 @@ components:
           description: Всего страниц
           type: integer
           example: 1
+    UserProfileResponse:
+      type: object
+      description: Данные профиля пользователя
+      properties:
+        user:
+          $ref: "#/components/schemas/UserResponse"
+        accounts:
+          type: array
+          items:
+            $ref:
+              "#/components/schemas/AccountResponse"
 
     CreateAccountRequest:
       type: object
@@ -491,10 +608,18 @@ components:
           format: int64
           description: Идентификатор пользователя
           example: 45
-        currencyCharCode:
+        currencyId:
           type: string
-          description: Символьный код валюты
-          example: USD
+          description: Код валюты
+          example: R01235
+        currencyName:
+          type: string
+          description: Наименование валюты
+          example: Доллар США
+        currencyEngName:
+          type: string
+          description: Наименование валюты на английском
+          example: US Dollar
         sum:
           type: number
           description: Сумма на счете
@@ -525,6 +650,27 @@ components:
           type: number
           description: Сумма на счете
           example: 0.00
+    AccountOperationRequest:
+      type: object
+      description: Запрос на выполнение операции по счету
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор счета
+          example: 465
+        operation:
+          type: string
+          description: Вид операции - пополнение (debit) или снятие (credit)
+          example: debit
+        sum:
+          type: number
+          description: Сумма на счете
+          example: 1000.00
+        description:
+          type: string
+          description: пополнение, снятие, изменение остатка в результате торгов
+          example: пополнение счета
     AccountEnableRequest:
       type: object
       description: Активация / блокировка счета пользователя
@@ -538,6 +684,41 @@ components:
           type: boolean
           description: Доступность счета пользователя (возможность работы, значения true / false)
           example: true
+    AccountOperationResponse:
+      type: object
+      description: Операция по счету пользователя (пополнение, снятие, изменение остатка после торгов)
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор операции
+          example: 45
+        date:
+          type: string
+          format: date
+          description: Дата операции
+          example: 2022-09-22
+        accountId:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя
+          example: 33
+        currencyId:
+          type: string
+          description: Идентификатор валюты
+          example: R01235
+        operation:
+          type: string
+          description: Вид операции - пополнение (debit) или снятие (credit)
+          example: credit
+        sum:
+          type: number
+          description: Сумма операции
+          example: 608,69
+        description:
+          type: string
+          description: пополнение, снятие, изменение остатка в результате торгов
+          example: изменение остатка в результате торгов
 
     CurrentCurrencyRateRequest:
       type: object
@@ -575,3 +756,127 @@ components:
           type: number
           description: Курс
           example: 60,8685
+    DateCurrencyRateResponse:
+      type: object
+      description: Курс валюты
+      properties:
+        date:
+          type: string
+          format: date
+          description: Дата курса валют
+          example: 2022-09-22
+        id:
+          type: string
+          description: Идентификатор валюты
+          example: R01235
+        nominal:
+          type: integer
+          description: Номинал
+          example: 1
+        value:
+          type: number
+          description: Курс
+          example: 60,8685
+    RangeCurrencyRateResponse:
+      type: object
+      description: Курсы валюты за период
+      properties:
+        dateFrom:
+          type: string
+          format: date
+          description: Дата начала периода
+          example: 2022-09-22
+        dateTo:
+          type: string
+          format: date
+          description: Дата окончания периода
+          example: 2022-09-28
+        rates:
+          type: array
+          items:
+            $ref:
+              "#/components/schemas/DateCurrencyRateResponse"
+    TradeOperationRequest:
+      type: object
+      description: Запрос на покупку или продажу валюты по текущему курсу
+      properties:
+        currencyId:
+          type: string
+          description: Идентификатор валюты
+          example: R01235
+        operation:
+          type: string
+          description: Вид операции - покупка (buy) или продажа (sell)
+          example: buy
+        currencyRate:
+          type: number
+          description: Курс валюты, по которому совершена покупка / продажа
+          example: 60,8685
+        amount:
+          type: integer
+          description: количество валюты
+          example: 10
+        sum:
+          type: number
+          description: Сумма операции
+          example: 608,69
+    TradeOperationResponse:
+      type: object
+      description: Торговая операция (покупка или продажа валюты)
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор операции
+          example: 45
+        date:
+          type: string
+          format: date
+          description: Дата операции
+          example: 2022-09-22
+        accountId:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя
+          example: 33
+        currencyId:
+          type: string
+          description: Идентификатор валюты
+          example: R01235
+        operation:
+          type: string
+          description: Вид операции - покупка (buy) или продажа (sell)
+          example: buy
+        currencyRate:
+          type: number
+          description: Курс валюты, по которому совершена покупка / продажа
+          example: 60,8685
+        amount:
+          type: integer
+          description: количество валюты
+          example: 10
+        sum:
+          type: number
+          description: Сумма операции
+          example: 608,69
+    OperationListRequest:
+      type: object
+      description: Запрос списка торговых операций за период
+      properties:
+        accountId:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя
+          example: 33
+        dateFrom:
+          type: string
+          format: date
+          description: Дата начала
+          example: 2022-09-22
+        dateTo:
+          type: string
+          format: date
+          description: Дата окончания
+          example: 2022-09-22
+
+
