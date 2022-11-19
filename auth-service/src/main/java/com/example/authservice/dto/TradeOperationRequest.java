@@ -14,4 +14,6 @@ public class TradeOperationRequest {
     private double currencyRate;
     private int amount;
     private double sum;
+    private int accountIdFrom;
+    private int accountIdTo;
 }
