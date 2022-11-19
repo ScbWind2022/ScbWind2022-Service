@@ -67,4 +67,5 @@ public class UserServiceImpl implements UserService {
         //TODO set password encoder
         return userGrpcClient.registerUser(userDTO);
     }
+
 }

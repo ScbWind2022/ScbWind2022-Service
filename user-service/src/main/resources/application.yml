@@ -3,7 +3,7 @@ spring:
     name: userservice
   datasource:
     username: postgres
-    password: postgres
+    password: rootaye2
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=userservice
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -16,6 +16,8 @@ spring:
 server:
   port: 0
 eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 5
   client:
     register-with-eureka: true
     fetch-registry: true

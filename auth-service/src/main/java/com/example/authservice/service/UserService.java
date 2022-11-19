@@ -7,4 +7,5 @@ public interface UserService {
     JwtDTO loginUser(UserDTO userDTO);
     JwtDTO updateAccessAndRefreshToken(String refreshToken);
     String registerUser(UserDTO userDTO);
+
 }
