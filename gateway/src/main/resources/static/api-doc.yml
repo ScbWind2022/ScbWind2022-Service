@@ -11,6 +11,10 @@ tags:
     description: Администрирование пользователей
   - name: account
     description: Выполнение операций со счетами пользователей
+  - name: rate
+    description: Информация о курсах валют
+  - name: trade
+    description: Торговые операции с валютами
 
 paths:
   /api/v1/auth/register:
@@ -23,14 +27,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDto'
+              $ref: '#/components/schemas/CreateUserRequest'
       responses:
         '201':
           description: CREATED
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/UserResponse'
   /api/v1/auth/login:
     post:
       summary: Аутентификация пользователя
@@ -41,45 +45,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDto'
+              $ref: '#/components/schemas/AuthRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JwtDto'
+                $ref: '#/components/schemas/JwtResponse'
 
   /api/v1/users:
-    get:
+    post:
       summary: Получить список пользователей
       operationId: getUsers
       tags:
         - user
-      parameters:
-        - in: query
-          name: page
-          description: Номер страницы (нумерация начинается с 1)
-          allowEmptyValue: true
-          schema:
-            type: integer
-            default: 1
-          example: 1
-        - in: query
-          name: size
-          description: Размер страницы (сколько пользователей выведется на страницу)
-          allowEmptyValue: true
-          schema:
-            type: integer
-            default: 20
-          example: 20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPageRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserPageDto'
+                $ref: '#/components/schemas/UserPageResponse'
   /api/v1/users/{id}:
     get:
       summary: Получить пользователя по идентификатору
@@ -101,7 +93,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDto'
+                $ref: '#/components/schemas/UserResponse'
     put:
       summary: Изменить пользователя
       operationId: updateUser
@@ -120,14 +112,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDto'
+              $ref: '#/components/schemas/UpdateUserRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDto'
+                $ref: '#/components/schemas/UserResponse'
     delete:
       summary: Удалить пользователя
       operationId: deleteUser
@@ -155,7 +147,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserEnableDto'
+              $ref: '#/components/schemas/UserEnableRequest'
       responses:
         '200':
           description: OK
@@ -169,7 +161,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatePasswordDto'
+              $ref: '#/components/schemas/UpdatePwdRequest'
       responses:
         '200':
           description: OK
@@ -197,7 +189,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AccountDto'
+                  $ref: '#/components/schemas/AccountResponse'
   /api/v1/accounts/{id}:
     get:
       summary: Получить информацию по счету
@@ -219,7 +211,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDto'
+                $ref: '#/components/schemas/AccountResponse'
+    delete:
+      summary: Удалить счет пользователя
+      operationId: deleteAccountById
+      tags:
+        - account
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор счета
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
   /api/v1/accounts/:
     post:
       summary: Создать новый счет
@@ -230,14 +239,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateAccountDto'
+              $ref: '#/components/schemas/CreateAccountRequest'
       responses:
         '201':
           description: CREATED
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDto'
+                $ref: '#/components/schemas/AccountResponse'
+  /api/v1/accounts/sum/:
     patch:
       summary: Изменить сумму на счете
       operationId: updateAccountSum
@@ -247,14 +257,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountSumDto'
+              $ref: '#/components/schemas/AccountSumRequest'
       responses:
         '200':
-          description: CREATED
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDto'
+                $ref: '#/components/schemas/AccountResponse'
   /api/v1/accounts/enable:
     post:
       summary: Активация / блокирование счета пользователя
@@ -265,17 +275,38 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountEnableDto'
+              $ref: '#/components/schemas/AccountEnableRequest'
       responses:
         '200':
           description: OK
 
+  /api/v1/rate/current:
+    post:
+      summary: текущий курс валюты
+      operationId: getCurrencyRate
+      tags:
+        - rate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrentCurrencyRateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrencyRateResponse'
+
 
 components:
   schemas:
-    CreateUserDto:
+    CreateUserRequest:
       type: object
-      description: Данные для регистрации пользователя
+      description: Запрос регистрации пользователя
       properties:
         email:
           type: string
@@ -297,7 +328,27 @@ components:
           type: string
           description: Телефон пользователя
           example: 8(999)0010001
-    AuthDto:
+    UpdateUserRequest:
+      type: object
+      description: Запос обновлеения информации пользователя
+      properties:
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        firstName:
+          type: string
+          description: Имя пользователя
+          example: Сергей
+        lastName:
+          type: string
+          description: Фамилия пользователя
+          example: Иванов
+        phone:
+          type: string
+          description: Телефон пользователя
+          example: 8(999)0010001
+    AuthRequest:
       type: object
       description: Данные для аутентификации
       properties:
@@ -309,7 +360,7 @@ components:
           type: string
           description: Пароль
           example: secret1E6
-    UpdatePasswordDto:
+    UpdatePwdRequest:
       type: object
       description: Данные для аутентификации
       properties:
@@ -325,7 +376,7 @@ components:
           type: string
           description: Пароль
           example: newSecret
-    JwtDto:
+    JwtResponse:
       type: object
       description: Токен авторизации
       properties:
@@ -337,7 +388,7 @@ components:
           type: string
           description: Токен на запрос нового токена авторизации
           example: f35=kvfr3v3ervkMPOnj4-JO()Ll''
-    UserEnableDto:
+    UserEnableRequest:
       type: object
       description: Активация / блокировка пользователя
       properties:
@@ -350,7 +401,7 @@ components:
           type: boolean
           description: Доступность пользователя (возможность работы, значения true / false)
           example: true
-    UserDto:
+    UserResponse:
       type: object
       description: Данные пользователя
       properties:
@@ -379,7 +430,19 @@ components:
           type: boolean
           description: Доступность пользователя (возможность работы, значения true / false)
           example: true
-    UserPageDto:
+    UserPageRequest:
+      type: object
+      description: Запрос страницы списка пользователей
+      properties:
+        page:
+          description: Номер страницы
+          type: integer
+          example: 1
+        size:
+          description: Размер страницы (количество пользователей на странице)
+          type: integer
+          example: 20
+    UserPageResponse:
       type: object
       description: Страница списка пользователей
       properties:
@@ -387,7 +450,7 @@ components:
           description: Список пользователей
           type: array
           items:
-            $ref: '#/components/schemas/UserDto'
+            $ref: '#/components/schemas/UserResponse'
         page:
           description: Номер страницы
           type: integer
@@ -406,7 +469,7 @@ components:
           type: integer
           example: 1
 
-    CreateAccountDto:
+    CreateAccountRequest:
       type: object
       description: Запрос на создание счета пользователя
       properties:
@@ -414,7 +477,7 @@ components:
           type: string
           description: Символьный код валюты
           example: USD
-    AccountDto:
+    AccountResponse:
       type: object
       description: Данные счета пользователя
       properties:
@@ -440,7 +503,7 @@ components:
           type: boolean
           description: Доступность счета
           example: true
-    AccountSumDto:
+    AccountSumRequest:
       type: object
       description: Запрос на изменение суммы на счете пользователя
       properties:
@@ -462,7 +525,7 @@ components:
           type: number
           description: Сумма на счете
           example: 0.00
-    AccountEnableDto:
+    AccountEnableRequest:
       type: object
       description: Активация / блокировка счета пользователя
       properties:
@@ -475,3 +538,40 @@ components:
           type: boolean
           description: Доступность счета пользователя (возможность работы, значения true / false)
           example: true
+
+    CurrentCurrencyRateRequest:
+      type: object
+      description: Запрос текущего курса валют
+      properties:
+        charCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+    CurrencyRateResponse:
+      type: object
+      description: Курс валюты
+      properties:
+        id:
+          type: string
+          description: Идентификатор
+          example: R01235
+        numCode:
+          type: string
+          description: Цифровой код валюты
+          example: 840
+        charCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+        nominal:
+          type: integer
+          description: Номинал
+          example: 1
+        name:
+          type: string
+          description: Наименование валюты
+          example: Доллар США
+        value:
+          type: number
+          description: Курс
+          example: 60,8685
