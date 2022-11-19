@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CurrencyRateResponse {
-    private int id;
+    private String id;
     private String numCode;
     private String charCode;
     private int nominal;

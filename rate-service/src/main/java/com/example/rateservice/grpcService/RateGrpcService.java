@@ -1,5 +1,6 @@
 package com.example.rateservice.grpcService;
 
+
 import Grpc.Rate;
 import Grpc.RateServiceGrpc;
 import com.example.rateservice.dto.CurrencyRateRequest;

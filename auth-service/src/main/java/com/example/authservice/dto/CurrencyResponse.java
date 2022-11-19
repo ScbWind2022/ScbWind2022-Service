@@ -9,10 +9,20 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Builder
-public class CurrentCurrencyRateRequest {
+public class CurrencyResponse {
+
     private String id;
+
+    private String numCode;
+
+    private String charCode;
+
+    private int nominal;
+
+    private String name;
+
 }

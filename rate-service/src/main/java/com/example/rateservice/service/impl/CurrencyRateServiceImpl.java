@@ -10,6 +10,7 @@ import com.example.rateservice.service.CurrencyRateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,9 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
 
     @Override
     public RangeCurrencyRateResponse getRangeCurrencyRate(RangeCurrencyRateRequest request) {
-        return currencyRateProvider.getCurrencyRatesRange(request.getDateFrom(),
-                request.getDateTo(),
+        return currencyRateProvider.getCurrencyRatesRange(
+                LocalDate.parse(request.getDateFrom()),
+                LocalDate.parse(request.getDateTo()),
                 request.getId());
     }
 

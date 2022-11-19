@@ -13,4 +13,7 @@ grpc:
   server:
     port: 0
 cb:
-  url: https://www.cbr.ru/scripts/XML_daily.asp
+  url:
+    daily: https://www.cbr.ru/scripts/XML_daily.asp
+    dynamic: https://www.cbr.ru/scripts/XML_dynamic.asp
+

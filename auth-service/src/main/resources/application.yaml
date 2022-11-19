@@ -18,6 +18,11 @@ grpc:
       enable-keep-alive: true
       keep-alive-without-calls: true
       negotiation-type: plaintext
+    rate-service:
+      address: "discovery:///rateservice"
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
 jwt:
   accessToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="
   refreshToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="

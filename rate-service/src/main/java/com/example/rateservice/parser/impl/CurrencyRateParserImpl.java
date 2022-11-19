@@ -96,13 +96,14 @@ public class CurrencyRateParserImpl implements CurrencyRateParser {
                     var node = nodes.item(i);
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
                         var element = (Element) node;
-                        String id = element.getAttribute("ID");
+                        String id = element.getAttribute("Id");
                         String date = element.getAttribute("Date");
                         String nominal = element.getElementsByTagName("Nominal").item(0).getTextContent();
                         String value = element.getElementsByTagName("Value").item(0).getTextContent();
                         rates.add(
                                 DateCurrencyRateResponse.builder()
                                         .id(id)
+                                        .date(date)
                                         .nominal(Integer.parseInt(nominal))
                                         .value(new BigDecimal(value.replace(",", ".")))
                                         .build()

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -18,9 +17,9 @@ import java.util.List;
 @Builder
 public class RangeCurrencyRateResponse {
 
-    private LocalDate dateFrom;
+    private String dateFrom;
 
-    private LocalDate dateTo;
+    private String dateTo;
 
     private List<DateCurrencyRateResponse> rates;
 }

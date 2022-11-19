@@ -9,10 +9,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
-public class CurrentCurrencyRateRequest {
+public class RangeCurrencyRateRequest {
     private String id;
+
+    private String dateFrom;
+
+    private String dateTo;
 }
