@@ -1,8 +1,8 @@
 package com.example.authservice.utils;
 
 import com.example.authservice.config.JwtAuth;
-import com.example.authservice.dto.RoleDTO;
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.maindto.RoleDTO;
+import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.exception.IncorrectJwtTokenException;
 import com.example.authservice.exception.NotValidRequestException;
 import com.google.gson.Gson;

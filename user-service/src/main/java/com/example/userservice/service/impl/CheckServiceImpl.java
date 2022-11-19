@@ -13,6 +13,7 @@ import com.example.userservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,8 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public void createCheckWithUser(Long user_id) {
         final Check check = Check.builder()
-                .checkToken(UUID.randomUUID().toString()).build();
+                .checkToken(UUID.randomUUID().toString())
+                .currencyCharCode("RUB").build();
         checkRepository.save(check);
         checkRepository.updateUserAndCheck(user_id,check.getId());
     }
@@ -64,5 +66,38 @@ public class CheckServiceImpl implements CheckService {
             return checkDtos;
         }
         return new CheckDto[0];
+    }
+
+    @Override
+    public CheckDto changeSumByEmail(CheckDto checkDto) {
+        final Long check_id = Long.parseLong(String.valueOf(checkDto.getId()));
+        final String email = checkDto.getUserEmail();
+        final BigDecimal sum = checkDto.getSum();
+
+        checkRepository.changeSumByEmailAndId(check_id,email,sum);
+        final Check check = checkRepository.getCheckByIdAndUserEmail(check_id,email);
+        if(check != null){
+            final CheckDto res = dtoUtils.checkToCheckDto(check);
+            return res;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean changeEnableByEmail(CheckDto checkDto) {
+        final Long check_id = Long.parseLong(String.valueOf(checkDto.getId()));
+        return checkRepository.updateEnableByIdAndUserEmail(check_id,checkDto.getUserEmail(),checkDto.isEnable());
+    }
+
+    @Override
+    public CheckDto createCheck(CheckDto checkDto) {
+        final Check check = dtoUtils.checkDtoToCheck(checkDto);
+        final User user = userRepository.getUserByEmail(checkDto.getUserEmail());
+        if(user == null){
+            throw new UserNotFoundException();
+        }
+        check.setUser(user);
+        checkRepository.save(check);
+        return dtoUtils.checkToCheckDto(check);
     }
 }

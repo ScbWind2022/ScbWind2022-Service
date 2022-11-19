@@ -1,8 +1,7 @@
 package com.example.authservice;
 
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.maindto.UserDTO;
 import com.google.gson.Gson;
-import com.google.protobuf.TextFormat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
 class AuthServiceApplicationTests {
-	private final Gson gson = new Gson();
+	/*private final Gson gson = new Gson();
 	@Test
 	void contextLoads() {
 	}
@@ -22,5 +21,5 @@ class AuthServiceApplicationTests {
 		UserDTO userDTO = UserDTO.builder().dateCreate(dateStr).build();
 		System.out.println(gson.toJson(userDTO));
 
-	}
+	}*/
 }

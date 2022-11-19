@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -54,5 +55,41 @@ public class CheckRepositoryimpl implements CheckRepository {
         } catch (NoResultException n){
             return null;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Check getCheckByIdAndUserEmail(Long check_id, String email) {
+        try{
+            final Check check = em.createQuery("SELECT c FROM Check c " +
+                            "LEFT JOIN c.user AS cu WHERE c.id = ?1 AND LOWER(cu.email) = ?2", Check.class)
+                    .setParameter(1,check_id)
+                    .setParameter(2,email.toLowerCase())
+                    .getSingleResult();
+            return check;
+        } catch (NoResultException n){
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean updateEnableByIdAndUserEmail(Long check_id, String email,boolean bol) {
+        em.createQuery("UPDATE Check c SET c.enabled = ?3 WHERE LOWER(c.user.email) = ?1 AND c.id = ?2")
+                .setParameter(1,email.toLowerCase())
+                .setParameter(2,check_id)
+                .setParameter(3,bol)
+                .executeUpdate();
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public void changeSumByEmailAndId(Long chek_id, String email, BigDecimal sum) {
+        em.createQuery("UPDATE Check c SET c.count = ?1 WHERE c.id = ?2 AND LOWER(c.user.email) = ?3")
+                .setParameter(1,sum)
+                .setParameter(2,chek_id)
+                .setParameter(3,sum)
+                .executeUpdate();
     }
 }

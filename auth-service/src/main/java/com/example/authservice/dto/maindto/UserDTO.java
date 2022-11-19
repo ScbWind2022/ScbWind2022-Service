@@ -1,8 +1,6 @@
-package com.example.authservice.dto;
+package com.example.authservice.dto.maindto;
 
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,6 +13,8 @@ public class UserDTO {
     private String email;
     private String password;
     private String firstName;
+    private String lastName;
+    private String phone;
     private boolean accepted;
     private boolean banned;
     private RoleDTO[] roles;

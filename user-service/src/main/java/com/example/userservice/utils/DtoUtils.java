@@ -52,9 +52,19 @@ public class DtoUtils {
     }
     public CheckDto checkToCheckDto(final Check check){
         final CheckDto checkDto = CheckDto.builder()
-                .id(String.valueOf(check.getId()))
-                .checkToken(check.getCheckToken())
+                .id(Integer.parseInt(String.valueOf(check.getId())))
+                .currencyId(check.getCurrencyId())
+                .currencyName(check.getCurrencyName())
+                .currencyCharCode(check.getCurrencyCharCode())
+                .sum(check.getCount())
+                .enable(check.isEnabled())
                 .build();
         return checkDto;
+    }
+    public Check checkDtoToCheck(final CheckDto checkDto){
+        final Check check = Check.builder()
+                .currencyCharCode(checkDto.getCurrencyCharCode())
+                .build();
+        return check;
     }
 }

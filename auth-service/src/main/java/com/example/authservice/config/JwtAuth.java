@@ -1,6 +1,6 @@
 package com.example.authservice.config;
 
-import com.example.authservice.dto.RoleDTO;
+import com.example.authservice.dto.maindto.RoleDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;

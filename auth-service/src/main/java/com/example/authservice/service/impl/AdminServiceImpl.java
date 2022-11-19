@@ -1,9 +1,11 @@
 package com.example.authservice.service.impl;
 
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.UserResponse;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.grpcClient.UserGrpcClient;
 import com.example.authservice.service.AdminService;
+import com.example.authservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final UserGrpcClient userGrpcClient;
+    private final DtoUtils dtoUtils;
     @Override
-    public UserDTO[] getNotAcceptedUsers() {
-        return userGrpcClient.getNotAcceptedUser();
+    public UserResponse[] getNotAcceptedUsers() {
+        final UserDTO[] userDTOS = userGrpcClient.getNotAcceptedUser();
+        final UserResponse[] userResponses = new UserResponse[userDTOS.length];
+        int index = 0;
+        for(UserDTO u : userDTOS){
+            userResponses[index] = dtoUtils.toUserResponse(u);
+            index++;
+        }
+        return userResponses;
     }
     private void acceptedUserValid(UserDTO userDTO){
         if(userDTO == null){
@@ -43,8 +53,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserDTO[] getBannedUser() {
-        return userGrpcClient.getBannedUser();
+    public UserResponse[] getBannedUser() {
+        final UserDTO[] userDTOS = userGrpcClient.getBannedUser();
+        final UserResponse[] userResponses = new UserResponse[userDTOS.length];
+        int index = 0;
+        for(UserDTO u : userDTOS){
+            userResponses[index] = dtoUtils.toUserResponse(u);
+            index++;
+        }
+        return userResponses;
     }
     private void removeBannedUserValid(UserDTO userDTO){
         if(userDTO == null){

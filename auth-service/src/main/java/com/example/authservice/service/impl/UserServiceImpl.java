@@ -1,12 +1,14 @@
 package com.example.authservice.service.impl;
 
-import com.example.authservice.dto.JwtDTO;
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.*;
+import com.example.authservice.dto.maindto.JwtDTO;
+import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.exception.UserNotFoundException;
 import com.example.authservice.grpcClient.UserGrpcClient;
 import com.example.authservice.repository.RedisRepository;
 import com.example.authservice.service.UserService;
+import com.example.authservice.utils.DtoUtils;
 import com.example.authservice.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private final DtoUtils dtoUtils;
     private final UserGrpcClient userGrpcClient;
     private final RedisRepository redisRepository;
     private final JwtUtils jwtUtils;
@@ -26,7 +29,8 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public JwtDTO loginUser(UserDTO userDTO) {
+    public JwtDTO loginUser(AuthRequestDto userDTO2) {
+        final UserDTO userDTO = dtoUtils.toUserDTO(userDTO2);
         loginUserValid(userDTO);
         final UserDTO userDTO1 = userGrpcClient.loginUser(userDTO);
         if(!userDTO.getPassword().equals(userDTO1.getPassword())){
@@ -62,10 +66,19 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public String registerUser(UserDTO userDTO) {
+    public String registerUser(CreateUserRequest userDTO1) {
+        final UserDTO userDTO = dtoUtils.toUserDTO(userDTO1);
         registerUserValid(userDTO);
         //TODO set password encoder
         return userGrpcClient.registerUser(userDTO);
     }
 
+    @Override
+    public UserResponse getInfoUserByEmail(String email) {
+        final UserDTO req = UserDTO.builder()
+                .email(email)
+                .build();
+        final UserDTO userDTO = userGrpcClient.getAccountUserByEmail(req);
+        return dtoUtils.toUserResponse(userDTO);
+    }
 }

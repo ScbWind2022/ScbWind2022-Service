@@ -4,11 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
-public class JwtDTO {
-    private String accessToken;
-    private String refreshToken;
+public class CreateAccountRequestDto {
+    private String currencyCharCode;
 }

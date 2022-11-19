@@ -50,6 +50,13 @@ message getBannedUserResponse{
   string response = 1;
   int32 status = 2;
 }
+message getAccountUserByEmailRequest{
+  string request = 1;
+}
+message getAccotuntUserByEmailResponse{
+  string response = 1;
+  int32 status = 2;
+}
 service UserService{
   rpc getUserAndRoleByEmail(getUserByEmailRequest) returns(getUserByEmailResponse);
   rpc registerUser(registerUserRequest) returns(registerUserResponse);
@@ -58,4 +65,5 @@ service UserService{
   rpc bannedUser(bannedUserRequest) returns(bannedUserResponse);
   rpc removeBannedUser(removeBannedUserRequest) returns(removeBannedUserResponse);
   rpc getBannedUser(getBannedUserRequest) returns(getBannedUserResponse);
+  rpc getAccountUserByEmail(getAccountUserByEmailRequest) returns(getAccotuntUserByEmailResponse);
 }

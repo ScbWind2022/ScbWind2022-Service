@@ -1,9 +1,12 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.dto.JwtDTO;
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.*;
+import com.example.authservice.dto.maindto.JwtDTO;
+import com.example.authservice.dto.maindto.StatusDto;
 import com.example.authservice.exception.IncorrectJwtTokenException;
+import com.example.authservice.service.CheckService;
 import com.example.authservice.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +20,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(value = "/api/v1/user")
+@RequestMapping(value = "/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final CheckService checkService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<JwtDTO> login(@RequestBody UserDTO userDTO,HttpServletResponse response){
+    public ResponseEntity<JwtDTO> login(@RequestBody AuthRequestDto userDTO, HttpServletResponse response){
         System.out.println("3");
         final JwtDTO jwtDTO = userService.loginUser(userDTO);
         Cookie cookie = new Cookie("refreshToken", jwtDTO.getRefreshToken());
@@ -37,7 +38,7 @@ public class UserController {
         return new  ResponseEntity<>(jwtDTO, HttpStatus.OK);
     }
     @PostMapping(value = "/register")
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> register(@RequestBody CreateUserRequest userDTO){
         return new ResponseEntity<>(userService.registerUser(userDTO),HttpStatus.OK);
     }
     @PostMapping(value = "/admin")
@@ -69,6 +70,21 @@ public class UserController {
         }
         throw new IncorrectJwtTokenException();
     }
+    @PostMapping(value = "/profile/checks")
+    public ResponseEntity<AccountResponseDto[]> getProfileAccountCheck(Principal principal){
+        return new ResponseEntity<>(checkService.getCheckWithUserByEmail(principal.getName()),HttpStatus.OK);
+    }
+    @PostMapping(value = "/profile/user")
+    public ResponseEntity<UserResponse> getProfileAccountUser(Principal principal){
+        return new ResponseEntity<>(userService.getInfoUserByEmail(principal.getName()),HttpStatus.OK);
+    }
+    @PostMapping(value = "/enable")
+    public ResponseEntity<String> enableCheckByEmailAndId(@RequestBody UserEnableRequest userEnableRequest,
+                                                             Principal principal){
+        return new ResponseEntity<>(checkService.changeEnabledByEmailAndId(
+                userEnableRequest, principal.getName()),HttpStatus.OK);
+    }
+
     /*@PostMapping(value = "/getrefreshtoken")
     public ResponseEntity<JwtDTO> getAccessToken(@RequestBody String request){
         return new ResponseEntity<>(userService.getAccessAndRefreshToken(request), HttpStatus.OK);

@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,6 +24,12 @@ public class Check {
     private LocalDateTime dateCreate;
     @UpdateTimestamp
     private LocalDateTime dateUpdate;
+    private BigDecimal count;
+    private String currencyName;
+    private String currencyEngName;
+    private String currencyId;
+    private String currencyCharCode;
+    private boolean enabled;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_and_check",joinColumns = @JoinColumn(name = "check_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))

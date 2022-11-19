@@ -1,4 +1,4 @@
-package com.example.userservice.dto;
+package com.example.authservice.dto;
 
 import lombok.*;
 
@@ -10,15 +10,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckDto {
+public class AccountResponseDto {
     private int id;
     private int userId;
-    private UserDTO owner;
-    private String currencyCharCode;
     private String currencyId;
     private String currencyName;
     private String currencyEngName;
+    private String currencyCharCode;
     private BigDecimal sum;
-    private String userEmail;
-    private boolean enable;
+    private boolean enabled;
 }
