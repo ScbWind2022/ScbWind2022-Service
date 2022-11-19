@@ -1,18 +1,26 @@
 package com.example.rateservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RangeCurrencyRateResponse {
 
-    LocalDate dateFrom;
+    private LocalDate dateFrom;
 
-    LocalDate dateTo;
+    private LocalDate dateTo;
 
-    List<DateCurrencyRateResponse> rates;
+    private List<DateCurrencyRateResponse> rates;
 }

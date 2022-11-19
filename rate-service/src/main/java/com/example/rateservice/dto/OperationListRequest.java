@@ -1,12 +1,24 @@
 package com.example.rateservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Value
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class OperationListRequest {
-    int accountId;
-    String dateFrom;
-    String dateTo;
+
+    private int accountId;
+
+    private String dateFrom;
+
+    private String dateTo;
+
 }
