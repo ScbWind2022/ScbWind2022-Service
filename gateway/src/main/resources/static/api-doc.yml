@@ -343,7 +343,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CurrentCurrencyRateRequest'
+              $ref: '#/components/schemas/RangeCurrencyRateRequest'
       responses:
         '200':
           description: OK
@@ -352,7 +352,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CurrencyRateResponse'
+                  $ref: '#/components/schemas/DateCurrencyRateResponse'
+  /api/v1/rate/currencyList:
+    post:
+      summary: Список валют
+      operationId: getCurrencyList
+      tags:
+        - rate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrencyResponse'
 
   /api/v1/trade/session:
     post:
@@ -724,17 +739,17 @@ components:
       type: object
       description: Запрос текущего курса валют
       properties:
-        charCode:
+        id:
           type: string
-          description: Символьный код валюты
-          example: USD
+          description: Код валюты
+          example: R01235
     CurrencyRateResponse:
       type: object
       description: Курс валюты
       properties:
         id:
           type: string
-          description: Идентификатор
+          description: Идентификатор валюты
           example: R01235
         numCode:
           type: string
@@ -756,6 +771,24 @@ components:
           type: number
           description: Курс
           example: 60,8685
+    RangeCurrencyRateRequest:
+      type: object
+      description: Запрос курсов валют за период
+      properties:
+        id:
+          type: string
+          description: Код валюты
+          example: R01235
+        dateFrom:
+          type: string
+          format: date
+          description: Дата начала периода
+          example: 2022-09-22
+        dateTo:
+          type: string
+          format: date
+          description: Дата окончания периода
+          example: 2022-09-28
     DateCurrencyRateResponse:
       type: object
       description: Курс валюты
@@ -796,6 +829,44 @@ components:
           items:
             $ref:
               "#/components/schemas/DateCurrencyRateResponse"
+    CurrencyResponse:
+      type: object
+      description: Курс валюты
+      properties:
+        id:
+          type: string
+          description: Идентификатор
+          example: R01235
+        numCode:
+          type: string
+          description: Цифровой код валюты
+          example: 840
+        charCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+        nominal:
+          type: integer
+          description: Номинал
+          example: 1
+        name:
+          type: string
+          description: Наименование валюты
+          example: Доллар США
+
+    TradeSessionRequest:
+      type: object
+      description: Запрос на открытие / закрытие торговой сессии
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя
+          example: 45
+        enable:
+          type: boolean
+          description: Открыть / закрыть торговую сессию (true / false)
+          example: true
     TradeOperationRequest:
       type: object
       description: Запрос на покупку или продажу валюты по текущему курсу
