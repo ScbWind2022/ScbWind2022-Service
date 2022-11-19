@@ -300,8 +300,22 @@ paths:
                   $ref: '#/components/schemas/AccountOperationResponse'
   /api/v1/accounts/enable:
     post:
-      summary: Активация / блокирование счета пользователя
+      summary: Активация / блокирование счета пользователя по идентификатору
       operationId: enableAccount
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountEnableRequest'
+      responses:
+        '200':
+          description: OK
+  /api/v1/accounts/enable/all:
+    post:
+      summary: Активация / блокирование всех счетов пользователя (id в теле запроса игнорируется)
+      operationId: enableAllAccounts
       tags:
         - account
       requestBody:
