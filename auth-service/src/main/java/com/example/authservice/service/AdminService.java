@@ -1,11 +1,9 @@
-package com.example.authservice.grpcClient;
+package com.example.authservice.service;
 
 import com.example.authservice.dto.UserDTO;
 
-public interface UserGrpcClient {
-    UserDTO loginUser(UserDTO userDTO);
-    String registerUser(UserDTO userDTO);
-    UserDTO[] getNotAcceptedUser();
+public interface AdminService {
+    UserDTO[] getNotAcceptedUsers();
     UserDTO[] getBannedUser();
     String acceptedUser(UserDTO userDTO);
     String bannedUser(UserDTO userDTO);

@@ -55,4 +55,84 @@ public class UserGrpcClientImpl implements UserGrpcClient {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public UserDTO[] getNotAcceptedUser() {
+        try {
+            final ListenableFuture<User.getNotAcceptedUserResponse> response = futureStub.getNotAcceptedUser(
+                    User.getNotAcceptedUserRequest.newBuilder().build());
+            final User.getNotAcceptedUserResponse res = response.get();
+
+            return gson.fromJson(res.getResponse(),UserDTO[].class);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String acceptedUser(UserDTO userDTO) {
+        try {
+            final ListenableFuture<User.accepteduserResponse> response = futureStub.acceptedUser(
+                    User.acceptedUserRequest.newBuilder()
+                            .setRequest(gson.toJson(userDTO)).build());
+            final User.accepteduserResponse res = response.get();
+
+            return res.getResponse();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public String bannedUser(UserDTO userDTO) {
+        try {
+            final ListenableFuture<User.bannedUserResponse> response = futureStub.bannedUser(
+                    User.bannedUserRequest.newBuilder()
+                            .setRequest(gson.toJson(userDTO)).build());
+            final User.bannedUserResponse res = response.get();
+
+            return res.getResponse();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public UserDTO[] getBannedUser() {
+        try {
+            final ListenableFuture<User.getBannedUserResponse> response = futureStub.getBannedUser(
+                    User.getBannedUserRequest.newBuilder().build());
+            final User.getBannedUserResponse res = response.get();
+
+            return gson.fromJson(res.getResponse(),UserDTO[].class);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public String removeBannedUser(UserDTO userDTO) {
+        try {
+            final ListenableFuture<User.removeBannedUserResponse> response = futureStub.removeBannedUser(
+                    User.removeBannedUserRequest.newBuilder()
+                            .setRequest(gson.toJson(userDTO)).build());
+
+            final User.removeBannedUserResponse res = response.get();
+            return res.getResponse();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

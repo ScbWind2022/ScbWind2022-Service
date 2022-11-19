@@ -34,4 +34,49 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getNotAcceptedUser(User.getNotAcceptedUserRequest request, StreamObserver<User.getNotAcceptedUserResponse> responseObserver) {
+        final User.getNotAcceptedUserResponse response = User.getNotAcceptedUserResponse.newBuilder()
+                .setResponse(gson.toJson(userService.getNotAcceptedUser())).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void acceptedUser(User.acceptedUserRequest request, StreamObserver<User.accepteduserResponse> responseObserver) {
+        final User.accepteduserResponse response = User.accepteduserResponse.newBuilder()
+                .setResponse(userService.acceptedUserById(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void bannedUser(User.bannedUserRequest request, StreamObserver<User.bannedUserResponse> responseObserver) {
+        final User.bannedUserResponse response = User.bannedUserResponse.newBuilder()
+                .setResponse(userService.bannedUserById(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void removeBannedUser(User.removeBannedUserRequest request, StreamObserver<User.removeBannedUserResponse> responseObserver) {
+        final User.removeBannedUserResponse response = User.removeBannedUserResponse.newBuilder()
+                .setResponse(userService.removeBannedUser(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getBannedUser(User.getBannedUserRequest request, StreamObserver<User.getBannedUserResponse> responseObserver) {
+        final User.getBannedUserResponse response = User.getBannedUserResponse.newBuilder()
+                .setResponse(gson.toJson(userService.getBannedUser())).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 }
