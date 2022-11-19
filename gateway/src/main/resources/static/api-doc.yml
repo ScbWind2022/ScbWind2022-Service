@@ -1,0 +1,364 @@
+openapi: '3.0.3'
+info:
+  title: Personal Financial Office Личный финансовый кабинет
+  version: 1.0.0
+servers:
+  - url: http://localhost:8083
+tags:
+  - name: auth
+    description: Регистрация, аутентификация пользователя
+  - name: user
+    description: Администрирование пользователей
+  - name: account
+    description: Выполнение операций со счетами пользователей
+
+paths:
+  /api/v1/auth/register:
+    post:
+      summary: Регистрация пользователя
+      operationId: register
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/auth/login:
+    post:
+      summary: Аутентификация пользователя
+      operationId: login
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtDto'
+
+  /api/v1/users:
+    get:
+      summary: Получить список пользователей
+      operationId: getUsers
+      tags:
+        - user
+      parameters:
+        - in: query
+          name: page
+          description: Номер страницы (нумерация начинается с 1)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - in: query
+          name: size
+          description: Размер страницы (сколько пользователей выведется на страницу)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+          example: 20
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPageDto'
+  /api/v1/users/{id}:
+    get:
+      summary: Получить пользователя по идентификатору
+      operationId: getUserById
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+    put:
+      summary: Изменить пользователя
+      operationId: updateUser
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+    delete:
+      summary: Удалить пользователя
+      operationId: deleteUser
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+  /api/v1/users/enable:
+    post:
+      summary: Активация / блокирование пользователя
+      operationId: block
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableDto'
+      responses:
+        '200':
+          description: OK
+  /api/v1/users/password:
+    post:
+      summary: Изменить пароль пользователя
+      operationId: updatePassword
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordDto'
+      responses:
+        '200':
+          description: OK
+
+  /api/v1/accounts/:
+    post:
+      summary: Создать новый счет
+      operationId: createAccount
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountDto'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+
+
+components:
+  schemas:
+    CreateUserDto:
+      type: object
+      description: Данные для регистрации пользователя
+      properties:
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        password:
+          type: string
+          description: Пароль
+          example: secret1E6
+        firstName:
+          type: string
+          description: Имя пользователя
+          example: Сергей
+        lastName:
+          type: string
+          description: Фамилия пользователя
+          example: Иванов
+        phone:
+          type: string
+          description: Телефон пользователя
+          example: 8(999)0010001
+    AuthDto:
+      type: object
+      description: Данные для аутентификации
+      properties:
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        password:
+          type: string
+          description: Пароль
+          example: secret1E6
+    UpdatePasswordDto:
+      type: object
+      description: Данные для аутентификации
+      properties:
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        oldPassword:
+          type: string
+          description: Пароль
+          example: secret1E6
+        newPassword:
+          type: string
+          description: Пароль
+          example: newSecret
+    JwtDto:
+      type: object
+      description: Токен авторизации
+      properties:
+        accessToken:
+          type: string
+          description: Токен авторизации
+          example: 1fn3459gf3p_23mj54p-5PONO(mk'
+        refreshToken:
+          type: string
+          description: Токен на запрос нового токена авторизации
+          example: f35=kvfr3v3ervkMPOnj4-JO()Ll''
+    EnableDto:
+      type: object
+      description: Активация / блокировка пользователя
+      properties:
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        enable:
+          type: boolean
+          description: Доступность пользователя (возможность работы, значения true / false)
+          example: true
+    UserDto:
+      type: object
+      description: Данные пользователя
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор задания
+          example: 45
+        email:
+          type: string
+          description: Логин пользователя
+          example: ivanov
+        firstName:
+          type: string
+          description: Имя пользователя
+          example: Сергей
+        lastName:
+          type: string
+          description: Фамилия пользователя
+          example: Иванов
+        phone:
+          type: string
+          description: Телефон пользователя
+          example: 8(999)0010001
+        enable:
+          type: boolean
+          description: Доступность пользователя (возможность работы, значения true / false)
+          example: true
+    UserPageDto:
+      type: object
+      description: Страница списка пользователей
+      properties:
+        content:
+          description: Список пользователей
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        page:
+          description: Номер страницы
+          type: integer
+          example: 1
+        size:
+          description: Размер страницы (количество пользователей на странице)
+          type: integer
+          example: 20
+        totalItems:
+          description: Всего пользователей
+          type: integer
+          format: int64
+          example: 2
+        totalPages:
+          description: Всего страниц
+          type: integer
+          example: 1
+
+    CreateAccountDto:
+      type: object
+      description: Запрос на создание счета пользователя
+      properties:
+        currencyCharCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+    AccountDto:
+      type: object
+      description: Данные счета пользователя
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор счета
+          example: 465
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя
+          example: 45
+        currencyCharCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+        sum:
+          type: number
+          description: Сумма на счете
+          example: 0.00
+        enable:
+          type: boolean
+          description: Доступность счета
+          example: true
