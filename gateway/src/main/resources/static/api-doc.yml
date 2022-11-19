@@ -155,7 +155,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnableDto'
+              $ref: '#/components/schemas/UserEnableDto'
       responses:
         '200':
           description: OK
@@ -174,6 +174,52 @@ paths:
         '200':
           description: OK
 
+  /api/v1/accounts/users/{id}:
+    get:
+      summary: Получить информацию по счетам пользователя
+      operationId: getAccountsByUserId
+      tags:
+        - account
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountDto'
+  /api/v1/accounts/{id}:
+    get:
+      summary: Получить информацию по счету
+      operationId: getAccountById
+      tags:
+        - account
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор счета
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
   /api/v1/accounts/:
     post:
       summary: Создать новый счет
@@ -192,6 +238,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountDto'
+    patch:
+      summary: Изменить сумму на счете
+      operationId: updateAccountSum
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSumDto'
+      responses:
+        '200':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+  /api/v1/accounts/enable:
+    post:
+      summary: Активация / блокирование счета пользователя
+      operationId: enableAccount
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountEnableDto'
+      responses:
+        '200':
+          description: OK
 
 
 components:
@@ -260,14 +337,15 @@ components:
           type: string
           description: Токен на запрос нового токена авторизации
           example: f35=kvfr3v3ervkMPOnj4-JO()Ll''
-    EnableDto:
+    UserEnableDto:
       type: object
       description: Активация / блокировка пользователя
       properties:
-        email:
-          type: string
-          description: Логин пользователя
-          example: ivanov
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор счета
+          example: 465
         enable:
           type: boolean
           description: Доступность пользователя (возможность работы, значения true / false)
@@ -361,4 +439,39 @@ components:
         enable:
           type: boolean
           description: Доступность счета
+          example: true
+    AccountSumDto:
+      type: object
+      description: Запрос на изменение суммы на счете пользователя
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор счета
+          example: 465
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя
+          example: 45
+        currencyCharCode:
+          type: string
+          description: Символьный код валюты
+          example: USD
+        sum:
+          type: number
+          description: Сумма на счете
+          example: 0.00
+    AccountEnableDto:
+      type: object
+      description: Активация / блокировка счета пользователя
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор счета
+          example: 465
+        enable:
+          type: boolean
+          description: Доступность счета пользователя (возможность работы, значения true / false)
           example: true
