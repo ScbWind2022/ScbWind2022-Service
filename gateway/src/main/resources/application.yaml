@@ -1,1 +1,7 @@
+spring:
+  main:
+    banner-mode: off
+  cache:
+    caffeine:
+      spec: maximumSize=48,expireAfterAccess=1s
 

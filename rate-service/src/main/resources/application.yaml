@@ -1,3 +1,5 @@
+server:
+  port: 0
 spring:
   application:
     name: rateservice
@@ -10,3 +12,5 @@ eureka:
 grpc:
   server:
     port: 0
+cb:
+  url: https://www.cbr.ru/scripts/XML_daily.asp
