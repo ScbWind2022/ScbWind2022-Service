@@ -1,9 +1,11 @@
 package com.example.authservice.dto;
 
-import lombok.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -12,9 +14,9 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 public class RangeCurrencyRateRequest {
-    String id;
+    private String id;
 
-    LocalDate dateFrom;
+    private String dateFrom;
 
-    LocalDate dateTo;
+    private String dateTo;
 }

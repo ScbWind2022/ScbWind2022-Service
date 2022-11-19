@@ -6,6 +6,7 @@ import com.example.authservice.dto.*;
 import com.example.authservice.grpcClient.RateGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;

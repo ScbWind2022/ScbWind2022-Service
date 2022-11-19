@@ -2,6 +2,7 @@ package com.example.authservice;
 
 import com.example.authservice.dto.CurrencyRateResponse;
 import com.example.authservice.dto.CurrencyResponse;
+import com.example.authservice.dto.CurrentCurrencyRateRequest;
 import com.example.authservice.dto.RangeCurrencyRateRequest;
 import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.grpcClient.RateGrpcClient;
@@ -14,15 +15,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@SpringBootTest
+//@SpringBootTest
 class AuthServiceApplicationTests {
 	private final Gson gson = new Gson();
     @Autowired
     private RateGrpcClient rateGrpcClient;
-	@Test
+//	@Test
 	void contextLoads() {
 	}
-	@Test
+//	@Test
 	void datetest1(){
 		LocalDateTime now = LocalDateTime.now();
 		String dateStr = now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -30,21 +31,28 @@ class AuthServiceApplicationTests {
 		System.out.println(gson.toJson(userDTO));
 
 	}
-    @Test
+//    @Test
     void grpcTest1(){
-        /*CurrencyResponse[] res = rateGrpcClient.getCurrencyList();
-        for(CurrencyResponse c : res){
-            System.out.println(c);
-        }*/
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String s = "2020-12-12";
-        String s1 = "2021-12-12";
-        LocalDate date = LocalDate.parse(s, formatter);
-        RangeCurrencyRateRequest request = RangeCurrencyRateRequest.builder()
-                .dateFrom(LocalDate.parse(s,formatter))
-                .dateTo(LocalDate.parse(s1,formatter))
+//        CurrencyResponse[] res = rateGrpcClient.getCurrencyList();
+//        for(CurrencyResponse c : res){
+//            System.out.println(c);
+//        }
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDate date = LocalDate.parse(s1, formatter);
+
+//        String s1 = "2020-12-12";
+//        String s2 = "2021-12-22";
+//        RangeCurrencyRateRequest request = RangeCurrencyRateRequest.builder()
+//                .dateFrom(s1)
+//                .dateTo(s2)
+//                .id("R01235")
+//                .build();
+//        System.out.println(rateGrpcClient.getRangeCurrencyRate(request));
+
+        CurrentCurrencyRateRequest request = CurrentCurrencyRateRequest.builder()
                 .id("R01235")
                 .build();
-        System.out.println(rateGrpcClient.getRangeCurrencyRate(request));
+        System.out.println(rateGrpcClient.getCurrentCurrencyRate(request));
     }
 }
