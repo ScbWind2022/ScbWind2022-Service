@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
-@FeignClient(name = "rates",
-        url = "${cb.url}")
-public interface CbClient {
-
-    @GetMapping
-    String getCurrencyRatesOnDate(@RequestParam("date_req") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date);
+@FeignClient(name = "dynamicrates",
+        url = "${cb.url.dynamic}")
+public interface CbClientDynamic {
 
     @GetMapping
     String getCurrencyRatesRange(@RequestParam("date_req1") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dateFrom,

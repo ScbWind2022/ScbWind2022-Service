@@ -1,6 +1,11 @@
 package com.example.authservice.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -12,10 +17,10 @@ import java.math.BigDecimal;
 @Builder
 public class DateCurrencyRateResponse {String date;
 
-    String id;
+    private String id;
 
-    int nominal;
+    private int nominal;
 
-    BigDecimal value;
+    private BigDecimal value;
 
 }

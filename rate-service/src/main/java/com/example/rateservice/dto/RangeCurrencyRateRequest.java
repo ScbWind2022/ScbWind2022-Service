@@ -19,8 +19,8 @@ public class RangeCurrencyRateRequest {
 
     private String id;
 
-    private LocalDate dateFrom;
+    private String dateFrom;
 
-    private LocalDate dateTo;
+    private String dateTo;
 
 }

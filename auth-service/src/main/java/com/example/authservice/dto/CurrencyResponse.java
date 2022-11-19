@@ -1,6 +1,11 @@
 package com.example.authservice.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -9,13 +14,15 @@ import lombok.*;
 @ToString
 @Builder
 public class CurrencyResponse {
-    String id;
 
-    String numCode;
+    private String id;
 
-    String charCode;
+    private String numCode;
 
-    int nominal;
+    private String charCode;
 
-    String name;
+    private int nominal;
+
+    private String name;
+
 }

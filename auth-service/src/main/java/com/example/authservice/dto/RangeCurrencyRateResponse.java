@@ -12,9 +12,10 @@ import java.util.List;
 @ToString
 @Builder
 public class RangeCurrencyRateResponse {
-    LocalDate dateFrom;
 
-    LocalDate dateTo;
+    private String dateFrom;
 
-    DateCurrencyRateResponse[] rates;
+    private String dateTo;
+
+    private DateCurrencyRateResponse[] rates;
 }
