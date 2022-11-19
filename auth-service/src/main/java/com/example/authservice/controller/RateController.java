@@ -22,7 +22,7 @@ public class RateController {
     @PostMapping(value = "/current")
     public ResponseEntity<CurrencyRateResponse> current(@RequestBody CurrentCurrencyRateRequest request,
                                                         Principal principal){
-        return null;
+        return new ResponseEntity<>(rateService.getCurrencyRate(request),HttpStatus.OK);
     }
     @PostMapping(value = "/range")
     public ResponseEntity<CurrencyRateResponse> range(@RequestBody CurrentCurrencyRateRequest request,

@@ -15,7 +15,9 @@ import java.math.BigDecimal;
 @ToString
 @AllArgsConstructor
 @Builder
-public class DateCurrencyRateResponse {String date;
+public class DateCurrencyRateResponse {
+
+    private String date;
 
     private String id;
 

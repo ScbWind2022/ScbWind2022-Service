@@ -15,12 +15,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//@SpringBootTest
+@SpringBootTest
 class AuthServiceApplicationTests {
 	private final Gson gson = new Gson();
     @Autowired
     private RateGrpcClient rateGrpcClient;
-//	@Test
+	@Test
 	void contextLoads() {
 	}
 //	@Test
@@ -31,7 +31,7 @@ class AuthServiceApplicationTests {
 		System.out.println(gson.toJson(userDTO));
 
 	}
-//    @Test
+   @Test
     void grpcTest1(){
 //        CurrencyResponse[] res = rateGrpcClient.getCurrencyList();
 //        for(CurrencyResponse c : res){
@@ -50,9 +50,14 @@ class AuthServiceApplicationTests {
 //                .build();
 //        System.out.println(rateGrpcClient.getRangeCurrencyRate(request));
 
-        CurrentCurrencyRateRequest request = CurrentCurrencyRateRequest.builder()
+        /*CurrentCurrencyRateRequest request = CurrentCurrencyRateRequest.builder()
                 .id("R01235")
                 .build();
-        System.out.println(rateGrpcClient.getCurrentCurrencyRate(request));
+        System.out.println(rateGrpcClient.getCurrentCurrencyRate(request));*/
+	   RangeCurrencyRateRequest request = RangeCurrencyRateRequest.builder()
+			   .dateTo("2022-10-10")
+			   .dateFrom("2020-12-12")
+			   .build();
+	   System.out.println(rateGrpcClient.getRangeCurrencyRate(request));;
     }
 }
