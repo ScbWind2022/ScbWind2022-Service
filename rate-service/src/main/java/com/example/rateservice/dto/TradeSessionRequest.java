@@ -13,8 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CurrencyRateRequest {
-
-    private String id;
-
+public class TradeSessionRequest {
+    private boolean enable;
+    private String userId;
 }

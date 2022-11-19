@@ -13,8 +13,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CurrencyRateRequest {
+public class OperationListRequest {
 
-    private String id;
+    private int accountId;
+
+    private String dateFrom;
+
+    private String dateTo;
 
 }

@@ -1,21 +1,28 @@
 package com.example.rateservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-@Value
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class DateCurrencyRateResponse {
 
-    String date;
+    private String date;
 
-    String id;
+    private String id;
 
-    int nominal;
+    private int nominal;
 
-    BigDecimal value;
+    private BigDecimal value;
 
 }
