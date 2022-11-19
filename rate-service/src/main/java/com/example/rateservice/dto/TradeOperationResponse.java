@@ -1,17 +1,25 @@
 package com.example.rateservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Value
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class TradeOperationResponse {
-    int id;
-    String date;
-    int accountId;
-    String currencyId;
-    String operation;
-    double currencyRate;
-    int amount;
-    int sum;
+    private int id;
+    private String date;
+    private int accountId;
+    private String currencyId;
+    private String operation;
+    private double currencyRate;
+    private int amount;
+    private int sum;
 }

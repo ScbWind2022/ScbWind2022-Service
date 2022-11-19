@@ -1,25 +1,32 @@
 package com.example.rateservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
-@Value
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CurrencyRateResponse {
 
-    String id;
+    private String id;
 
-    String numCode;
+    private String numCode;
 
-    String charCode;
+    private String charCode;
 
-    Integer nominal;
+    private Integer nominal;
 
-    String name;
+    private String name;
 
-    BigDecimal value;
+    private BigDecimal value;
 
 }
