@@ -94,7 +94,7 @@ public class CheckServiceImpl implements CheckService {
             final CheckDto res = dtoUtils.checkToCheckDto(check);
             return res;
         }
-        return null;
+        throw new CheckNotFoundException();
     }
 
     @Override
@@ -119,5 +119,24 @@ public class CheckServiceImpl implements CheckService {
         check.setUser(user);
         checkRepository.save(check);
         return dtoUtils.checkToCheckDto(check);
+    }
+
+    @Override
+    public CheckDto changeSumByEmailInSession(CheckDto checkDto) {
+        final Long check_id = Long.parseLong(String.valueOf(checkDto.getId()));
+        final String email = checkDto.getUserEmail();
+        final Integer sum = Integer.parseInt(checkDto.getSum());
+
+        final Check check1 = checkRepository.getCheckByIdAndUserEmail(check_id,email);
+        if(check1 == null){
+            throw new CheckNotFoundException();
+        }
+        checkRepository.changeSumById(check_id,sum);
+        final Check check = checkRepository.getCheckByIdAndUserEmail(check_id,email);
+        if(check != null){
+            final CheckDto res = dtoUtils.checkToCheckDto(check);
+            return res;
+        }
+        return null;
     }
 }

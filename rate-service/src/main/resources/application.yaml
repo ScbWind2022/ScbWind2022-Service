@@ -10,6 +10,12 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 grpc:
+  client:
+    user-service:
+      address: "discovery:///userservice"
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
   server:
     port: 0
 cb:

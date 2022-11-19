@@ -57,6 +57,7 @@ class AuthServiceApplicationTests {
 	   RangeCurrencyRateRequest request = RangeCurrencyRateRequest.builder()
 			   .dateTo("2022-10-10")
 			   .dateFrom("2020-12-12")
+			   .id("R01235")
 			   .build();
 	   System.out.println(rateGrpcClient.getRangeCurrencyRate(request));;
     }

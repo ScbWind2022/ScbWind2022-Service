@@ -1,8 +1,6 @@
 package com.example.authservice.service.impl;
 
-import com.example.authservice.dto.CurrencyRateResponse;
-import com.example.authservice.dto.CurrencyResponse;
-import com.example.authservice.dto.CurrentCurrencyRateRequest;
+import com.example.authservice.dto.*;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.grpcClient.RateGrpcClient;
 import com.example.authservice.service.RateService;
@@ -28,5 +26,11 @@ public class RateServiceImpl implements RateService {
             throw new NotValidRequestException();
         }
         return rateGrpcClient.getCurrentCurrencyRate(request);
+    }
+
+    @Override
+    public RangeCurrencyRateResponse getCurrencyInRange(RangeCurrencyRateRequest request) {
+        RangeCurrencyRateResponse response = rateGrpcClient.getRangeCurrencyRate(request);
+        return response;
     }
 }

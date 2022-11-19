@@ -54,4 +54,14 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void changeSumInSession(Check.changeSumInSessionRequest request, StreamObserver<Check.chandeSumInSessionResponse> responseObserver) {
+        final Check.chandeSumInSessionResponse response = Check.chandeSumInSessionResponse.newBuilder()
+                .setResponse(gson.toJson(checkService.changeSumByEmailInSession(
+                        gson.fromJson(request.getRequest(), CheckDto.class)))).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 }
