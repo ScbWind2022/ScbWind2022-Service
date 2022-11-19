@@ -854,6 +854,19 @@ components:
           description: Наименование валюты
           example: Доллар США
 
+    TradeSessionRequest:
+      type: object
+      description: Запрос на открытие / закрытие торговой сессии
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя
+          example: 45
+        enable:
+          type: boolean
+          description: Открыть / закрыть торговую сессию (true / false)
+          example: true
     TradeOperationRequest:
       type: object
       description: Запрос на покупку или продажу валюты по текущему курсу
