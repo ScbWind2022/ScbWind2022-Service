@@ -100,4 +100,20 @@ public class UserRepositoryImpl implements UserRepository {
                 .setParameter(1,id)
                 .executeUpdate();
     }
+
+    @Override
+    @Transactional
+    public void openSession(String email) {
+        em.createQuery("UPDATE User u SET u.inSession = TRUE WHERE LOWER(u.email) = ?1")
+                .setParameter(1,email.toLowerCase())
+                .executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void closeSession(String email) {
+        em.createQuery("UPDATE User u SET u.inSession = FALSE WHERE LOWER(u.email) = ?1")
+                .setParameter(1,email.toLowerCase())
+                .executeUpdate();
+    }
 }

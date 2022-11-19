@@ -4,11 +4,11 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class RoleDTO {
+public class AccountEnableRequestDto {
     private String id;
-    private String name;
+    private boolean enable;
 }

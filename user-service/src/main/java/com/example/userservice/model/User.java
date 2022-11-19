@@ -19,8 +19,11 @@ public class User {
     private String email;
     private String password;
     private String firstName;
+    private String lastName;
     private boolean accepted;
     private boolean banned;
+    private boolean inSession;
+    private String phone;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_and_check",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "check_id"))

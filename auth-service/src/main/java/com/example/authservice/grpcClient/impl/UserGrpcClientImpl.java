@@ -2,7 +2,7 @@ package com.example.authservice.grpcClient.impl;
 
 import Grpc.User;
 import Grpc.UserServiceGrpc;
-import com.example.authservice.dto.UserDTO;
+import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.grpcClient.UserGrpcClient;
 
@@ -129,6 +129,21 @@ public class UserGrpcClientImpl implements UserGrpcClient {
 
             final User.removeBannedUserResponse res = response.get();
             return res.getResponse();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public UserDTO getAccountUserByEmail(UserDTO userDTO) {
+        try {
+            final ListenableFuture<User.getAccotuntUserByEmailResponse> response = futureStub.getAccountUserByEmail(
+                    User.getAccountUserByEmailRequest.newBuilder()
+                            .setRequest(gson.toJson(userDTO)).build());
+            final User.getAccotuntUserByEmailResponse res = response.get();
+            return gson.fromJson(res.getResponse(),UserDTO.class);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {

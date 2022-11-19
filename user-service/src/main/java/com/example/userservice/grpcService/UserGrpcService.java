@@ -79,4 +79,13 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getAccountUserByEmail(User.getAccountUserByEmailRequest request, StreamObserver<User.getAccotuntUserByEmailResponse> responseObserver) {
+        final User.getAccotuntUserByEmailResponse response = User.getAccotuntUserByEmailResponse.newBuilder()
+                .setResponse(gson.toJson(userService.getUserAccountByEmail(
+                        gson.fromJson(request.getRequest(),UserDTO.class)))).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 }

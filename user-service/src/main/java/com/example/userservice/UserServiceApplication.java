@@ -2,10 +2,11 @@ package com.example.userservice;
 
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
+import com.example.userservice.repository.CheckRepository;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.CheckService;
-import org.checkerframework.checker.units.qual.A;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,10 @@ public class UserServiceApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
+	private CheckRepository checkRepository;
+	@Autowired
 	private CheckService checkService;
+	private final Gson gson = new Gson();
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
@@ -50,6 +54,5 @@ public class UserServiceApplication implements CommandLineRunner {
 		userRepository.save(user1);
 		userRepository.acceptedUserById(user.getId());
 		checkService.createCheckWithUser(1L);
-
 	}
 }
