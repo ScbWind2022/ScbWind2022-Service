@@ -10,5 +10,6 @@ public interface UserService {
     String acceptedUserById(UserDTO userDTO);
     String bannedUserById(UserDTO userDTO);
     String removeBannedUser(UserDTO userDTO);
+    UserDTO getUserAccountByEmail(UserDTO userDTO);
 
 }

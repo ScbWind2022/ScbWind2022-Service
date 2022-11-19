@@ -64,11 +64,19 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void removeBannedUser(User.removeBannedUserRequest request, StreamObserver<User.removeBannedUserResponse> responseObserver) {
-        super.removeBannedUser(request, responseObserver);
+        final User.removeBannedUserResponse response = User.removeBannedUserResponse.newBuilder()
+                .setResponse(userService.removeBannedUser(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void getBannedUser(User.getBannedUserRequest request, StreamObserver<User.getBannedUserResponse> responseObserver) {
-        super.getBannedUser(request, responseObserver);
+        final User.getBannedUserResponse response = User.getBannedUserResponse.newBuilder()
+                .setResponse(gson.toJson(userService.getBannedUser())).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 }

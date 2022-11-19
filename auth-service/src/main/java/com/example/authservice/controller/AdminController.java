@@ -35,6 +35,6 @@ public class AdminController {
     }
     @PostMapping(value = "/user-removebanned")
     public ResponseEntity<String> removeBannedUser(@RequestBody UserDTO userDTO){
-        return null;
+        return new ResponseEntity<>(adminService.removeBannedUser(userDTO),HttpStatus.OK);
     }
 }

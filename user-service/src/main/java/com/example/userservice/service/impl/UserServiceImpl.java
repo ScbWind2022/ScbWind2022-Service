@@ -1,9 +1,11 @@
 package com.example.userservice.service.impl;
 
+import com.example.userservice.dto.CheckDto;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.exception.NotValidRequestException;
 import com.example.userservice.exception.UserAlreadyExistException;
 import com.example.userservice.exception.UserNotFoundException;
+import com.example.userservice.model.Check;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import com.example.userservice.repository.RoleRepository;
@@ -12,6 +14,7 @@ import com.example.userservice.service.CheckService;
 import com.example.userservice.service.UserService;
 import com.example.userservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -135,5 +138,12 @@ public class UserServiceImpl implements UserService {
         removeBannedUserByIdValid(userDTO);
         userRepository.removeBannedUserById(Long.parseLong(userDTO.getId()));
         return "remove banned";
+    }
+
+    @Override
+    public UserDTO getUserAccountByEmail(UserDTO userDTO) {
+        final User user = userRepository.getUserByEmail(userDTO.getEmail());
+        final UserDTO userDTO1 = dtoUtils.userToUserDTOWithoutRelationEntity(user);
+        return userDTO1;
     }
 }

@@ -29,7 +29,10 @@ public class UserController {
     public ResponseEntity<JwtDTO> login(@RequestBody UserDTO userDTO,HttpServletResponse response){
         System.out.println("3");
         final JwtDTO jwtDTO = userService.loginUser(userDTO);
-        response.addCookie(new Cookie("refreshToken", jwtDTO.getRefreshToken()));
+        Cookie cookie = new Cookie("refreshToken", jwtDTO.getRefreshToken());
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
         jwtDTO.setRefreshToken(null);
         return new  ResponseEntity<>(jwtDTO, HttpStatus.OK);
     }
