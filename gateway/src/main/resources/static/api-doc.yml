@@ -619,10 +619,10 @@ components:
       type: object
       description: Запрос на создание счета пользователя
       properties:
-        currencyCharCode:
+        currencyId:
           type: string
-          description: Символьный код валюты
-          example: USD
+          description: Идентификатор валюты
+          example: R01235
     AccountResponse:
       type: object
       description: Данные счета пользователя
