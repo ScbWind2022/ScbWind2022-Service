@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface TradeService {
 
-    void operateTradeSession(TradeSessionRequest request);
+    void operateTradeSession(TradeSessionRequest request, String email);
 
-    TradeOperationResponse operateTrade(TradeOperationRequest request);
+    TradeOperationResponse operateTrade(TradeOperationRequest request, String email);
 
-    List<TradeOperationResponse> tradeOperationList(OperationListRequest request);
+    List<TradeOperationResponse> tradeOperationList(OperationListRequest request, String email);
 
 }

@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class CurrencyRateParsingException extends RuntimeException {
-    public CurrencyRateParsingException(Exception e) {
+public class TradeOperationException extends RuntimeException {
+    public TradeOperationException(Exception e) {
         super(e);
+    }
+
+    public TradeOperationException() {
     }
 }
