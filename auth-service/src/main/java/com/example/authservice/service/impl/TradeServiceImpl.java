@@ -1,7 +1,9 @@
 package com.example.authservice.service.impl;
 
+import com.example.authservice.dto.OperationListRequest;
 import com.example.authservice.dto.TradeOperationRequest;
 import com.example.authservice.dto.TradeOperationResponse;
+import com.example.authservice.dto.TradeSessionRequest;
 import com.example.authservice.dto.maindto.UserDTO;
 import com.example.authservice.grpcClient.TradeGrpcClient;
 import com.example.authservice.service.TradeService;
@@ -25,7 +27,17 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public TradeOperationResponse operationTrade(TradeOperationRequest request) {
-        return null;
+    public TradeOperationResponse operationTrade(TradeOperationRequest request,String email) {
+        return tradeGrpcClient.operateTrade(request,email);
+    }
+
+    @Override
+    public TradeOperationResponse[] tradeOperationList(OperationListRequest request, String email) {
+        return tradeGrpcClient.tradeOperationList(request,email);
+    }
+
+    @Override
+    public String operateTradeSession(TradeSessionRequest request, String email) {
+        return tradeGrpcClient.operateTradeSession(request,email);
     }
 }

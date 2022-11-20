@@ -7,7 +7,9 @@ import com.example.rateservice.dto.OperationListRequest;
 import com.example.rateservice.dto.TradeOperationRequest;
 import com.example.rateservice.dto.TradeOperationResponse;
 import com.example.rateservice.dto.TradeSessionRequest;
+import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.exception.TradeOperationException;
+import com.example.rateservice.grpcclient.TradeGrpcClient;
 import com.example.rateservice.service.AccountService;
 import com.example.rateservice.service.CurrencyRateService;
 import com.example.rateservice.service.TradeService;
@@ -27,6 +29,7 @@ public class TradeServiceImpl implements TradeService {
 
     private AccountService accountService;
     private CurrencyRateService currencyRateService;
+    private TradeGrpcClient tradeGrpcClient;
 
     private final Map<String, Map<Integer, BigDecimal>> userAccountBalances = new ConcurrentHashMap<>();
 
@@ -34,6 +37,7 @@ public class TradeServiceImpl implements TradeService {
     public void operateTradeSession(TradeSessionRequest request, String email) {
 
         if (request.isEnable()) {
+            openSession(email);
             // Заблокировать счета на user-service (пропускаем)
 
             // Получить информацию по счетам и поместить в мапу
@@ -49,7 +53,7 @@ public class TradeServiceImpl implements TradeService {
                 accountService.changeSumInAccountByUserEmailAndId(email, entry.getKey(), entry.getValue());
             }
             userAccountBalances.remove(email);
-
+            closeSession(email);
             // Разблокировать счета на user-service (пропускаем)
         }
     }
@@ -99,5 +103,21 @@ public class TradeServiceImpl implements TradeService {
     public List<TradeOperationResponse> tradeOperationList(OperationListRequest request, String email) {
         // TODO
         return List.of();
+    }
+
+    @Override
+    public String openSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return tradeGrpcClient.openSession(userDTO);
+    }
+
+    @Override
+    public String closeSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return tradeGrpcClient.closeSession(userDTO);
     }
 }

@@ -2,6 +2,8 @@ package com.example.authservice.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -9,12 +11,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class TradeOperationResponse {
+    private int accountIdFrom;
+    private int accountIdTo;
     private int id;
     private String date;
     private int accountId;
     private String currencyId;
     private String operation;
-    private double currencyRate;
-    private int amount;
-    private int sum;
+    private BigDecimal currencyRate;
+    private BigDecimal amount;
+    private BigDecimal sum;
 }
