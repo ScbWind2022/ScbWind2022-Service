@@ -1,9 +1,13 @@
 spring:
+  redis:
+    cluster:
+      nodes:
+        - 172.18.0.3:6379
   application:
     name: userservice
   datasource:
     username: postgres
-    password: postgres
+    password: rootaye2
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=userservice
     driver-class-name: org.postgresql.Driver
   jpa:
