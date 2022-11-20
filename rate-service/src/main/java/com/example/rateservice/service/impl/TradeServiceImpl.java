@@ -27,9 +27,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class TradeServiceImpl implements TradeService {
 
-    private AccountService accountService;
-    private CurrencyRateService currencyRateService;
-    private TradeGrpcClient tradeGrpcClient;
+    private final AccountService accountService;
+    private final CurrencyRateService currencyRateService;
+    private final TradeGrpcClient tradeGrpcClient;
 
     private final Map<String, Map<Integer, BigDecimal>> userAccountBalances = new ConcurrentHashMap<>();
 
@@ -62,7 +62,7 @@ public class TradeServiceImpl implements TradeService {
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
 
         String currencyId = request.getCurrencyId();
-
+        System.out.println(request);
         CurrencyRateResponse currentCurrencyRate = currencyRateService.getCurrentCurrencyRate(
                 CurrencyRateRequest.builder().id(currencyId).build());
         BigDecimal rate = currentCurrencyRate.getValue().multiply(BigDecimal.valueOf(currentCurrencyRate.getNominal()));
