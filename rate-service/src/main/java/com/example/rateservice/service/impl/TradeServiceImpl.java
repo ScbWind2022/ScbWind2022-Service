@@ -44,6 +44,8 @@ public class TradeServiceImpl implements TradeService {
             AccountResponseDto[] accounts = accountService.getAccountsUserByEmail(email);
             Map<Integer, BigDecimal> sums = new HashMap<>();
             for (AccountResponseDto account : accounts) {
+                System.out.println(account);
+                System.out.println(account.getSum());
                 sums.put(account.getId(), new BigDecimal(account.getSum()));
             }
             userAccountBalances.put(email, sums);
@@ -60,7 +62,7 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
-
+        System.out.println(userAccountBalances);
         String currencyId = request.getCurrencyId();
         System.out.println(request);
         CurrencyRateResponse currentCurrencyRate = currencyRateService.getCurrentCurrencyRate(
