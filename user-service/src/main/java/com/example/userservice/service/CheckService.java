@@ -12,4 +12,5 @@ public interface CheckService {
     CheckDto changeSumByEmail(CheckDto checkDto);
     boolean changeEnableByEmail(CheckDto checkDto);
     CheckDto createCheck(CheckDto checkDto);
+    CheckDto changeSumByEmailInSession(CheckDto checkDto);
 }

@@ -19,4 +19,5 @@ public class RangeCurrencyRateRequest {
     private String dateFrom;
 
     private String dateTo;
+    private DateCurrencyRateResponse[] rates;
 }

@@ -15,4 +15,5 @@ import lombok.ToString;
 @Builder
 public class CurrentCurrencyRateRequest {
     private String id;
+
 }
