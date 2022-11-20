@@ -85,7 +85,7 @@ public class CheckRepositoryimpl implements CheckRepository {
 
     @Override
     @Transactional
-    public void changeSumById(Long chek_id, Integer sum) {
+    public void changeSumById(Long chek_id, Double sum) {
         em.createQuery("UPDATE Check c SET c.count = ?1 WHERE c.id = ?2")
                 .setParameter(1,sum)
                 .setParameter(2,chek_id)

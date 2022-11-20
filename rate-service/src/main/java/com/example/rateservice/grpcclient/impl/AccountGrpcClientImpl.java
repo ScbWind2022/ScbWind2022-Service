@@ -2,6 +2,7 @@ package com.example.rateservice.grpcclient.impl;
 
 import Grpc.Check;
 import Grpc.CheckServiceGrpc;
+import Grpc.Trade;
 import com.example.rateservice.dto.maindto.CheckDto;
 import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.grpcclient.AccountGrpcClient;
@@ -49,4 +50,6 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
             throw new RuntimeException(e);
         }
     }
+
+
 }

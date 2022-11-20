@@ -28,6 +28,7 @@ public class CheckServiceImpl implements CheckService {
     public void createCheckWithUser(Long user_id) {
         final Check check = Check.builder()
                 .checkToken(UUID.randomUUID().toString())
+                .count(10.0)
                 .currencyCharCode("RUB")
                 .enabled(true)
                 .build();
@@ -78,7 +79,7 @@ public class CheckServiceImpl implements CheckService {
         System.out.println(checkDto);
         final Long check_id = Long.parseLong(String.valueOf(checkDto.getId()));
         final String email = checkDto.getUserEmail();
-        final Integer sum = Integer.parseInt(checkDto.getSum());
+        final Double sum = Double.parseDouble(checkDto.getSum());
 
         final User user = userRepository.getUserByEmail(email);
         if(user.isInSession()){
@@ -125,7 +126,7 @@ public class CheckServiceImpl implements CheckService {
     public CheckDto changeSumByEmailInSession(CheckDto checkDto) {
         final Long check_id = Long.parseLong(String.valueOf(checkDto.getId()));
         final String email = checkDto.getUserEmail();
-        final Integer sum = Integer.parseInt(checkDto.getSum());
+        final Double sum = Double.parseDouble(checkDto.getSum());
 
         final Check check1 = checkRepository.getCheckByIdAndUserEmail(check_id,email);
         if(check1 == null){

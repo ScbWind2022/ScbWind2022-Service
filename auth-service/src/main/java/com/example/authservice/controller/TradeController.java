@@ -23,20 +23,17 @@ public class TradeController {
     @PostMapping(value = "/session")
     public ResponseEntity<String> session(@RequestBody TradeSessionRequest tradeSessionRequest,
                                           Principal principal){
-        if(tradeSessionRequest.isEnable()){
-            return new ResponseEntity<>(tradeService.openSession(principal.getName()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(tradeService.closeSession(principal.getName()),HttpStatus.OK);
-        }
+        return new ResponseEntity<>(
+                tradeService.operateTradeSession(tradeSessionRequest, principal.getName()),HttpStatus.OK);
     }
-    @PostMapping(value = "/api/v1/trade/operation")
+    @PostMapping(value = "/operation")
     public ResponseEntity<TradeOperationResponse> tradeOperation(@RequestBody TradeOperationRequest request,
                                                                  Principal principal){
-        return null;
+        return new ResponseEntity<>(tradeService.operationTrade(request, principal.getName()),HttpStatus.OK);
     }
-    @PostMapping(value = "/api/v1/trade/operation/list")
-    public ResponseEntity<TradeOperationResponse> tradeList(@RequestBody OperationListRequest request,
+    @PostMapping(value = "/operation/list")
+    public ResponseEntity<TradeOperationResponse[]> tradeList(@RequestBody OperationListRequest request,
                                                             Principal principal){
-        return null;
+        return new ResponseEntity<>(tradeService.tradeOperationList(request, principal.getName()),HttpStatus.OK);
     }
 }

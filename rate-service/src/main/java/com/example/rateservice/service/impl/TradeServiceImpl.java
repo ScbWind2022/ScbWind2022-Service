@@ -7,7 +7,9 @@ import com.example.rateservice.dto.OperationListRequest;
 import com.example.rateservice.dto.TradeOperationRequest;
 import com.example.rateservice.dto.TradeOperationResponse;
 import com.example.rateservice.dto.TradeSessionRequest;
+import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.exception.TradeOperationException;
+import com.example.rateservice.grpcclient.TradeGrpcClient;
 import com.example.rateservice.service.AccountService;
 import com.example.rateservice.service.CurrencyRateService;
 import com.example.rateservice.service.TradeService;
@@ -25,8 +27,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class TradeServiceImpl implements TradeService {
 
-    private AccountService accountService;
-    private CurrencyRateService currencyRateService;
+    private final AccountService accountService;
+    private final CurrencyRateService currencyRateService;
+    private final TradeGrpcClient tradeGrpcClient;
 
     private final Map<String, Map<Integer, BigDecimal>> userAccountBalances = new ConcurrentHashMap<>();
 
@@ -34,12 +37,15 @@ public class TradeServiceImpl implements TradeService {
     public void operateTradeSession(TradeSessionRequest request, String email) {
 
         if (request.isEnable()) {
+            openSession(email);
             // Заблокировать счета на user-service (пропускаем)
 
             // Получить информацию по счетам и поместить в мапу
             AccountResponseDto[] accounts = accountService.getAccountsUserByEmail(email);
             Map<Integer, BigDecimal> sums = new HashMap<>();
             for (AccountResponseDto account : accounts) {
+                System.out.println(account);
+                System.out.println(account.getSum());
                 sums.put(account.getId(), new BigDecimal(account.getSum()));
             }
             userAccountBalances.put(email, sums);
@@ -49,16 +55,16 @@ public class TradeServiceImpl implements TradeService {
                 accountService.changeSumInAccountByUserEmailAndId(email, entry.getKey(), entry.getValue());
             }
             userAccountBalances.remove(email);
-
+            closeSession(email);
             // Разблокировать счета на user-service (пропускаем)
         }
     }
 
     @Override
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
-
+        System.out.println(userAccountBalances);
         String currencyId = request.getCurrencyId();
-
+        System.out.println(request);
         CurrencyRateResponse currentCurrencyRate = currencyRateService.getCurrentCurrencyRate(
                 CurrencyRateRequest.builder().id(currencyId).build());
         BigDecimal rate = currentCurrencyRate.getValue().multiply(BigDecimal.valueOf(currentCurrencyRate.getNominal()));
@@ -99,5 +105,21 @@ public class TradeServiceImpl implements TradeService {
     public List<TradeOperationResponse> tradeOperationList(OperationListRequest request, String email) {
         // TODO
         return List.of();
+    }
+
+    @Override
+    public String openSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return tradeGrpcClient.openSession(userDTO);
+    }
+
+    @Override
+    public String closeSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return tradeGrpcClient.closeSession(userDTO);
     }
 }

@@ -8,4 +8,5 @@ public interface AccountService {
     AccountResponseDto[] getAccountsUserByEmail(String email);
 
     AccountResponseDto changeSumInAccountByUserEmailAndId(String email, int checkId, BigDecimal sum);
+
 }

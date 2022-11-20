@@ -46,7 +46,8 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public AccountResponseDto createCheckByEmail(CreateAccountRequestDto createAccountRequestDto, String email) {
         final AccountRequestDto accountRequestDto = AccountRequestDto.builder()
-                .currencyCharCode(createAccountRequestDto.getCurrencyCharCode()).build();
+                .currencyCharCode(createAccountRequestDto.getCurrencyCharCode())
+                .currencyId(createAccountRequestDto.getCurrencyId()).build();
         final CheckDto req = dtoUtils.toCheckDto(accountRequestDto);
         req.setUserEmail(email);
         final CheckDto checkDto = checkGrpcClient.createCheckByEmail(req);

@@ -1,4 +1,8 @@
 spring:
+  redis:
+    cluster:
+      nodes:
+        - 172.18.0.3:6379
   application:
     name: userservice
   datasource:

@@ -14,5 +14,6 @@ public class AccountRequestDto {
     private int id;
     private int userId;
     private String currencyCharCode;
+    private String currencyId;
     private String sum;
 }
