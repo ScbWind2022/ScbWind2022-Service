@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -14,9 +16,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class TradeOperationRequest {
+    private int accountIdFrom;
+    private int accountIdTo;
     private String currencyId;
     private String operation;
-    private double currencyRate;
-    private int amount;
-    private double sum;
+    private BigDecimal currencyRate;
+    private BigDecimal amount;
+    private BigDecimal sum;
 }

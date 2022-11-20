@@ -885,6 +885,16 @@ components:
       type: object
       description: Запрос на покупку или продажу валюты по текущему курсу
       properties:
+        accountIdFrom:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя с которого происходит списание
+          example: 43
+        accountIdTo:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя на который происходит покупка
+          example: 45
         currencyId:
           type: string
           description: Идентификатор валюты
@@ -901,14 +911,20 @@ components:
           type: integer
           description: количество валюты
           example: 10
-        sum:
-          type: number
-          description: Сумма операции
-          example: 608,69
     TradeOperationResponse:
       type: object
       description: Торговая операция (покупка или продажа валюты)
       properties:
+        accountIdFrom:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя с которого происходит списание
+          example: 43
+        accountIdTo:
+          type: integer
+          format: int64
+          description: Идентификатор счета пользователя на который происходит покупка
+          example: 45
         id:
           type: integer
           format: int64
@@ -937,12 +953,12 @@ components:
           description: Курс валюты, по которому совершена покупка / продажа
           example: 60,8685
         amount:
-          type: integer
-          description: количество валюты
-          example: 10
+          type: number
+          description: купленная/проданная сумма валюты
+          example: 10,00
         sum:
           type: number
-          description: Сумма операции
+          description: Сумма операции (расход / приход по покупке / продаже)
           example: 608,69
     OperationListRequest:
       type: object
