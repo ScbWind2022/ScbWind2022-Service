@@ -9,6 +9,8 @@ import com.example.rateservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -30,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDto changeSumInAccountByUserEmailAndId(String email, int checkId, int sum) {
+    public AccountResponseDto changeSumInAccountByUserEmailAndId(String email, int checkId, BigDecimal sum) {
         final CheckDto req = CheckDto.builder()
                 .userEmail(email)
                 .id(checkId)
