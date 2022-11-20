@@ -18,6 +18,66 @@ public class ROUTER {
                 .route(r -> r
                         .path(urlV1 + "/user/register")
                         .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/trade/operation")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/trade/operation/list")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/trade/session")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/accounts/sum")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/rate/current")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/rate/current")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/rate/current/list")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/rate/range")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/banned")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/rate/users/enable")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/get/banned")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/get/enabled")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/removebanned")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/check/enable")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/login")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/profile")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/profile/checks")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/profile/user")
+                        .uri(authService))
+                .route(r -> r
+                        .path(urlV1 + "/users/register")
+                        .uri(authService))
+                .route(r -> r
+                        .path("/users/update-token")
+                        .uri(authService))
                 .build();
     }
 }
