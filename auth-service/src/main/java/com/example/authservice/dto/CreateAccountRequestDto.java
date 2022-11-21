@@ -10,4 +10,5 @@ import lombok.*;
 @Builder
 public class CreateAccountRequestDto {
     private String currencyCharCode;
+    private String currencyId;
 }

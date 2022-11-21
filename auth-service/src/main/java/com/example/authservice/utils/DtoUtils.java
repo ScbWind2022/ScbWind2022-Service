@@ -64,6 +64,7 @@ public class DtoUtils {
         final CheckDto checkDto = CheckDto.builder()
                 .id(accountRequestDto.getId())
                 .currencyCharCode(accountRequestDto.getCurrencyCharCode())
+                .currencyId(accountRequestDto.getCurrencyId())
                 .userId(accountRequestDto.getId())
                 .sum(accountRequestDto.getSum())
                 .build();

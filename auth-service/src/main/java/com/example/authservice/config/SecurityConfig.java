@@ -32,9 +32,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(
                         r -> r
-                                .antMatchers("/admin").hasAuthority("ADMIN")
-                                .antMatchers("/user").hasAuthority("USER")
-                                .antMatchers("/auth").authenticated()
+                                .antMatchers("/api/v1/login","/api/v1/register").permitAll()
+                                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().permitAll()
                                 .and()
                                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

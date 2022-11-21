@@ -14,5 +14,7 @@ public interface TradeService {
     TradeOperationResponse operateTrade(TradeOperationRequest request, String email);
 
     List<TradeOperationResponse> tradeOperationList(OperationListRequest request, String email);
+    String openSession(String email);
+    String closeSession(String email);
 
 }

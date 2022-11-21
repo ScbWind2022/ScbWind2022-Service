@@ -11,5 +11,5 @@ public interface CheckRepository {
     List<Check> getCheksByUserEmail(String email);
     Check getCheckByIdAndUserEmail(Long check_id,String email);
     boolean updateEnableByIdAndUserEmail(Long check_id,String email,boolean bol);
-    void changeSumById(Long chek_id, Integer sum);
+    void changeSumById(Long chek_id, Double sum);
 }

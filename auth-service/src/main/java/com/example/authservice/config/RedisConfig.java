@@ -12,7 +12,8 @@ public class RedisConfig {
     @Bean
     @Primary
     public JedisConnectionFactory jedisConnectionFactory() {
-        return new JedisConnectionFactory();
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+        return jedisConnectionFactory;
     }
 
     @Bean

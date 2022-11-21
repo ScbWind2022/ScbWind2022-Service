@@ -6,8 +6,6 @@ import com.example.authservice.dto.OperationListRequest;
 import com.example.authservice.dto.TradeOperationRequest;
 import com.example.authservice.dto.TradeOperationResponse;
 import com.example.authservice.dto.TradeSessionRequest;
-import com.example.authservice.dto.maindto.UserDTO;
-import com.example.authservice.grpcClient.TradeGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -18,43 +16,11 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
-public class TradeGrpcClientImpl implements TradeGrpcClient {
-    @GrpcClient("user-service")
-    private TradeServiceGrpc.TradeServiceFutureStub futureStub;
+public class TradeRateGrpcClientImpl {
     @GrpcClient("rate-service")
     private TradeServiceGrpc.TradeServiceFutureStub tradeServiceFutureStub;
     private final Gson gson = new Gson();
-    @Override
-    public String openSession(UserDTO userDTO) {
-        try {
-            final ListenableFuture<Trade.openSessionResponse> response = futureStub.openSession(
-                    Trade.openSessionRequest.newBuilder()
-                            .setRequest(gson.toJson(userDTO)).build());
-            final Trade.openSessionResponse res = response.get();
-            return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Override
-    public String closeSession(UserDTO userDTO) {
-        try {
-            final ListenableFuture<Trade.closeSessionResponse> response = futureStub.closeSession(
-                    Trade.closeSessionRequest.newBuilder()
-                            .setRequest(gson.toJson(userDTO)).build());
-            final Trade.closeSessionResponse res = response.get();
-            return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /*@Override
     public String operateTradeSession(TradeSessionRequest request, String email) {
         try {
             final ListenableFuture<Trade.operateTradeSessionResponse> response = tradeServiceFutureStub.operateTradeSession(
@@ -70,7 +36,7 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
         }
     }
 
-    @Override
+
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
         try {
             final ListenableFuture<Trade.operateTradeResponse> response = tradeServiceFutureStub.operateTrade(
@@ -86,7 +52,7 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
         }
     }
 
-    @Override
+
     public TradeOperationResponse[] tradeOperationList(OperationListRequest request, String email) {
         try {
             final ListenableFuture<Trade.tradeOperationListResponse> response = tradeServiceFutureStub.tradeOperationList(
@@ -100,5 +66,5 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 }
