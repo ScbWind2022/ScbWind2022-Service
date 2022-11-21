@@ -27,7 +27,7 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_and_check",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "check_id"))
-    private Set<Check> checks;
+    private Set<Account> checks;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_and_role",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

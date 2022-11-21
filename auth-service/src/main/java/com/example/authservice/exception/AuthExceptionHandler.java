@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class MyExceptionHandler {
+public class AuthExceptionHandler {
     private ResponseEntity<Object> constructException(final String message, final HttpStatus httpStatus){
         Map<String,Object> body = new LinkedHashMap<>();
         body.put("Timestamp", LocalDateTime.now());

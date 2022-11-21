@@ -1,17 +1,13 @@
 package com.example.authservice;
 
-import com.example.authservice.dto.CurrencyRateResponse;
-import com.example.authservice.dto.CurrencyResponse;
-import com.example.authservice.dto.CurrentCurrencyRateRequest;
 import com.example.authservice.dto.RangeCurrencyRateRequest;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.grpcClient.RateGrpcClient;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +23,7 @@ class AuthServiceApplicationTests {
 	void datetest1(){
 		LocalDateTime now = LocalDateTime.now();
 		String dateStr = now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-		UserDTO userDTO = UserDTO.builder().dateCreate(dateStr).build();
+		UserDto userDTO = UserDto.builder().dateCreate(dateStr).build();
 		System.out.println(gson.toJson(userDTO));
 
 	}

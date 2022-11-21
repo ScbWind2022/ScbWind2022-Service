@@ -1,8 +1,8 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.dto.AccountRequestDto;
-import com.example.authservice.dto.AccountResponseDto;
-import com.example.authservice.dto.CreateAccountRequestDto;
+import com.example.authservice.dto.AccountRequest;
+import com.example.authservice.dto.AccountResponse;
+import com.example.authservice.dto.CreateAccountRequest;
 import com.example.authservice.service.CheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,16 +19,19 @@ import java.security.Principal;
 @RequestMapping(value = "/api/v1/accounts")
 public class AccountController {
     private final CheckService checkService;
+
     @PostMapping(value = "/sum")
-    public ResponseEntity<AccountResponseDto> changeSum(@RequestBody AccountRequestDto accountRequestDto,
-                                                        Principal principal){
-        return new ResponseEntity<>(
-                checkService.changeSumByEmail(accountRequestDto, principal.getName()), HttpStatus.OK);
+    public ResponseEntity<AccountResponse> changeSum(@RequestBody AccountRequest request,
+                                                     Principal principal) {
+        return new ResponseEntity<>(checkService.changeSumByEmail(request, principal.getName()),
+                HttpStatus.OK);
     }
+
     @PostMapping(value = "/")
-    public ResponseEntity<AccountResponseDto> createCheck(@RequestBody CreateAccountRequestDto accountRequestDto,
-                                                          Principal principal){
-        return new ResponseEntity<>(checkService.createCheckByEmail(accountRequestDto, principal.getName()),HttpStatus.OK);
+    public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest request,
+                                                         Principal principal) {
+        return new ResponseEntity<>(checkService.createAccount(request, principal.getName()),
+                HttpStatus.OK);
     }
 
 }

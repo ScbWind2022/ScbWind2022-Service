@@ -8,6 +8,8 @@ import com.example.rateservice.dto.TradeOperationRequest;
 import com.example.rateservice.dto.TradeOperationResponse;
 import com.example.rateservice.dto.TradeSessionRequest;
 import com.example.rateservice.dto.maindto.UserDTO;
+import com.example.rateservice.exception.NotEnoughCurrencyException;
+import com.example.rateservice.exception.NotEnoughMoneyException;
 import com.example.rateservice.exception.TradeOperationException;
 import com.example.rateservice.grpcclient.TradeGrpcClient;
 import com.example.rateservice.service.AccountService;
@@ -83,11 +85,17 @@ public class TradeServiceImpl implements TradeService {
         }
 
         if ("buy".equalsIgnoreCase(request.getOperation())) {
+            if (sumFrom.compareTo(sum) < 0) {
+                throw new NotEnoughMoneyException("Не достаточно денежных средств на счете");
+            }
             balances.put(request.getAccountIdFrom(), sumFrom.subtract(sum));
-            balances.put(request.getAccountIdTo(), sumFrom.add(sum));
+            balances.put(request.getAccountIdTo(), sumTo.add(amount));
         } else if ("sell".equalsIgnoreCase(request.getOperation())) {
+            if (sumTo.compareTo(sum) < 0) {
+                throw new NotEnoughCurrencyException("Не достаточно валюты для продажи");
+            }
             balances.put(request.getAccountIdFrom(), sumFrom.add(sum));
-            balances.put(request.getAccountIdTo(), sumFrom.subtract(sum));
+            balances.put(request.getAccountIdTo(), sumTo.subtract(amount));
         }
 
         return TradeOperationResponse.builder()

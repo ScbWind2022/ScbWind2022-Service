@@ -1,4 +1,4 @@
-package com.example.authservice.dto.maindto;
+package com.example.authservice.dto.domestic;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class UserDTO {
+public class UserDto {
     private String id;
     private String email;
     private String password;
@@ -17,11 +17,11 @@ public class UserDTO {
     private String phone;
     private boolean accepted;
     private boolean banned;
-    private RoleDTO[] roles;
+    private RoleDto[] roles;
 
     private String dateCreate;
 
-    public UserDTO(String email, RoleDTO[] roles) {
+    public UserDto(String email, RoleDto[] roles) {
         this.email = email;
         this.roles = roles;
     }

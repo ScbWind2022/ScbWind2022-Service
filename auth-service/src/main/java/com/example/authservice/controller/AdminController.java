@@ -1,6 +1,6 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.dto.UserResponse;
 import com.example.authservice.service.AdminService;
 import com.example.authservice.service.UserService;
@@ -27,15 +27,15 @@ public class AdminController {
         return new ResponseEntity<>(adminService.getBannedUser(),HttpStatus.OK);
     }
     @PostMapping(value = "/enable")
-    public ResponseEntity<String> acceptedUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> acceptedUser(@RequestBody UserDto userDTO){
        return new ResponseEntity<>(adminService.acceptedUser(userDTO),HttpStatus.OK);
     }
     @PostMapping(value = "/banned")
-    public ResponseEntity<String> bannedUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> bannedUser(@RequestBody UserDto userDTO){
         return new ResponseEntity<>(adminService.bannedUser(userDTO),HttpStatus.OK);
     }
     @PostMapping(value = "/removebanned")
-    public ResponseEntity<String> removeBannedUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> removeBannedUser(@RequestBody UserDto userDTO){
         return new ResponseEntity<>(adminService.removeBannedUser(userDTO),HttpStatus.OK);
     }
 }

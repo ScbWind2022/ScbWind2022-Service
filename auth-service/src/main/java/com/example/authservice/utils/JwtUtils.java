@@ -1,8 +1,8 @@
 package com.example.authservice.utils;
 
 import com.example.authservice.config.JwtAuth;
-import com.example.authservice.dto.maindto.RoleDTO;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.RoleDto;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.exception.IncorrectJwtTokenException;
 import com.example.authservice.exception.NotValidRequestException;
 import com.google.gson.Gson;
@@ -30,7 +30,7 @@ public class JwtUtils {
         this.jwtAccessToken = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessToken));
         this.jwtRefreshToken = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshToken));
     }
-    public String generateAccessToken(final UserDTO userDTO){
+    public String generateAccessToken(final UserDto userDTO){
         final LocalDateTime time = LocalDateTime.now();
         final Instant accessInst = time.plusMinutes(100).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessTime = Date.from(accessInst);
@@ -42,7 +42,7 @@ public class JwtUtils {
                 .signWith(jwtAccessToken)
                 .compact();
     }
-    public String generateRefreshToken(final UserDTO userDTO){
+    public String generateRefreshToken(final UserDto userDTO){
         final LocalDateTime time = LocalDateTime.now();
         final Instant refreshInst = time.plusDays(5).atZone(ZoneId.systemDefault()).toInstant();
         final Date refreshTime = Date.from(refreshInst);
@@ -128,17 +128,17 @@ public class JwtUtils {
         jwtAuth.setEmail(claims.getSubject());
         return jwtAuth;
     }
-    private RoleDTO[] getRoles(final Claims claims){
+    private RoleDto[] getRoles(final Claims claims){
         try {
-            final RoleDTO[] roles = gson.fromJson((String) claims.get("roles"), RoleDTO[].class);
+            final RoleDto[] roles = gson.fromJson((String) claims.get("roles"), RoleDto[].class);
             return roles;
         } catch (NullPointerException n){
             throw new NotValidRequestException("Not valid request (null roles)");
         }
     }
-    public UserDTO parseRefreshToken(final String refresh){
+    public UserDto parseRefreshToken(final String refresh){
         final Claims claims = getRefreshClaims(refresh);
-        return new UserDTO(claims.getSubject(),getRoles(claims));
+        return new UserDto(claims.getSubject(),getRoles(claims));
     }
 
 }

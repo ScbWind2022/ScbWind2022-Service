@@ -10,5 +10,5 @@ import lombok.*;
 @Builder
 public class UserProfileResponse {
     private UserResponse user;
-    private AccountResponseDto[] accounts;
+    private AccountResponse[] accounts;
 }

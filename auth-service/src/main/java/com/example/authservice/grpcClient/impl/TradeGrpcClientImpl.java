@@ -2,11 +2,7 @@ package com.example.authservice.grpcClient.impl;
 
 import Grpc.Trade;
 import Grpc.TradeServiceGrpc;
-import com.example.authservice.dto.OperationListRequest;
-import com.example.authservice.dto.TradeOperationRequest;
-import com.example.authservice.dto.TradeOperationResponse;
-import com.example.authservice.dto.TradeSessionRequest;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.grpcClient.TradeGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
@@ -25,7 +21,7 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
     private TradeServiceGrpc.TradeServiceFutureStub tradeServiceFutureStub;
     private final Gson gson = new Gson();
     @Override
-    public String openSession(UserDTO userDTO) {
+    public String openSession(UserDto userDTO) {
         try {
             final ListenableFuture<Trade.openSessionResponse> response = futureStub.openSession(
                     Trade.openSessionRequest.newBuilder()
@@ -40,7 +36,7 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
     }
 
     @Override
-    public String closeSession(UserDTO userDTO) {
+    public String closeSession(UserDto userDTO) {
         try {
             final ListenableFuture<Trade.closeSessionResponse> response = futureStub.closeSession(
                     Trade.closeSessionRequest.newBuilder()

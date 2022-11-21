@@ -2,8 +2,8 @@ package com.example.userservice.grpcService;
 
 import Grpc.Check;
 import Grpc.CheckServiceGrpc;
-import com.example.userservice.dto.CheckDto;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.AccountDto;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.CheckService;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
@@ -19,7 +19,7 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     public void getCheckByEmail(Check.getCheckByUserEmailRequest request, StreamObserver<Check.getCheckByUserEmailResponse> responseObserver) {
         final Check.getCheckByUserEmailResponse response = Check.getCheckByUserEmailResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.getCheckByUserEmail(
-                        gson.fromJson(request.getRequest(), UserDTO.class)))).build();
+                        gson.fromJson(request.getRequest(), UserDto.class)))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -29,7 +29,7 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     public void changeSum(Check.changeSumRequest request, StreamObserver<Check.changeSumResponse> responseObserver) {
         final Check.changeSumResponse response = Check.changeSumResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.changeSumByEmail(
-                        gson.fromJson(request.getRequest(), CheckDto.class)))).build();
+                        gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -37,7 +37,7 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
 
     @Override
     public void changeEnable(Check.changeEnableRequest request, StreamObserver<Check.changeEnableResponse> responseObserver) {
-        checkService.changeEnableByEmail(gson.fromJson(request.getRequest(), CheckDto.class));
+        checkService.changeEnableByEmail(gson.fromJson(request.getRequest(), AccountDto.class));
         final Check.changeEnableResponse response = Check.changeEnableResponse.newBuilder()
                 .setResponse("true").build();
 
@@ -49,7 +49,7 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     public void createCheck(Check.createCheckRequest request, StreamObserver<Check.createCheckResponse> responseObserver) {
         final Check.createCheckResponse response = Check.createCheckResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.createCheck(
-                        gson.fromJson(request.getRequest(), CheckDto.class)))).build();
+                        gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -59,7 +59,7 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     public void changeSumInSession(Check.changeSumInSessionRequest request, StreamObserver<Check.chandeSumInSessionResponse> responseObserver) {
         final Check.chandeSumInSessionResponse response = Check.chandeSumInSessionResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.changeSumByEmailInSession(
-                        gson.fromJson(request.getRequest(), CheckDto.class)))).build();
+                        gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();

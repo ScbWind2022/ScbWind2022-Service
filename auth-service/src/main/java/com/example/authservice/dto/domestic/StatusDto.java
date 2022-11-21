@@ -1,4 +1,4 @@
-package com.example.authservice.dto.maindto;
+package com.example.authservice.dto.domestic;
 
 import lombok.*;
 

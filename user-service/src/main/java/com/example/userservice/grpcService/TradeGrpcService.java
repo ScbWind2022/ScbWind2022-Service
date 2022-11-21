@@ -2,7 +2,7 @@ package com.example.userservice.grpcService;
 
 import Grpc.Trade;
 import Grpc.TradeServiceGrpc;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.TradeService;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
@@ -17,7 +17,7 @@ public class TradeGrpcService extends TradeServiceGrpc.TradeServiceImplBase {
     @Override
     public void openSession(Trade.openSessionRequest request, StreamObserver<Trade.openSessionResponse> responseObserver) {
         final Trade.openSessionResponse response = Trade.openSessionResponse.newBuilder()
-                .setResponse(tradeService.openSession(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+                .setResponse(tradeService.openSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -26,7 +26,7 @@ public class TradeGrpcService extends TradeServiceGrpc.TradeServiceImplBase {
     @Override
     public void closeSession(Trade.closeSessionRequest request, StreamObserver<Trade.closeSessionResponse> responseObserver) {
         final Trade.closeSessionResponse response = Trade.closeSessionResponse.newBuilder()
-                .setResponse(tradeService.closeSession(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+                .setResponse(tradeService.closeSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();

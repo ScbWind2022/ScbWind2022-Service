@@ -1,4 +1,4 @@
-package com.example.authservice.dto.maindto;
+package com.example.authservice.dto.domestic;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class JwtDTO {
+public class JwtDto {
     private String accessToken;
     private String refreshToken;
 }

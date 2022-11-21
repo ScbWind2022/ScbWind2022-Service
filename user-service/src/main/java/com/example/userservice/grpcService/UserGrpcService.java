@@ -2,7 +2,7 @@ package com.example.userservice.grpcService;
 
 import Grpc.User;
 import Grpc.UserServiceGrpc;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.UserService;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
@@ -18,7 +18,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void getUserAndRoleByEmail(User.getUserByEmailRequest request, StreamObserver<User.getUserByEmailResponse> responseObserver) {
         final User.getUserByEmailResponse response = User.getUserByEmailResponse.newBuilder()
                 .setResponse(gson.toJson(userService.getUserAndRoleByEmail(
-                        gson.fromJson(request.getRequest(), UserDTO.class).getEmail())))
+                        gson.fromJson(request.getRequest(), UserDto.class).getEmail())))
                 .build();
 
         responseObserver.onNext(response);
@@ -28,7 +28,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void registerUser(User.registerUserRequest request, StreamObserver<User.registerUserResponse> responseObserver) {
         final User.registerUserResponse response = User.registerUserResponse.newBuilder()
-                .setResponse(userService.registerUser(gson.fromJson(request.getRequest(), UserDTO.class)))
+                .setResponse(userService.registerUser(gson.fromJson(request.getRequest(), UserDto.class)))
                 .build();
 
         responseObserver.onNext(response);
@@ -47,7 +47,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void acceptedUser(User.acceptedUserRequest request, StreamObserver<User.accepteduserResponse> responseObserver) {
         final User.accepteduserResponse response = User.accepteduserResponse.newBuilder()
-                .setResponse(userService.acceptedUserById(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+                .setResponse(userService.acceptedUserById(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -56,7 +56,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void bannedUser(User.bannedUserRequest request, StreamObserver<User.bannedUserResponse> responseObserver) {
         final User.bannedUserResponse response = User.bannedUserResponse.newBuilder()
-                .setResponse(userService.bannedUserById(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+                .setResponse(userService.bannedUserById(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -65,7 +65,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void removeBannedUser(User.removeBannedUserRequest request, StreamObserver<User.removeBannedUserResponse> responseObserver) {
         final User.removeBannedUserResponse response = User.removeBannedUserResponse.newBuilder()
-                .setResponse(userService.removeBannedUser(gson.fromJson(request.getRequest(), UserDTO.class))).build();
+                .setResponse(userService.removeBannedUser(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -84,7 +84,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void getAccountUserByEmail(User.getAccountUserByEmailRequest request, StreamObserver<User.getAccotuntUserByEmailResponse> responseObserver) {
         final User.getAccotuntUserByEmailResponse response = User.getAccotuntUserByEmailResponse.newBuilder()
                 .setResponse(gson.toJson(userService.getUserAccountByEmail(
-                        gson.fromJson(request.getRequest(),UserDTO.class)))).build();
+                        gson.fromJson(request.getRequest(), UserDto.class)))).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

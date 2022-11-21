@@ -1,9 +1,9 @@
 package com.example.userservice.utils;
 
-import com.example.userservice.dto.CheckDto;
-import com.example.userservice.dto.RoleDTO;
-import com.example.userservice.dto.UserDTO;
-import com.example.userservice.model.Check;
+import com.example.userservice.dto.AccountDto;
+import com.example.userservice.dto.RoleDto;
+import com.example.userservice.dto.UserDto;
+import com.example.userservice.model.Account;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import org.springframework.stereotype.Service;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DtoUtils {
-    public UserDTO userToUserDTO(final User user){
-        final RoleDTO[] roles = new RoleDTO[user.getRoles().size()];
+    public UserDto userToUserDTO(final User user) {
+        final RoleDto[] roles = new RoleDto[user.getRoles().size()];
         int index = 0;
-        for(Role r : user.getRoles()){
+        for (Role r : user.getRoles()) {
             roles[index] = roleToRoleDTO(r);
         }
-        final UserDTO userDTO = UserDTO.builder()
+        final UserDto userDTO = UserDto.builder()
                 .id(String.valueOf(user.getId()))
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
@@ -30,8 +30,9 @@ public class DtoUtils {
                 .build();
         return userDTO;
     }
-    public UserDTO userToUserDTOWithoutRelationEntity(final User user){
-        final UserDTO userDTO = UserDTO.builder()
+
+    public UserDto userToUserDTOWithoutRelationEntity(final User user) {
+        final UserDto userDTO = UserDto.builder()
                 .id(String.valueOf(user.getId()))
                 .email(user.getEmail())
                 .accepted(user.isAccepted())
@@ -42,13 +43,15 @@ public class DtoUtils {
                 .build();
         return userDTO;
     }
-    public RoleDTO roleToRoleDTO(final Role role){
-        final RoleDTO roleDTO = RoleDTO.builder()
+
+    public RoleDto roleToRoleDTO(final Role role) {
+        final RoleDto roleDTO = RoleDto.builder()
                 .name(role.getName())
                 .build();
         return roleDTO;
     }
-    public User userDTOToUser(final UserDTO userDTO){
+
+    public User userDTOToUser(final UserDto userDTO) {
         final User user = User.builder()
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())
@@ -58,20 +61,23 @@ public class DtoUtils {
                 .build();
         return user;
     }
-    public CheckDto checkToCheckDto(final Check check){
-        final CheckDto checkDto = CheckDto.builder()
+
+    public AccountDto checkToCheckDto(final Account check) {
+        final AccountDto checkDto = AccountDto.builder()
                 .id(Integer.parseInt(String.valueOf(check.getId())))
+                .userId(check.getUser().getId())
                 .currencyId(check.getCurrencyId())
                 .currencyName(check.getCurrencyName())
                 .currencyCharCode(check.getCurrencyCharCode())
-                .sum(String.valueOf(check.getCount()))
+                .sum(check.getSum().toString())
                 .enable(check.isEnabled())
                 .build();
         return checkDto;
     }
-    public Check checkDtoToCheck(final CheckDto checkDto){
-        final Check check = Check.builder()
-                .currencyCharCode(checkDto.getCurrencyCharCode())
+
+    public Account checkDtoToCheck(final AccountDto checkDto) {
+        final Account check = Account.builder()
+                .currencyId(checkDto.getCurrencyId())
                 .build();
         return check;
     }

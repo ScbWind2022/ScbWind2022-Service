@@ -1,8 +1,11 @@
-package com.example.authservice.dto.maindto;
+package com.example.userservice.dto;
 
-import lombok.*;
-
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -10,9 +13,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckDto {
+public class AccountDto {
     private int id;
-    private int userId;
+    private long userId;
+    private UserDto owner;
     private String currencyCharCode;
     private String currencyId;
     private String currencyName;

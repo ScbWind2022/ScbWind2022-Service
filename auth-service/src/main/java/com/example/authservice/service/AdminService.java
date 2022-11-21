@@ -1,12 +1,12 @@
 package com.example.authservice.service;
 
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.dto.UserResponse;
 
 public interface AdminService {
     UserResponse[] getNotAcceptedUsers();
     UserResponse[] getBannedUser();
-    String acceptedUser(UserDTO userDTO);
-    String bannedUser(UserDTO userDTO);
-    String removeBannedUser(UserDTO userDTO);
+    String acceptedUser(UserDto userDTO);
+    String bannedUser(UserDto userDTO);
+    String removeBannedUser(UserDto userDTO);
 }

@@ -1,19 +1,16 @@
-package com.example.userservice.dto;
+package com.example.authservice.dto.domestic;
 
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
-public class CheckDto {
+public class TradeDto {
     private int id;
     private int userId;
-    private UserDTO owner;
     private String currencyCharCode;
     private String currencyId;
     private String currencyName;
@@ -21,4 +18,6 @@ public class CheckDto {
     private String sum;
     private String userEmail;
     private boolean enable;
+    private int accountIdFrom;
+    private int accountIdTo;
 }

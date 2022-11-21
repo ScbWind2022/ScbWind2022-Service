@@ -4,7 +4,7 @@ import com.example.authservice.dto.OperationListRequest;
 import com.example.authservice.dto.TradeOperationRequest;
 import com.example.authservice.dto.TradeOperationResponse;
 import com.example.authservice.dto.TradeSessionRequest;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.grpcClient.TradeGrpcClient;
 import com.example.authservice.grpcClient.impl.TradeRateGrpcClientImpl;
 import com.example.authservice.service.TradeService;
@@ -18,13 +18,13 @@ public class TradeServiceImpl implements TradeService {
     private final TradeRateGrpcClientImpl tradeRateGrpcClient;
     @Override
     public String openSession(String email) {
-        final UserDTO userDTO = UserDTO.builder().email(email).build();
+        final UserDto userDTO = UserDto.builder().email(email).build();
         return tradeGrpcClient.openSession(userDTO);
     }
 
     @Override
     public String closeSession(String email) {
-        final UserDTO userDTO = UserDTO.builder().email(email).build();
+        final UserDto userDTO = UserDto.builder().email(email).build();
         return tradeGrpcClient.closeSession(userDTO);
     }
 

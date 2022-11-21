@@ -1,6 +1,6 @@
 package com.example.authservice.config;
 
-import com.example.authservice.dto.maindto.RoleDTO;
+import com.example.authservice.dto.domestic.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class JwtAuth implements Authentication {
     private String email;
     private boolean authenticated;
-    private RoleDTO[] roles;
+    private RoleDto[] roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

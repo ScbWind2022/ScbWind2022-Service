@@ -1,12 +1,11 @@
 package com.example.authservice.grpcClient;
 
-import Grpc.Check;
-import com.example.authservice.dto.maindto.CheckDto;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.AccountDto;
+import com.example.authservice.dto.domestic.UserDto;
 
 public interface CheckGrpcClient {
-    CheckDto[] getCheckByEmail(UserDTO userDTO);
-    CheckDto changeSumByIdAndEmail(CheckDto checkDto);
-    String changeEnableByIdAndEmail(CheckDto checkDto);
-    CheckDto createCheckByEmail(CheckDto checkDto);
+    AccountDto[] getCheckByEmail(UserDto userDTO);
+    AccountDto changeSumByIdAndEmail(AccountDto checkDto);
+    String changeEnableByIdAndEmail(AccountDto checkDto);
+    AccountDto createCheckByEmail(AccountDto checkDto);
 }

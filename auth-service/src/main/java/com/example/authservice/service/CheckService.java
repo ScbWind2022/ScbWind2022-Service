@@ -1,13 +1,16 @@
 package com.example.authservice.service;
 
-import com.example.authservice.dto.AccountRequestDto;
-import com.example.authservice.dto.AccountResponseDto;
-import com.example.authservice.dto.CreateAccountRequestDto;
-import com.example.authservice.dto.UserEnableRequest;
+import com.example.authservice.dto.AccountEnableRequest;
+import com.example.authservice.dto.AccountRequest;
+import com.example.authservice.dto.AccountResponse;
+import com.example.authservice.dto.CreateAccountRequest;
 
 public interface CheckService {
-    AccountResponseDto[] getCheckWithUserByEmail(String email);
-    AccountResponseDto changeSumByEmail(AccountRequestDto accountRequestDto,String email);
-    AccountResponseDto createCheckByEmail(CreateAccountRequestDto createAccountRequestDto, String email);
-    String changeEnabledByEmailAndId(UserEnableRequest userEnableRequest,String email);
+    AccountResponse[] getAccountByUserEmail(String email);
+
+    AccountResponse changeSumByEmail(AccountRequest request, String email);
+
+    AccountResponse createAccount(CreateAccountRequest request, String email);
+
+    String changeEnabledByEmailAndId(AccountEnableRequest request, String email);
 }

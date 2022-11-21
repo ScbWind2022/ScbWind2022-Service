@@ -9,16 +9,11 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
-public class RangeCurrencyRateRequest {
-    private String id;
-
-    private String dateFrom;
-
-    private String dateTo;
-
-    private DateCurrencyRateResponse[] rates;
+public class AccountEnableRequest {
+    private int id;
+    private boolean enable;
 }

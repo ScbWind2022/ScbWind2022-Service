@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ROUTER {
+public class Router {
     private final String urlV1 = "/api/v1";
     private final String authService = "lb://authservice";
     @Bean

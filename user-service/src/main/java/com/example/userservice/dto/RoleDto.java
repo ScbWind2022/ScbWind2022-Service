@@ -1,4 +1,4 @@
-package com.example.authservice.dto.maindto;
+package com.example.userservice.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class RoleDTO {
+public class RoleDto {
     private String id;
     private String name;
 }

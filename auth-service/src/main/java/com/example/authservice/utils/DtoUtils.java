@@ -1,80 +1,81 @@
 package com.example.authservice.utils;
 
-import com.example.authservice.dto.*;
-import com.example.authservice.dto.maindto.CheckDto;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.AccountEnableRequest;
+import com.example.authservice.dto.AccountRequest;
+import com.example.authservice.dto.AccountResponse;
+import com.example.authservice.dto.AuthRequestDto;
+import com.example.authservice.dto.CreateUserRequest;
+import com.example.authservice.dto.UserResponse;
+import com.example.authservice.dto.domestic.AccountDto;
+import com.example.authservice.dto.domestic.UserDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DtoUtils {
-    public UserDTO toUserDTO(final CreateUserRequest createUserRequest){
-        final UserDTO userDTO = UserDTO.builder()
+    public UserDto toUserDTO(final CreateUserRequest createUserRequest) {
+        return UserDto.builder()
                 .email(createUserRequest.getEmail())
                 .firstName(createUserRequest.getFirstName())
                 .password(createUserRequest.getPassword())
                 .lastName(createUserRequest.getLastName())
                 .phone(createUserRequest.getPhone())
                 .build();
-        return userDTO;
     }
-    public UserDTO toUserDTO(final AuthRequestDto authRequestDto){
-        final UserDTO userDTO = UserDTO.builder()
+
+    public UserDto toUserDTO(final AuthRequestDto authRequestDto) {
+        return UserDto.builder()
                 .email(authRequestDto.getEmail())
                 .password(authRequestDto.getPassword())
                 .build();
-        return userDTO;
     }
 
-    public UserResponse toUserResponse(final UserDTO userDTO){
-        final UserResponse response = UserResponse.builder()
+    public UserResponse toUserResponse(final UserDto userDTO) {
+        return UserResponse.builder()
                 .lastName(userDTO.getLastName())
                 .firstName(userDTO.getFirstName())
                 .email(userDTO.getEmail())
                 .phone(userDTO.getPhone())
                 .id(userDTO.getId())
                 .build();
-        return response;
     }
-    public AccountResponseDto toAccountResponseDto(final CheckDto checkDto){
-        final AccountResponseDto accountResponseDto = AccountResponseDto.builder()
+
+    public AccountResponse toAccountResponseDto(final AccountDto checkDto) {
+        return AccountResponse.builder()
                 .id(checkDto.getId())
                 .sum(checkDto.getSum())
                 .userId(checkDto.getUserId())
                 .currencyName(checkDto.getCurrencyName())
                 .currencyId(checkDto.getCurrencyId())
-                .currencyEngName(checkDto.getCurrencyEngName())
                 .currencyCharCode(checkDto.getCurrencyCharCode())
                 .enabled(checkDto.isEnable())
                 .build();
-        return accountResponseDto;
     }
-    public CheckDto toCheckDto(final AccountResponseDto accountResponseDto){
-        final CheckDto checkDto = CheckDto.builder()
+
+    public AccountDto toAccountDto(final AccountResponse accountResponseDto) {
+        return AccountDto.builder()
                 .enable(accountResponseDto.isEnabled())
                 .currencyCharCode(accountResponseDto.getCurrencyCharCode())
-                .currencyEngName(accountResponseDto.getCurrencyEngName())
                 .currencyName(accountResponseDto.getCurrencyName())
                 .currencyId(accountResponseDto.getCurrencyId())
                 .sum(accountResponseDto.getSum())
                 .id(accountResponseDto.getId())
                 .build();
-        return checkDto;
     }
-    public CheckDto toCheckDto(final AccountRequestDto accountRequestDto){
-        final CheckDto checkDto = CheckDto.builder()
+
+    public AccountDto toAccountDto(final AccountRequest accountRequestDto) {
+        return AccountDto.builder()
                 .id(accountRequestDto.getId())
                 .currencyCharCode(accountRequestDto.getCurrencyCharCode())
                 .currencyId(accountRequestDto.getCurrencyId())
                 .userId(accountRequestDto.getId())
                 .sum(accountRequestDto.getSum())
                 .build();
-        return checkDto;
     }
-    public CheckDto toCheckDto(final UserEnableRequest userEnableRequest){
-        final CheckDto checkDto = CheckDto.builder()
-                .id(userEnableRequest.getId())
-                .enable(userEnableRequest.isEnable())
+
+    public AccountDto toAccountDto(final AccountEnableRequest request) {
+        return AccountDto.builder()
+                .id(request.getId())
+                .enable(request.isEnable())
                 .build();
-        return checkDto;
     }
 }

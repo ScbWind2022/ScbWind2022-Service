@@ -1,6 +1,10 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.dto.*;
+import com.example.authservice.dto.CurrencyRateResponse;
+import com.example.authservice.dto.CurrencyResponse;
+import com.example.authservice.dto.CurrentCurrencyRateRequest;
+import com.example.authservice.dto.RangeCurrencyRateRequest;
+import com.example.authservice.dto.RangeCurrencyRateResponse;
 import com.example.authservice.service.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +21,21 @@ import java.security.Principal;
 @RequestMapping(value = "/api/v1/rate")
 public class RateController {
     private final RateService rateService;
+
     @PostMapping(value = "/current")
     public ResponseEntity<CurrencyRateResponse> current(@RequestBody CurrentCurrencyRateRequest request,
-                                                        Principal principal){
-        return new ResponseEntity<>(rateService.getCurrencyRate(request),HttpStatus.OK);
+                                                        Principal principal) {
+        return new ResponseEntity<>(rateService.getCurrencyRate(request), HttpStatus.OK);
     }
+
     @PostMapping(value = "/range")
     public ResponseEntity<RangeCurrencyRateResponse> range(@RequestBody RangeCurrencyRateRequest request,
-                                                           Principal principal){
-        return new ResponseEntity<>(rateService.getCurrencyInRange(request),HttpStatus.OK);
+                                                           Principal principal) {
+        return new ResponseEntity<>(rateService.getCurrencyInRange(request), HttpStatus.OK);
     }
+
     @PostMapping(value = "/current/list")
-    public ResponseEntity<CurrencyResponse[]> getCurrencyList(){
+    public ResponseEntity<CurrencyResponse[]> getCurrencyList() {
         return new ResponseEntity<>(rateService.getCurrencyList(), HttpStatus.OK);
     }
 }

@@ -1,11 +1,11 @@
 package com.example.authservice.service;
 
 import com.example.authservice.dto.*;
-import com.example.authservice.dto.maindto.JwtDTO;
+import com.example.authservice.dto.domestic.JwtDto;
 
 public interface UserService {
-    JwtDTO loginUser(AuthRequestDto userDTO);
-    JwtDTO updateAccessAndRefreshToken(String refreshToken);
+    JwtDto loginUser(AuthRequestDto userDTO);
+    JwtDto updateAccessAndRefreshToken(String refreshToken);
     String registerUser(CreateUserRequest userDTO);
     UserResponse getInfoUserByEmail(String email);
 

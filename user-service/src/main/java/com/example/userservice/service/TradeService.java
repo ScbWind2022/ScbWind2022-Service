@@ -1,8 +1,8 @@
 package com.example.userservice.service;
 
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 
 public interface TradeService {
-    String openSession(UserDTO userDTO);
-    String closeSession(UserDTO userDTO);
+    String openSession(UserDto userDTO);
+    String closeSession(UserDto userDTO);
 }

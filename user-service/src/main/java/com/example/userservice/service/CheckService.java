@@ -1,16 +1,14 @@
 package com.example.userservice.service;
 
-import com.example.userservice.dto.CheckDto;
-import com.example.userservice.dto.UserDTO;
-
-import java.math.BigDecimal;
+import com.example.userservice.dto.AccountDto;
+import com.example.userservice.dto.UserDto;
 
 public interface CheckService {
     void createCheckWithUser(Long user_id);
-    CheckDto openNewCheckWithUser(String userEmail);
-    CheckDto[] getCheckByUserEmail(UserDTO userDTO);
-    CheckDto changeSumByEmail(CheckDto checkDto);
-    boolean changeEnableByEmail(CheckDto checkDto);
-    CheckDto createCheck(CheckDto checkDto);
-    CheckDto changeSumByEmailInSession(CheckDto checkDto);
+    AccountDto openNewCheckWithUser(String userEmail);
+    AccountDto[] getCheckByUserEmail(UserDto userDTO);
+    AccountDto changeSumByEmail(AccountDto accountDto);
+    boolean changeEnableByEmail(AccountDto accountDto);
+    AccountDto createCheck(AccountDto accountDto);
+    AccountDto changeSumByEmailInSession(AccountDto accountDto);
 }

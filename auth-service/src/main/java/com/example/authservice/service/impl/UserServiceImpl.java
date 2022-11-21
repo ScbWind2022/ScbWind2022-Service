@@ -1,8 +1,8 @@
 package com.example.authservice.service.impl;
 
 import com.example.authservice.dto.*;
-import com.example.authservice.dto.maindto.JwtDTO;
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.JwtDto;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.exception.UserNotFoundException;
 import com.example.authservice.grpcClient.UserGrpcClient;
@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserGrpcClient userGrpcClient;
     private final RedisRepository redisRepository;
     private final JwtUtils jwtUtils;
-    private void loginUserValid(UserDTO userDTO){
+    private void loginUserValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -29,23 +29,23 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public JwtDTO loginUser(AuthRequestDto userDTO2) {
-        final UserDTO userDTO = dtoUtils.toUserDTO(userDTO2);
+    public JwtDto loginUser(AuthRequestDto userDTO2) {
+        final UserDto userDTO = dtoUtils.toUserDTO(userDTO2);
         loginUserValid(userDTO);
-        final UserDTO userDTO1 = userGrpcClient.loginUser(userDTO);
+        final UserDto userDTO1 = userGrpcClient.loginUser(userDTO);
         if(!userDTO.getPassword().equals(userDTO1.getPassword())){
             throw new UserNotFoundException("Incorrect email or password");
         }
         // TODO save refresh in redis and add matches password
-        return new JwtDTO(jwtUtils.generateAccessToken(userDTO1),jwtUtils.generateRefreshToken(userDTO1));
+        return new JwtDto(jwtUtils.generateAccessToken(userDTO1),jwtUtils.generateRefreshToken(userDTO1));
     }
 
     @Override
-    public JwtDTO updateAccessAndRefreshToken(String refresh) {
+    public JwtDto updateAccessAndRefreshToken(String refresh) {
         if(refresh == null){
             throw new NotValidRequestException("Not valid request");
         }
-        final UserDTO userDTO = jwtUtils.parseRefreshToken(refresh);
+        final UserDto userDTO = jwtUtils.parseRefreshToken(refresh);
         /*final String hashToken = String.valueOf(refresh.hashCode());
         final String tokenRedis = redisRepository.getValue(userDTO.getEmail());*/
         // TODO add redis
@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService {
             final String newRefreshToken = jwtUtils.generateRefreshToken(userDTO);
             /*redisRepository.save(userDTO.getEmail(),String.valueOf(newRefreshToken.hashCode()));*/
             final String newAccessToken = jwtUtils.generateAccessToken(userDTO);
-            return new JwtDTO(newAccessToken,newRefreshToken);
+            return new JwtDto(newAccessToken,newRefreshToken);
         }
         throw new NotValidRequestException("Not valid request or incorrect token");
     }
-    private void registerUserValid(UserDTO userDTO){
+    private void registerUserValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public String registerUser(CreateUserRequest userDTO1) {
-        final UserDTO userDTO = dtoUtils.toUserDTO(userDTO1);
+        final UserDto userDTO = dtoUtils.toUserDTO(userDTO1);
         registerUserValid(userDTO);
         //TODO set password encoder
         return userGrpcClient.registerUser(userDTO);
@@ -75,10 +75,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getInfoUserByEmail(String email) {
-        final UserDTO req = UserDTO.builder()
+        final UserDto req = UserDto.builder()
                 .email(email)
                 .build();
-        final UserDTO userDTO = userGrpcClient.getAccountUserByEmail(req);
+        final UserDto userDTO = userGrpcClient.getAccountUserByEmail(req);
         return dtoUtils.toUserResponse(userDTO);
     }
 }

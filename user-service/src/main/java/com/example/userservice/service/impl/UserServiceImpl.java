@@ -1,11 +1,9 @@
 package com.example.userservice.service.impl;
 
-import com.example.userservice.dto.CheckDto;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.exception.NotValidRequestException;
 import com.example.userservice.exception.UserAlreadyExistException;
 import com.example.userservice.exception.UserNotFoundException;
-import com.example.userservice.model.Check;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import com.example.userservice.repository.RoleRepository;
@@ -14,7 +12,6 @@ import com.example.userservice.service.CheckService;
 import com.example.userservice.service.UserService;
 import com.example.userservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -28,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final CheckService checkService;
     private final DtoUtils dtoUtils;
     @Override
-    public UserDTO getUserAndRoleByEmail(String email) {
+    public UserDto getUserAndRoleByEmail(String email) {
         if(email == null){
             throw new NotValidRequestException();
         }
@@ -36,10 +33,10 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             throw new UserNotFoundException();
         }
-        final UserDTO userDTO = dtoUtils.userToUserDTO(user);
+        final UserDto userDTO = dtoUtils.userToUserDTO(user);
         return userDTO;
     }
-    private void registerUserValidate(UserDTO userDTO){
+    private void registerUserValidate(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -48,7 +45,7 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public String registerUser(UserDTO userDTO) {
+    public String registerUser(UserDto userDTO) {
         registerUserValidate(userDTO);
         final User user = userRepository.getUserByEmail(userDTO.getEmail());
         if(user != null){
@@ -67,10 +64,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO[] getNotAcceptedUser() {
+    public UserDto[] getNotAcceptedUser() {
         final List<User> users = userRepository.getNotAcceptedUser();
         if(users != null && users.size() > 0){
-            final UserDTO[] usersDto = new UserDTO[users.size()];
+            final UserDto[] usersDto = new UserDto[users.size()];
             int index = 0;
             for(User u : users){
                 usersDto[index] = dtoUtils.userToUserDTOWithoutRelationEntity(u);
@@ -78,9 +75,9 @@ public class UserServiceImpl implements UserService {
             }
             return usersDto;
         }
-        return new UserDTO[0];
+        return new UserDto[0];
     }
-    private void acceptedUserByIdValid(UserDTO userDTO){
+    private void acceptedUserByIdValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -89,14 +86,14 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public String acceptedUserById(UserDTO userDTO) {
+    public String acceptedUserById(UserDto userDTO) {
         acceptedUserByIdValid(userDTO);
         final Long user_id = Long.parseLong(userDTO.getId());
         userRepository.acceptedUserById(user_id);
         checkService.createCheckWithUser(user_id);
         return "accepted";
     }
-    private void bannedUserByIdValid(UserDTO userDTO){
+    private void bannedUserByIdValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -105,17 +102,17 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public String bannedUserById(UserDTO userDTO) {
+    public String bannedUserById(UserDto userDTO) {
         bannedUserByIdValid(userDTO);
         userRepository.bannedUserById(Long.parseLong(userDTO.getId()));
         return "banned";
     }
 
     @Override
-    public UserDTO[] getBannedUser() {
+    public UserDto[] getBannedUser() {
         final List<User> users = userRepository.getBannedUser();
         if(users != null && users.size() > 0){
-            final UserDTO[] usersDto = new UserDTO[users.size()];
+            final UserDto[] usersDto = new UserDto[users.size()];
             int index = 0;
             for(User u : users){
                 usersDto[index] = dtoUtils.userToUserDTOWithoutRelationEntity(u);
@@ -123,9 +120,9 @@ public class UserServiceImpl implements UserService {
             }
             return usersDto;
         }
-        return new UserDTO[0];
+        return new UserDto[0];
     }
-    private void removeBannedUserByIdValid(UserDTO userDTO){
+    private void removeBannedUserByIdValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -134,16 +131,16 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public String removeBannedUser(UserDTO userDTO) {
+    public String removeBannedUser(UserDto userDTO) {
         removeBannedUserByIdValid(userDTO);
         userRepository.removeBannedUserById(Long.parseLong(userDTO.getId()));
         return "remove banned";
     }
 
     @Override
-    public UserDTO getUserAccountByEmail(UserDTO userDTO) {
+    public UserDto getUserAccountByEmail(UserDto userDTO) {
         final User user = userRepository.getUserByEmail(userDTO.getEmail());
-        final UserDTO userDTO1 = dtoUtils.userToUserDTOWithoutRelationEntity(user);
+        final UserDto userDTO1 = dtoUtils.userToUserDTOWithoutRelationEntity(user);
         return userDTO1;
     }
 }

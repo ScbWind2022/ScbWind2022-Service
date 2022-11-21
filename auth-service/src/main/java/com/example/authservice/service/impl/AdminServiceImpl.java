@@ -1,6 +1,6 @@
 package com.example.authservice.service.impl;
 
-import com.example.authservice.dto.maindto.UserDTO;
+import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.dto.UserResponse;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.grpcClient.UserGrpcClient;
@@ -16,16 +16,16 @@ public class AdminServiceImpl implements AdminService {
     private final DtoUtils dtoUtils;
     @Override
     public UserResponse[] getNotAcceptedUsers() {
-        final UserDTO[] userDTOS = userGrpcClient.getNotAcceptedUser();
+        final UserDto[] userDTOS = userGrpcClient.getNotAcceptedUser();
         final UserResponse[] userResponses = new UserResponse[userDTOS.length];
         int index = 0;
-        for(UserDTO u : userDTOS){
+        for(UserDto u : userDTOS){
             userResponses[index] = dtoUtils.toUserResponse(u);
             index++;
         }
         return userResponses;
     }
-    private void acceptedUserValid(UserDTO userDTO){
+    private void acceptedUserValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -34,11 +34,11 @@ public class AdminServiceImpl implements AdminService {
         }
     }
     @Override
-    public String acceptedUser(UserDTO userDTO) {
+    public String acceptedUser(UserDto userDTO) {
         acceptedUserValid(userDTO);
         return userGrpcClient.acceptedUser(userDTO);
     }
-    private void bannedUserValid(UserDTO userDTO){
+    private void bannedUserValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -47,23 +47,23 @@ public class AdminServiceImpl implements AdminService {
         }
     }
     @Override
-    public String bannedUser(UserDTO userDTO) {
+    public String bannedUser(UserDto userDTO) {
         bannedUserValid(userDTO);
         return userGrpcClient.bannedUser(userDTO);
     }
 
     @Override
     public UserResponse[] getBannedUser() {
-        final UserDTO[] userDTOS = userGrpcClient.getBannedUser();
+        final UserDto[] userDTOS = userGrpcClient.getBannedUser();
         final UserResponse[] userResponses = new UserResponse[userDTOS.length];
         int index = 0;
-        for(UserDTO u : userDTOS){
+        for(UserDto u : userDTOS){
             userResponses[index] = dtoUtils.toUserResponse(u);
             index++;
         }
         return userResponses;
     }
-    private void removeBannedUserValid(UserDTO userDTO){
+    private void removeBannedUserValid(UserDto userDTO){
         if(userDTO == null){
             throw new NotValidRequestException();
         }
@@ -72,7 +72,7 @@ public class AdminServiceImpl implements AdminService {
         }
     }
     @Override
-    public String removeBannedUser(UserDTO userDTO) {
+    public String removeBannedUser(UserDto userDTO) {
         removeBannedUserValid(userDTO);
         return userGrpcClient.removeBannedUser(userDTO);
     }
