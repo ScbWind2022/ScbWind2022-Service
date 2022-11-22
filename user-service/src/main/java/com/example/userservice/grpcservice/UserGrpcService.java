@@ -1,7 +1,7 @@
-package com.example.userservice.grpcService;
+package com.example.userservice.grpcservice;
 
-import Grpc.User;
-import Grpc.UserServiceGrpc;
+import grpc.User;
+import grpc.UserServiceGrpc;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.UserService;
 import com.google.gson.Gson;

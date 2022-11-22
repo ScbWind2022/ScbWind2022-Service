@@ -3,7 +3,7 @@ package com.example.userservice.service;
 import com.example.userservice.dto.AccountDto;
 import com.example.userservice.dto.UserDto;
 
-public interface CheckService {
+public interface AccountService {
     void createCheckWithUser(Long user_id);
     AccountDto openNewCheckWithUser(String userEmail);
     AccountDto[] getCheckByUserEmail(UserDto userDTO);

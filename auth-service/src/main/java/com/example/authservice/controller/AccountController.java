@@ -3,7 +3,7 @@ package com.example.authservice.controller;
 import com.example.authservice.dto.AccountRequest;
 import com.example.authservice.dto.AccountResponse;
 import com.example.authservice.dto.CreateAccountRequest;
-import com.example.authservice.service.CheckService;
+import com.example.authservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +18,19 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/accounts")
 public class AccountController {
-    private final CheckService checkService;
+    private final AccountService accountService;
 
     @PostMapping(value = "/sum")
     public ResponseEntity<AccountResponse> changeSum(@RequestBody AccountRequest request,
                                                      Principal principal) {
-        return new ResponseEntity<>(checkService.changeSumByEmail(request, principal.getName()),
+        return new ResponseEntity<>(accountService.changeSumByEmail(request, principal.getName()),
                 HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
     public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest request,
                                                          Principal principal) {
-        return new ResponseEntity<>(checkService.createAccount(request, principal.getName()),
+        return new ResponseEntity<>(accountService.createAccount(request, principal.getName()),
                 HttpStatus.OK);
     }
 

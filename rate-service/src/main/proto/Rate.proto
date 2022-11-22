@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_package = "Grpc";
+option java_package = "grpc";
 
 message getCurrencyRateRequest{
   string request = 1;

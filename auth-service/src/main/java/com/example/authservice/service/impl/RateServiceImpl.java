@@ -2,7 +2,7 @@ package com.example.authservice.service.impl;
 
 import com.example.authservice.dto.*;
 import com.example.authservice.exception.NotValidRequestException;
-import com.example.authservice.grpcClient.RateGrpcClient;
+import com.example.authservice.grpcclient.RateGrpcClient;
 import com.example.authservice.service.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

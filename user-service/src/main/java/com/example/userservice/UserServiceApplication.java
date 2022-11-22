@@ -5,7 +5,7 @@ import com.example.userservice.model.User;
 import com.example.userservice.repository.CheckRepository;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
-import com.example.userservice.service.CheckService;
+import com.example.userservice.service.AccountService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,7 +25,7 @@ public class UserServiceApplication implements CommandLineRunner {
 	@Autowired
 	private CheckRepository checkRepository;
 	@Autowired
-	private CheckService checkService;
+	private AccountService checkService;
 	private final Gson gson = new Gson();
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);

@@ -1,7 +1,7 @@
-package com.example.userservice.grpcService;
+package com.example.userservice.grpcservice;
 
-import Grpc.Trade;
-import Grpc.TradeServiceGrpc;
+import grpc.Trade;
+import grpc.TradeServiceGrpc;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.TradeService;
 import com.google.gson.Gson;

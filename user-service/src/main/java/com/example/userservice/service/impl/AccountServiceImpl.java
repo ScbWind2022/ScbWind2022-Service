@@ -10,7 +10,7 @@ import com.example.userservice.model.Account;
 import com.example.userservice.model.User;
 import com.example.userservice.repository.CheckRepository;
 import com.example.userservice.repository.UserRepository;
-import com.example.userservice.service.CheckService;
+import com.example.userservice.service.AccountService;
 import com.example.userservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CheckServiceImpl implements CheckService {
+public class AccountServiceImpl implements AccountService {
     private final CheckRepository checkRepository;
     private final UserRepository userRepository;
     private final DtoUtils dtoUtils;

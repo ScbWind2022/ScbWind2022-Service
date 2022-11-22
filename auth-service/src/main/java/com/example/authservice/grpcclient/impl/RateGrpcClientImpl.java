@@ -1,17 +1,15 @@
-package com.example.authservice.grpcClient.impl;
+package com.example.authservice.grpcclient.impl;
 
-import Grpc.Rate;
-import Grpc.RateServiceGrpc;
+import grpc.Rate;
+import grpc.RateServiceGrpc;
 import com.example.authservice.dto.*;
-import com.example.authservice.grpcClient.RateGrpcClient;
+import com.example.authservice.grpcclient.RateGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service

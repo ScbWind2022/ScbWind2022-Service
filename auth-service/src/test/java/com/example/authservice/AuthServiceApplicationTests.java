@@ -2,21 +2,19 @@ package com.example.authservice;
 
 import com.example.authservice.dto.RangeCurrencyRateRequest;
 import com.example.authservice.dto.domestic.UserDto;
-import com.example.authservice.grpcClient.RateGrpcClient;
+import com.example.authservice.grpcclient.RateGrpcClient;
 import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@SpringBootTest
+//@SpringBootTest
 class AuthServiceApplicationTests {
 	private final Gson gson = new Gson();
     @Autowired
     private RateGrpcClient rateGrpcClient;
-	@Test
+//	@Test
 	void contextLoads() {
 	}
 //	@Test
@@ -27,7 +25,7 @@ class AuthServiceApplicationTests {
 		System.out.println(gson.toJson(userDTO));
 
 	}
-   @Test
+//   @Test
     void grpcTest1(){
 //        CurrencyResponse[] res = rateGrpcClient.getCurrencyList();
 //        for(CurrencyResponse c : res){

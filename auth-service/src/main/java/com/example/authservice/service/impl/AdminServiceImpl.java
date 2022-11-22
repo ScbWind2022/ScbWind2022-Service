@@ -3,7 +3,7 @@ package com.example.authservice.service.impl;
 import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.dto.UserResponse;
 import com.example.authservice.exception.NotValidRequestException;
-import com.example.authservice.grpcClient.UserGrpcClient;
+import com.example.authservice.grpcclient.UserGrpcClient;
 import com.example.authservice.service.AdminService;
 import com.example.authservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;

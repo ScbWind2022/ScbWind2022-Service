@@ -5,7 +5,7 @@ import com.example.authservice.dto.AccountRequest;
 import com.example.authservice.dto.AccountResponse;
 import com.example.authservice.dto.CreateAccountRequest;
 
-public interface CheckService {
+public interface AccountService {
     AccountResponse[] getAccountByUserEmail(String email);
 
     AccountResponse changeSumByEmail(AccountRequest request, String email);

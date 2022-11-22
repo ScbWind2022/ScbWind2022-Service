@@ -5,7 +5,7 @@ import com.example.authservice.dto.domestic.JwtDto;
 import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.exception.UserNotFoundException;
-import com.example.authservice.grpcClient.UserGrpcClient;
+import com.example.authservice.grpcclient.UserGrpcClient;
 import com.example.authservice.repository.RedisRepository;
 import com.example.authservice.service.UserService;
 import com.example.authservice.utils.DtoUtils;

@@ -1,9 +1,9 @@
-package com.example.authservice.grpcClient.impl;
+package com.example.authservice.grpcclient.impl;
 
-import Grpc.Trade;
-import Grpc.TradeServiceGrpc;
+import grpc.Trade;
+import grpc.TradeServiceGrpc;
 import com.example.authservice.dto.domestic.UserDto;
-import com.example.authservice.grpcClient.TradeGrpcClient;
+import com.example.authservice.grpcclient.TradeGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;

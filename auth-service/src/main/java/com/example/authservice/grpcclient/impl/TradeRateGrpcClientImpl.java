@@ -1,7 +1,7 @@
-package com.example.authservice.grpcClient.impl;
+package com.example.authservice.grpcclient.impl;
 
-import Grpc.Trade;
-import Grpc.TradeServiceGrpc;
+import grpc.Trade;
+import grpc.TradeServiceGrpc;
 import com.example.authservice.dto.OperationListRequest;
 import com.example.authservice.dto.TradeOperationRequest;
 import com.example.authservice.dto.TradeOperationResponse;

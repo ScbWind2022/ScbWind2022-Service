@@ -1,7 +1,7 @@
-package com.example.rateservice.grpcService;
+package com.example.rateservice.grpcservice;
 
-import Grpc.Trade;
-import Grpc.TradeServiceGrpc;
+import grpc.Trade;
+import grpc.TradeServiceGrpc;
 import com.example.rateservice.dto.OperationListRequest;
 import com.example.rateservice.dto.TradeOperationRequest;
 import com.example.rateservice.dto.TradeSessionRequest;

@@ -1,4 +1,4 @@
-package com.example.authservice.grpcClient;
+package com.example.authservice.grpcclient;
 
 import com.example.authservice.dto.domestic.UserDto;
 

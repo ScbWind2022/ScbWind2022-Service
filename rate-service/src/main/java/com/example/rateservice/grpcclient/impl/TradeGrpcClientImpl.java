@@ -1,7 +1,7 @@
 package com.example.rateservice.grpcclient.impl;
 
-import Grpc.Trade;
-import Grpc.TradeServiceGrpc;
+import grpc.Trade;
+import grpc.TradeServiceGrpc;
 import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.grpcclient.TradeGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;

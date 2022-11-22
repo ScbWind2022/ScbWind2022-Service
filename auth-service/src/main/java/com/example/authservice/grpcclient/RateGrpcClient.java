@@ -1,8 +1,6 @@
-package com.example.authservice.grpcClient;
+package com.example.authservice.grpcclient;
 
 import com.example.authservice.dto.*;
-
-import java.util.List;
 
 public interface RateGrpcClient {
     CurrencyRateResponse getCurrentCurrencyRate(CurrentCurrencyRateRequest request);

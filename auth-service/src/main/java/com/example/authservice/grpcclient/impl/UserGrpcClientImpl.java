@@ -1,10 +1,10 @@
-package com.example.authservice.grpcClient.impl;
+package com.example.authservice.grpcclient.impl;
 
-import Grpc.User;
-import Grpc.UserServiceGrpc;
+import grpc.User;
+import grpc.UserServiceGrpc;
 import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.exception.NotValidRequestException;
-import com.example.authservice.grpcClient.UserGrpcClient;
+import com.example.authservice.grpcclient.UserGrpcClient;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public UserDto loginUser(UserDto userDTO) {
         try {
-            final ListenableFuture<Grpc.User.getUserByEmailResponse> response = futureStub.getUserAndRoleByEmail(
+            final ListenableFuture<grpc.User.getUserByEmailResponse> response = futureStub.getUserAndRoleByEmail(
                     User.getUserByEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
             final User.getUserByEmailResponse res = response.get();

@@ -8,7 +8,7 @@ import com.example.authservice.dto.UserProfileResponse;
 import com.example.authservice.dto.UserResponse;
 import com.example.authservice.dto.domestic.JwtDto;
 import com.example.authservice.exception.IncorrectJwtTokenException;
-import com.example.authservice.service.CheckService;
+import com.example.authservice.service.AccountService;
 import com.example.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final CheckService checkService;
+    private final AccountService checkService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<JwtDto> login(@RequestBody AuthRequestDto userDTO, HttpServletResponse response) {

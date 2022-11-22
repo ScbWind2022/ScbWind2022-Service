@@ -1,8 +1,8 @@
 package com.example.rateservice.grpcclient.impl;
 
-import Grpc.Check;
-import Grpc.CheckServiceGrpc;
-import Grpc.Trade;
+import grpc.Account;
+import grpc.AccountServiceGrpc;
+import grpc.Trade;
 import com.example.rateservice.dto.maindto.CheckDto;
 import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.grpcclient.AccountGrpcClient;
@@ -18,16 +18,16 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class AccountGrpcClientImpl implements AccountGrpcClient {
     @GrpcClient("user-service")
-    private CheckServiceGrpc.CheckServiceFutureStub futureStub;
+    private AccountServiceGrpc.AccountServiceFutureStub futureStub;
     private final Gson gson = new Gson();
 
     @Override
     public CheckDto[] getAccountsUser(UserDTO userDTO) {
         try {
-            final ListenableFuture<Check.getCheckByUserEmailResponse> response = futureStub.getCheckByEmail(
-                    Check.getCheckByUserEmailRequest.newBuilder()
+            final ListenableFuture<Account.getCheckByUserEmailResponse> response = futureStub.getCheckByEmail(
+                    Account.getCheckByUserEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final Check.getCheckByUserEmailResponse res = response.get();
+            final Account.getCheckByUserEmailResponse res = response.get();
             return gson.fromJson(res.getResponse(), CheckDto[].class);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -39,10 +39,10 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     @Override
     public CheckDto changeSumInSession(CheckDto checkDto) {
         try {
-            final ListenableFuture<Check.chandeSumInSessionResponse> response = futureStub.changeSumInSession(
-                    Check.changeSumInSessionRequest.newBuilder()
+            final ListenableFuture<Account.chandeSumInSessionResponse> response = futureStub.changeSumInSession(
+                    Account.changeSumInSessionRequest.newBuilder()
                             .setRequest(gson.toJson(checkDto)).build());
-            final Check.chandeSumInSessionResponse res = response.get();
+            final Account.chandeSumInSessionResponse res = response.get();
             return gson.fromJson(res.getResponse(), CheckDto.class);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

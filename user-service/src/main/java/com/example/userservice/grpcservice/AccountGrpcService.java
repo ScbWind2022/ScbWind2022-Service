@@ -1,10 +1,10 @@
-package com.example.userservice.grpcService;
+package com.example.userservice.grpcservice;
 
-import Grpc.Check;
-import Grpc.CheckServiceGrpc;
+import grpc.Account;
+import grpc.AccountServiceGrpc;
 import com.example.userservice.dto.AccountDto;
 import com.example.userservice.dto.UserDto;
-import com.example.userservice.service.CheckService;
+import com.example.userservice.service.AccountService;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +12,14 @@ import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
 @RequiredArgsConstructor
-public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
+public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBase {
     private final Gson gson = new Gson();
-    private final CheckService checkService;
+    private final AccountService checkService;
+
     @Override
-    public void getCheckByEmail(Check.getCheckByUserEmailRequest request, StreamObserver<Check.getCheckByUserEmailResponse> responseObserver) {
-        final Check.getCheckByUserEmailResponse response = Check.getCheckByUserEmailResponse.newBuilder()
+    public void getCheckByEmail(Account.getCheckByUserEmailRequest request,
+                                StreamObserver<Account.getCheckByUserEmailResponse> responseObserver) {
+        final Account.getCheckByUserEmailResponse response = Account.getCheckByUserEmailResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.getCheckByUserEmail(
                         gson.fromJson(request.getRequest(), UserDto.class)))).build();
 
@@ -26,8 +28,9 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     }
 
     @Override
-    public void changeSum(Check.changeSumRequest request, StreamObserver<Check.changeSumResponse> responseObserver) {
-        final Check.changeSumResponse response = Check.changeSumResponse.newBuilder()
+    public void changeSum(Account.changeSumRequest request,
+                          StreamObserver<Account.changeSumResponse> responseObserver) {
+        final Account.changeSumResponse response = Account.changeSumResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.changeSumByEmail(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
@@ -36,9 +39,10 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     }
 
     @Override
-    public void changeEnable(Check.changeEnableRequest request, StreamObserver<Check.changeEnableResponse> responseObserver) {
+    public void changeEnable(Account.changeEnableRequest request,
+                             StreamObserver<Account.changeEnableResponse> responseObserver) {
         checkService.changeEnableByEmail(gson.fromJson(request.getRequest(), AccountDto.class));
-        final Check.changeEnableResponse response = Check.changeEnableResponse.newBuilder()
+        final Account.changeEnableResponse response = Account.changeEnableResponse.newBuilder()
                 .setResponse("true").build();
 
         responseObserver.onNext(response);
@@ -46,8 +50,9 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     }
 
     @Override
-    public void createCheck(Check.createCheckRequest request, StreamObserver<Check.createCheckResponse> responseObserver) {
-        final Check.createCheckResponse response = Check.createCheckResponse.newBuilder()
+    public void createCheck(Account.createCheckRequest request,
+                            StreamObserver<Account.createCheckResponse> responseObserver) {
+        final Account.createCheckResponse response = Account.createCheckResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.createCheck(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
@@ -56,8 +61,9 @@ public class CheckGrpcService extends CheckServiceGrpc.CheckServiceImplBase {
     }
 
     @Override
-    public void changeSumInSession(Check.changeSumInSessionRequest request, StreamObserver<Check.chandeSumInSessionResponse> responseObserver) {
-        final Check.chandeSumInSessionResponse response = Check.chandeSumInSessionResponse.newBuilder()
+    public void changeSumInSession(Account.changeSumInSessionRequest request,
+                                   StreamObserver<Account.chandeSumInSessionResponse> responseObserver) {
+        final Account.chandeSumInSessionResponse response = Account.chandeSumInSessionResponse.newBuilder()
                 .setResponse(gson.toJson(checkService.changeSumByEmailInSession(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 

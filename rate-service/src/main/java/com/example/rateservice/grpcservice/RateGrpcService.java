@@ -1,8 +1,8 @@
-package com.example.rateservice.grpcService;
+package com.example.rateservice.grpcservice;
 
 
-import Grpc.Rate;
-import Grpc.RateServiceGrpc;
+import grpc.Rate;
+import grpc.RateServiceGrpc;
 import com.example.rateservice.dto.CurrencyRateRequest;
 import com.example.rateservice.dto.RangeCurrencyRateRequest;
 import com.example.rateservice.service.CurrencyRateService;

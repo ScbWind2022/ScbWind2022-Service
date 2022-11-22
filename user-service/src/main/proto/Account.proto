@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_package = "Grpc";
+option java_package = "grpc";
 message getCheckByUserEmailRequest{
   string request = 1;
 }
@@ -28,9 +28,17 @@ message createCheckResponse{
   string response = 1;
   int32 status = 2;
 }
-service CheckService{
+message changeSumInSessionRequest{
+  string request = 1;
+}
+message chandeSumInSessionResponse{
+  string response = 1;
+  int32 status = 2;
+}
+service AccountService{
   rpc getCheckByEmail(getCheckByUserEmailRequest) returns(getCheckByUserEmailResponse);
   rpc changeSum(changeSumRequest) returns(changeSumResponse);
   rpc changeEnable(changeEnableRequest) returns(changeEnableResponse);
   rpc createCheck(createCheckRequest) returns(createCheckResponse);
+  rpc changeSumInSession(changeSumInSessionRequest) returns(chandeSumInSessionResponse);
 }

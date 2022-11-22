@@ -8,7 +8,7 @@ import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
-import com.example.userservice.service.CheckService;
+import com.example.userservice.service.AccountService;
 import com.example.userservice.service.UserService;
 import com.example.userservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final CheckService checkService;
+    private final AccountService checkService;
     private final DtoUtils dtoUtils;
     @Override
     public UserDto getUserAndRoleByEmail(String email) {
