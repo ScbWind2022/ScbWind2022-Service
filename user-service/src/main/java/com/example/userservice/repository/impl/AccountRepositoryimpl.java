@@ -2,7 +2,7 @@ package com.example.userservice.repository.impl;
 
 import com.example.userservice.exception.UserNotFoundException;
 import com.example.userservice.model.Account;
-import com.example.userservice.repository.CheckRepository;
+import com.example.userservice.repository.AccountRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class CheckRepositoryimpl implements CheckRepository {
+public class AccountRepositoryimpl implements AccountRepository {
     @PersistenceContext
     private EntityManager em;
     @Override

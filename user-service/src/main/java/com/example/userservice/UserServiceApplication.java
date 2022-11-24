@@ -2,7 +2,7 @@ package com.example.userservice;
 
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
-import com.example.userservice.repository.CheckRepository;
+import com.example.userservice.repository.AccountRepository;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.AccountService;
@@ -23,7 +23,7 @@ public class UserServiceApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private CheckRepository checkRepository;
+	private AccountRepository checkRepository;
 	@Autowired
 	private AccountService checkService;
 	private final Gson gson = new Gson();

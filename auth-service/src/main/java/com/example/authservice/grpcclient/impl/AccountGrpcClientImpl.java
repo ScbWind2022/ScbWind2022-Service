@@ -7,6 +7,7 @@ import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.grpcclient.AccountGrpcClient;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
+import grpc.Trade;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -79,4 +80,5 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -8,7 +8,7 @@ import com.example.userservice.exception.UserInSessionException;
 import com.example.userservice.exception.UserNotFoundException;
 import com.example.userservice.model.Account;
 import com.example.userservice.model.User;
-import com.example.userservice.repository.CheckRepository;
+import com.example.userservice.repository.AccountRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.AccountService;
 import com.example.userservice.utils.DtoUtils;
@@ -22,9 +22,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    private final CheckRepository checkRepository;
+    private final AccountRepository checkRepository;
     private final UserRepository userRepository;
     private final DtoUtils dtoUtils;
+
     @Override
     public void createCheckWithUser(Long user_id) {
         final Account check = Account.builder()
@@ -34,13 +35,13 @@ public class AccountServiceImpl implements AccountService {
                 .enabled(true)
                 .build();
         checkRepository.save(check);
-        checkRepository.updateUserAndCheck(user_id,check.getId());
+        checkRepository.updateUserAndCheck(user_id, check.getId());
     }
 
     @Override
     public AccountDto openNewCheckWithUser(String userEmail) {
         final User user = userRepository.getUserByEmail(userEmail);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException();
         }
         final Account check = Account.builder()
@@ -49,22 +50,24 @@ public class AccountServiceImpl implements AccountService {
         checkRepository.save(check);
         return dtoUtils.checkToCheckDto(check);
     }
-    private void getCheckByUserEmailValid(UserDto userDTO){
-        if(userDTO == null){
+
+    private void getCheckByUserEmailValid(UserDto userDTO) {
+        if (userDTO == null) {
             throw new NotValidRequestException();
         }
-        if(userDTO.getEmail() == null) {
+        if (userDTO.getEmail() == null) {
             throw new NotValidRequestException();
         }
     }
+
     @Override
     public AccountDto[] getCheckByUserEmail(UserDto userDTO) {
         getCheckByUserEmailValid(userDTO);
         final List<Account> checks = checkRepository.getCheksByUserEmail(userDTO.getEmail());
-        if(checks != null && checks.size() > 0){
+        if (checks != null && checks.size() > 0) {
             final AccountDto[] checkDtos = new AccountDto[checks.size()];
             int index = 0;
-            for(Account c : checks){
+            for (Account c : checks) {
                 AccountDto checkDto = dtoUtils.checkToCheckDto(c);
                 checkDto.setUserId(Integer.parseInt(String.valueOf(c.getUser().getId())));
                 checkDtos[index] = checkDto;
@@ -83,16 +86,16 @@ public class AccountServiceImpl implements AccountService {
         final Double sum = Double.parseDouble(accountDto.getSum());
 
         final User user = userRepository.getUserByEmail(email);
-        if(user.isInSession()){
+        if (user.isInSession()) {
             throw new UserInSessionException();
         }
-        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id,email);
-        if(check1 == null){
+        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        if (check1 == null) {
             throw new CheckNotFoundException();
         }
-        checkRepository.changeSumById(check_id,sum);
-        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id,email);
-        if(check != null){
+        checkRepository.changeSumById(check_id, sum);
+        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        if (check != null) {
             final AccountDto res = dtoUtils.checkToCheckDto(check);
             return res;
         }
@@ -102,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean changeEnableByEmail(AccountDto accountDto) {
         final User user = userRepository.getUserByEmail(accountDto.getUserEmail());
-        if(user.isInSession()){
+        if (user.isInSession()) {
             throw new UserInSessionException();
         }
         final Long check_id = Long.parseLong(String.valueOf(accountDto.getId()));
@@ -115,7 +118,7 @@ public class AccountServiceImpl implements AccountService {
         check.setCheckToken(UUID.randomUUID().toString());
         check.setEnabled(true);
         final User user = userRepository.getUserByEmail(accountDto.getUserEmail());
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException();
         }
         check.setUser(user);
@@ -131,16 +134,28 @@ public class AccountServiceImpl implements AccountService {
         final String email = accountDto.getUserEmail();
         final Double sum = Double.parseDouble(accountDto.getSum());
 
-        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id,email);
-        if(check1 == null){
+        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        if (check1 == null) {
             throw new CheckNotFoundException();
         }
-        checkRepository.changeSumById(check_id,sum);
-        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id,email);
-        if(check != null){
+        checkRepository.changeSumById(check_id, sum);
+        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        if (check != null) {
             final AccountDto res = dtoUtils.checkToCheckDto(check);
             return res;
         }
         return null;
+    }
+
+    @Override
+    public String openSession(UserDto userDTO) {
+        userRepository.openSession(userDTO.getEmail());
+        return "open";
+    }
+
+    @Override
+    public String closeSession(UserDto userDTO) {
+        userRepository.closeSession(userDTO.getEmail());
+        return "close";
     }
 }

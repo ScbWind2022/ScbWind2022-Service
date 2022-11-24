@@ -4,7 +4,7 @@ import com.example.userservice.model.Account;
 
 import java.util.List;
 
-public interface CheckRepository {
+public interface AccountRepository {
     void save(Account check);
     void delete(Account check);
     void updateUserAndCheck(Long user_id,Long check_id);

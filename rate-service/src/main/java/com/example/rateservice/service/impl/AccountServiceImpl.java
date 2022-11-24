@@ -1,7 +1,7 @@
 package com.example.rateservice.service.impl;
 
 import com.example.rateservice.dto.AccountResponseDto;
-import com.example.rateservice.dto.maindto.CheckDto;
+import com.example.rateservice.dto.maindto.AccountDto;
 import com.example.rateservice.dto.maindto.UserDTO;
 import com.example.rateservice.grpcclient.AccountGrpcClient;
 import com.example.rateservice.service.AccountService;
@@ -21,10 +21,10 @@ public class AccountServiceImpl implements AccountService {
         final UserDTO userDTO = UserDTO.builder()
                 .email(email)
                 .build();
-        final CheckDto[] checkDtos = accountGrpcClient.getAccountsUser(userDTO);
-        final AccountResponseDto[] res = new AccountResponseDto[checkDtos.length];
+        final AccountDto[] AccountDtos = accountGrpcClient.getAccountsUser(userDTO);
+        final AccountResponseDto[] res = new AccountResponseDto[AccountDtos.length];
         int index = 0;
-        for (CheckDto c : checkDtos){
+        for (AccountDto c : AccountDtos){
             res[index] = dtoUtils.toAccountResponseDto(c);
             index++;
         }
@@ -33,14 +33,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountResponseDto changeSumInAccountByUserEmailAndId(String email, int checkId, BigDecimal sum) {
-        final CheckDto req = CheckDto.builder()
+        final AccountDto req = AccountDto.builder()
                 .userEmail(email)
                 .id(checkId)
                 .sum(String.valueOf(sum))
                 .build();
-        final CheckDto checkDto = accountGrpcClient.changeSumInSession(req);
-        return dtoUtils.toAccountResponseDto(checkDto);
+        final AccountDto accountDto = accountGrpcClient.changeSumInSession(req);
+        return dtoUtils.toAccountResponseDto(accountDto);
     }
 
+    @Override
+    public String openSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return accountGrpcClient.openSession(userDTO);
+    }
+
+    @Override
+    public String closeSession(String email) {
+        final UserDTO userDTO = UserDTO.builder()
+                .email(email)
+                .build();
+        return accountGrpcClient.closeSession(userDTO);
+    }
 
 }

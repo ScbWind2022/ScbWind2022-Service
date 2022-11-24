@@ -11,4 +11,6 @@ public interface AccountService {
     boolean changeEnableByEmail(AccountDto accountDto);
     AccountDto createCheck(AccountDto accountDto);
     AccountDto changeSumByEmailInSession(AccountDto accountDto);
+    String openSession(UserDto userDTO);
+    String closeSession(UserDto userDTO);
 }

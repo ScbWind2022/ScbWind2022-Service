@@ -1,5 +1,6 @@
 package com.example.authservice.grpcclient.impl;
 
+import com.example.authservice.grpcclient.TradeGrpcClient;
 import grpc.Trade;
 import grpc.TradeServiceGrpc;
 import com.example.authservice.dto.OperationListRequest;
@@ -35,7 +36,6 @@ public class TradeRateGrpcClientImpl {
             throw new RuntimeException(e);
         }
     }
-
 
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
         try {

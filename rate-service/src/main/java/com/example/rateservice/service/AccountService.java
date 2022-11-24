@@ -9,4 +9,6 @@ public interface AccountService {
 
     AccountResponseDto changeSumInAccountByUserEmailAndId(String email, int checkId, BigDecimal sum);
 
+    String openSession(String email);
+    String closeSession(String email);
 }
