@@ -106,12 +106,27 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8083/api/v1/trade/operation",
+			"name": "http://localhost:8083/api/v1/trade/session",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbCIsImV4cCI6MTY2OTQxMjE1OSwicm9sZXMiOiJbe1wibmFtZVwiOlwiUk9MRV9VU0VSXCJ9XSIsInR5cGUiOiJhY2Nlc3MifQ.nvPerVRfbWN_L36gwFdUfQJlT-tUdYZCDUrgKsUahYZuaPBP-KY23tCOhUmlFP-Ym5hcc7DpyH99RYwKthXTdg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"enable\": false,\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8083/api/v1/trade/operation",
+					"raw": "http://localhost:8083/api/v1/trade/session",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -121,7 +136,7 @@
 						"api",
 						"v1",
 						"trade",
-						"operation"
+						"session"
 					]
 				}
 			},

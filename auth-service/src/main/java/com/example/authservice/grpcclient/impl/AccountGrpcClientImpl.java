@@ -22,16 +22,14 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     private final Gson gson = new Gson();
 
     @Override
-    public AccountDto[] getCheckByEmail(UserDto userDTO) {
+    public AccountDto[] getAccountByEmail(UserDto userDTO) {
         try {
-            final ListenableFuture<Account.getCheckByUserEmailResponse> response = futureStub.getCheckByEmail(
-                    Account.getCheckByUserEmailRequest.newBuilder()
+            final ListenableFuture<Account.getAccountByUserEmailResponse> response = futureStub.getAccountByEmail(
+                    Account.getAccountByUserEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final Account.getCheckByUserEmailResponse res = response.get();
+            final Account.getAccountByUserEmailResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto[].class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -44,9 +42,7 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
                             .setRequest(gson.toJson(accountDto)).build());
             final Account.changeSumResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto.class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -59,24 +55,20 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
                             .setRequest(gson.toJson(accountDto)).build());
             final Account.changeEnableResponse res = response.get();
             return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public AccountDto createCheckByEmail(AccountDto accountDto) {
+    public AccountDto createAccountByEmail(AccountDto accountDto) {
         try {
-            final ListenableFuture<Account.createCheckResponse> response = futureStub.createCheck(
-                    Account.createCheckRequest.newBuilder()
+            final ListenableFuture<Account.createAccountResponse> response = futureStub.createAccount(
+                    Account.createAccountRequest.newBuilder()
                             .setRequest(gson.toJson(accountDto)).build());
-            final Account.createCheckResponse res = response.get();
+            final Account.createAccountResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto.class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }

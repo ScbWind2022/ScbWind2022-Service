@@ -1,11 +1,11 @@
 package com.example.userservice.grpcservice;
 
-import grpc.Account;
-import grpc.AccountServiceGrpc;
 import com.example.userservice.dto.AccountDto;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.AccountService;
 import com.google.gson.Gson;
+import grpc.Account;
+import grpc.AccountServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -17,10 +17,10 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     private final AccountService accountService;
 
     @Override
-    public void getCheckByEmail(Account.getCheckByUserEmailRequest request,
-                                StreamObserver<Account.getCheckByUserEmailResponse> responseObserver) {
-        final Account.getCheckByUserEmailResponse response = Account.getCheckByUserEmailResponse.newBuilder()
-                .setResponse(gson.toJson(accountService.getCheckByUserEmail(
+    public void getAccountByEmail(Account.getAccountByUserEmailRequest request,
+                                  StreamObserver<Account.getAccountByUserEmailResponse> responseObserver) {
+        final Account.getAccountByUserEmailResponse response = Account.getAccountByUserEmailResponse.newBuilder()
+                .setResponse(gson.toJson(accountService.getAccountByUserEmail(
                         gson.fromJson(request.getRequest(), UserDto.class)))).build();
 
         responseObserver.onNext(response);
@@ -50,10 +50,10 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void createCheck(Account.createCheckRequest request,
-                            StreamObserver<Account.createCheckResponse> responseObserver) {
-        final Account.createCheckResponse response = Account.createCheckResponse.newBuilder()
-                .setResponse(gson.toJson(accountService.createCheck(
+    public void createAccount(Account.createAccountRequest request,
+                              StreamObserver<Account.createAccountResponse> responseObserver) {
+        final Account.createAccountResponse response = Account.createAccountResponse.newBuilder()
+                .setResponse(gson.toJson(accountService.createAccount(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
         responseObserver.onNext(response);
@@ -77,7 +77,8 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
                 .setResponse(accountService.openSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
-        responseObserver.onCompleted();    }
+        responseObserver.onCompleted();
+    }
 
     @Override
     public void closeSession(Account.closeSessionRequest request, StreamObserver<Account.closeSessionResponse> responseObserver) {
@@ -85,5 +86,6 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
                 .setResponse(accountService.closeSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
-        responseObserver.onCompleted();    }
+        responseObserver.onCompleted();
+    }
 }

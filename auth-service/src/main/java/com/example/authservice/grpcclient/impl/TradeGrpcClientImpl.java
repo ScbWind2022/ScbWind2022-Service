@@ -18,24 +18,20 @@ import java.util.concurrent.ExecutionException;
 @Service
 @RequiredArgsConstructor
 public class TradeGrpcClientImpl implements TradeGrpcClient {
-    @GrpcClient("user-service")
-    private TradeServiceGrpc.TradeServiceFutureStub futureStub;
     @GrpcClient("rate-service")
-    private TradeServiceGrpc.TradeServiceFutureStub tradeServiceFutureStub;
+    private TradeServiceGrpc.TradeServiceFutureStub futureStub;
     private final Gson gson = new Gson();
 
     @Override
     public String operateTradeSession(TradeSessionRequest request, String email) {
         try {
-            final ListenableFuture<Trade.operateTradeSessionResponse> response = tradeServiceFutureStub.operateTradeSession(
-                    Trade.operateTradeSessionRequest.newBuilder()
+            final ListenableFuture<Trade.TradeSessionResponse> future = futureStub.operateTradeSession(
+                    Trade.TradeSessionRequest.newBuilder()
                             .setRequest(gson.toJson(request))
                             .setEmail(email).build());
-            final Trade.operateTradeSessionResponse res = response.get();
-            return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            final Trade.TradeSessionResponse response = future.get();
+            return response.getResponse();
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -43,15 +39,13 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
     @Override
     public TradeOperationResponse operateTrade(TradeOperationRequest request, String email) {
         try {
-            final ListenableFuture<Trade.operateTradeResponse> response = tradeServiceFutureStub.operateTrade(
-                    Trade.operateTradeRequest.newBuilder()
+            final ListenableFuture<Trade.TradeOperationResponse> future = futureStub.operateTrade(
+                    Trade.TradeOperationRequest.newBuilder()
                             .setRequest(gson.toJson(request))
                             .setEmail(email).build());
-            final Trade.operateTradeResponse res = response.get();
-            return gson.fromJson(res.getResponse(), TradeOperationResponse.class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            final Trade.TradeOperationResponse response = future.get();
+            return gson.fromJson(response.getResponse(), TradeOperationResponse.class);
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -59,15 +53,13 @@ public class TradeGrpcClientImpl implements TradeGrpcClient {
     @Override
     public TradeOperationResponse[] tradeOperationList(OperationListRequest request, String email) {
         try {
-            final ListenableFuture<Trade.tradeOperationListResponse> response = tradeServiceFutureStub.tradeOperationList(
-                    Trade.tradeOperationListRequest.newBuilder()
+            final ListenableFuture<Trade.TradeOperationListResponse> future = futureStub.tradeOperationList(
+                    Trade.TradeOperationListRequest.newBuilder()
                             .setRequest(gson.toJson(request))
                             .setEmail(email).build());
-            final Trade.tradeOperationListResponse res = response.get();
-            return gson.fromJson(res.getResponse(), TradeOperationResponse[].class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            final Trade.TradeOperationListResponse response = future.get();
+            return gson.fromJson(response.getResponse(), TradeOperationResponse[].class);
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,4 +1,4 @@
-package com.example.rateservice.dto.maindto;
+package com.example.rateservice.dto.domestic;
 
 import lombok.*;
 

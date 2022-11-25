@@ -2,7 +2,7 @@ package com.example.userservice.service.impl;
 
 import com.example.userservice.dto.AccountDto;
 import com.example.userservice.dto.UserDto;
-import com.example.userservice.exception.CheckNotFoundException;
+import com.example.userservice.exception.AccountNotFoundException;
 import com.example.userservice.exception.NotValidRequestException;
 import com.example.userservice.exception.UserInSessionException;
 import com.example.userservice.exception.UserNotFoundException;
@@ -22,24 +22,24 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    private final AccountRepository checkRepository;
+    private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final DtoUtils dtoUtils;
 
     @Override
-    public void createCheckWithUser(Long user_id) {
-        final Account check = Account.builder()
+    public void createAccountWithUser(Long user_id) {
+        final Account account = Account.builder()
                 .checkToken(UUID.randomUUID().toString())
                 .currencyCharCode("RUB")
                 .sum(BigDecimal.ZERO)
                 .enabled(true)
                 .build();
-        checkRepository.save(check);
-        checkRepository.updateUserAndCheck(user_id, check.getId());
+        accountRepository.save(account);
+        accountRepository.updateUserAndCheck(user_id, account.getId());
     }
 
     @Override
-    public AccountDto openNewCheckWithUser(String userEmail) {
+    public AccountDto openNewAccountWithUser(String userEmail) {
         final User user = userRepository.getUserByEmail(userEmail);
         if (user == null) {
             throw new UserNotFoundException();
@@ -47,8 +47,8 @@ public class AccountServiceImpl implements AccountService {
         final Account check = Account.builder()
                 .checkToken(UUID.randomUUID().toString()).build();
         check.setUser(user);
-        checkRepository.save(check);
-        return dtoUtils.checkToCheckDto(check);
+        accountRepository.save(check);
+        return dtoUtils.accountToAccountDto(check);
     }
 
     private void getCheckByUserEmailValid(UserDto userDTO) {
@@ -61,14 +61,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto[] getCheckByUserEmail(UserDto userDTO) {
+    public AccountDto[] getAccountByUserEmail(UserDto userDTO) {
         getCheckByUserEmailValid(userDTO);
-        final List<Account> checks = checkRepository.getCheksByUserEmail(userDTO.getEmail());
+        final List<Account> checks = accountRepository.getCheksByUserEmail(userDTO.getEmail());
         if (checks != null && checks.size() > 0) {
             final AccountDto[] checkDtos = new AccountDto[checks.size()];
             int index = 0;
             for (Account c : checks) {
-                AccountDto checkDto = dtoUtils.checkToCheckDto(c);
+                AccountDto checkDto = dtoUtils.accountToAccountDto(c);
                 checkDto.setUserId(Integer.parseInt(String.valueOf(c.getUser().getId())));
                 checkDtos[index] = checkDto;
                 index++;
@@ -83,23 +83,23 @@ public class AccountServiceImpl implements AccountService {
         System.out.println(accountDto);
         final Long check_id = Long.parseLong(String.valueOf(accountDto.getId()));
         final String email = accountDto.getUserEmail();
-        final Double sum = Double.parseDouble(accountDto.getSum());
+        final BigDecimal sum = new BigDecimal(accountDto.getSum());
 
         final User user = userRepository.getUserByEmail(email);
         if (user.isInSession()) {
             throw new UserInSessionException();
         }
-        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        final Account check1 = accountRepository.getCheckByIdAndUserEmail(check_id, email);
         if (check1 == null) {
-            throw new CheckNotFoundException();
+            throw new AccountNotFoundException();
         }
-        checkRepository.changeSumById(check_id, sum);
-        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+        accountRepository.changeSumById(check_id, sum);
+        final Account check = accountRepository.getCheckByIdAndUserEmail(check_id, email);
         if (check != null) {
-            final AccountDto res = dtoUtils.checkToCheckDto(check);
+            final AccountDto res = dtoUtils.accountToAccountDto(check);
             return res;
         }
-        throw new CheckNotFoundException();
+        throw new AccountNotFoundException();
     }
 
     @Override
@@ -109,11 +109,11 @@ public class AccountServiceImpl implements AccountService {
             throw new UserInSessionException();
         }
         final Long check_id = Long.parseLong(String.valueOf(accountDto.getId()));
-        return checkRepository.updateEnableByIdAndUserEmail(check_id, accountDto.getUserEmail(), accountDto.isEnable());
+        return accountRepository.updateEnableByIdAndUserEmail(check_id, accountDto.getUserEmail(), accountDto.isEnable());
     }
 
     @Override
-    public AccountDto createCheck(AccountDto accountDto) {
+    public AccountDto createAccount(AccountDto accountDto) {
         final Account check = dtoUtils.checkDtoToCheck(accountDto);
         check.setCheckToken(UUID.randomUUID().toString());
         check.setEnabled(true);
@@ -124,38 +124,42 @@ public class AccountServiceImpl implements AccountService {
         check.setUser(user);
         check.setUser(user);
         check.setSum(BigDecimal.ZERO);
-        checkRepository.save(check);
-        return dtoUtils.checkToCheckDto(check);
+        accountRepository.save(check);
+        return dtoUtils.accountToAccountDto(check);
     }
 
     @Override
     public AccountDto changeSumByEmailInSession(AccountDto accountDto) {
-        final Long check_id = Long.parseLong(String.valueOf(accountDto.getId()));
+        final Long account_id = Long.parseLong(String.valueOf(accountDto.getId()));
         final String email = accountDto.getUserEmail();
-        final Double sum = Double.parseDouble(accountDto.getSum());
+        final BigDecimal sum = new BigDecimal(accountDto.getSum());
 
-        final Account check1 = checkRepository.getCheckByIdAndUserEmail(check_id, email);
-        if (check1 == null) {
-            throw new CheckNotFoundException();
+        final Account account = accountRepository.getCheckByIdAndUserEmail(account_id, email);
+        if (account == null) {
+            throw new AccountNotFoundException();
         }
-        checkRepository.changeSumById(check_id, sum);
-        final Account check = checkRepository.getCheckByIdAndUserEmail(check_id, email);
+
+        if (account.getSum().equals(sum)) {
+            return dtoUtils.accountToAccountDto(account);
+        }
+
+        accountRepository.changeSumById(account_id, sum);
+        final Account check = accountRepository.getCheckByIdAndUserEmail(account_id, email);
         if (check != null) {
-            final AccountDto res = dtoUtils.checkToCheckDto(check);
-            return res;
+            return dtoUtils.accountToAccountDto(check);
         }
         return null;
     }
 
     @Override
-    public String openSession(UserDto userDTO) {
-        userRepository.openSession(userDTO.getEmail());
+    public String openSession(UserDto userDto) {
+        userRepository.openSession(userDto.getEmail());
         return "open";
     }
 
     @Override
-    public String closeSession(UserDto userDTO) {
-        userRepository.closeSession(userDTO.getEmail());
+    public String closeSession(UserDto userDto) {
+        userRepository.closeSession(userDto.getEmail());
         return "close";
     }
 }

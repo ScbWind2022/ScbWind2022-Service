@@ -53,6 +53,6 @@ public class UserServiceApplication implements CommandLineRunner {
 		userRepository.save(user);
 		userRepository.save(user1);
 		userRepository.acceptedUserById(user.getId());
-		checkService.createCheckWithUser(1L);
+		checkService.createAccountWithUser(1L);
 	}
 }

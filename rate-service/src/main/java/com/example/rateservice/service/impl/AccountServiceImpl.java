@@ -1,8 +1,8 @@
 package com.example.rateservice.service.impl;
 
 import com.example.rateservice.dto.AccountResponseDto;
-import com.example.rateservice.dto.maindto.AccountDto;
-import com.example.rateservice.dto.maindto.UserDTO;
+import com.example.rateservice.dto.domestic.AccountDto;
+import com.example.rateservice.dto.domestic.UserDto;
 import com.example.rateservice.grpcclient.AccountGrpcClient;
 import com.example.rateservice.service.AccountService;
 import com.example.rateservice.utils.DtoUtils;
@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
     private final AccountGrpcClient accountGrpcClient;
     @Override
     public AccountResponseDto[] getAccountsUserByEmail(String email) {
-        final UserDTO userDTO = UserDTO.builder()
+        final UserDto userDTO = UserDto.builder()
                 .email(email)
                 .build();
         final AccountDto[] AccountDtos = accountGrpcClient.getAccountsUser(userDTO);
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String openSession(String email) {
-        final UserDTO userDTO = UserDTO.builder()
+        final UserDto userDTO = UserDto.builder()
                 .email(email)
                 .build();
         return accountGrpcClient.openSession(userDTO);
@@ -52,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String closeSession(String email) {
-        final UserDTO userDTO = UserDTO.builder()
+        final UserDto userDTO = UserDto.builder()
                 .email(email)
                 .build();
         return accountGrpcClient.closeSession(userDTO);

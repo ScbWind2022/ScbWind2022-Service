@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountResponse[] getAccountByUserEmail(String email) {
         final UserDto req = UserDto.builder().email(email).build();
-        final AccountDto[] dtos = checkGrpcClient.getCheckByEmail(req);
+        final AccountDto[] dtos = checkGrpcClient.getAccountByEmail(req);
         if (dtos != null && dtos.length > 0) {
             final AccountResponse[] accountResponseDtos = new AccountResponse[dtos.length];
             int index = 0;
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
                 .currencyId(request.getCurrencyId()).build();
         final AccountDto req = dtoUtils.toAccountDto(accountRequestDto);
         req.setUserEmail(email);
-        final AccountDto accountDto = checkGrpcClient.createCheckByEmail(req);
+        final AccountDto accountDto = checkGrpcClient.createAccountByEmail(req);
         return dtoUtils.toAccountResponseDto(accountDto);
     }
 

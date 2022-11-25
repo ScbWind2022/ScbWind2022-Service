@@ -20,20 +20,23 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class TradeController {
     private final TradeService tradeService;
+
     @PostMapping(value = "/session")
-    public ResponseEntity<String> session(@RequestBody TradeSessionRequest tradeSessionRequest,
-                                          Principal principal){
+    public ResponseEntity<String> operateTradeSession(@RequestBody TradeSessionRequest tradeSessionRequest,
+                                                      Principal principal) {
         return new ResponseEntity<>(
-                tradeService.operateTradeSession(tradeSessionRequest, principal.getName()),HttpStatus.OK);
+                tradeService.operateTradeSession(tradeSessionRequest, principal.getName()), HttpStatus.OK);
     }
+
     @PostMapping(value = "/operation")
-    public ResponseEntity<TradeOperationResponse> tradeOperation(@RequestBody TradeOperationRequest request,
-                                                                 Principal principal){
-        return new ResponseEntity<>(tradeService.operationTrade(request, principal.getName()),HttpStatus.OK);
+    public ResponseEntity<TradeOperationResponse> operateTrade(@RequestBody TradeOperationRequest request,
+                                                               Principal principal) {
+        return new ResponseEntity<>(tradeService.operationTrade(request, principal.getName()), HttpStatus.OK);
     }
+
     @PostMapping(value = "/operation/list")
-    public ResponseEntity<TradeOperationResponse[]> tradeList(@RequestBody OperationListRequest request,
-                                                            Principal principal){
-        return new ResponseEntity<>(tradeService.tradeOperationList(request, principal.getName()),HttpStatus.OK);
+    public ResponseEntity<TradeOperationResponse[]> tradeOperationList(@RequestBody OperationListRequest request,
+                                                                       Principal principal) {
+        return new ResponseEntity<>(tradeService.tradeOperationList(request, principal.getName()), HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rateservice.dto.maindto;
+package com.example.rateservice.dto.domestic;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class UserDTO {
+public class UserDto {
     private String id;
     private String email;
     private String password;

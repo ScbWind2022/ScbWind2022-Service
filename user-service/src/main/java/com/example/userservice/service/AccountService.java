@@ -4,12 +4,12 @@ import com.example.userservice.dto.AccountDto;
 import com.example.userservice.dto.UserDto;
 
 public interface AccountService {
-    void createCheckWithUser(Long user_id);
-    AccountDto openNewCheckWithUser(String userEmail);
-    AccountDto[] getCheckByUserEmail(UserDto userDTO);
+    void createAccountWithUser(Long user_id);
+    AccountDto openNewAccountWithUser(String userEmail);
+    AccountDto[] getAccountByUserEmail(UserDto userDTO);
     AccountDto changeSumByEmail(AccountDto accountDto);
     boolean changeEnableByEmail(AccountDto accountDto);
-    AccountDto createCheck(AccountDto accountDto);
+    AccountDto createAccount(AccountDto accountDto);
     AccountDto changeSumByEmailInSession(AccountDto accountDto);
     String openSession(UserDto userDTO);
     String closeSession(UserDto userDTO);

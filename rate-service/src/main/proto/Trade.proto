@@ -1,32 +1,32 @@
 syntax = "proto3";
 option java_package = "grpc";
 
-message operateTradeSessionRequest{
+message TradeSessionRequest{
   string request = 1;
   string email = 2;
 }
-message operateTradeSessionResponse{
+message TradeSessionResponse{
   string response = 1;
   int32 status = 2;
 }
-message operateTradeRequest{
+message TradeOperationRequest{
   string request = 1;
   string email = 2;
 }
-message operateTradeResponse{
+message TradeOperationResponse{
   string response = 1;
   int32 status = 2;
 }
-message tradeOperationListRequest{
+message TradeOperationListRequest{
   string request = 1;
   string email = 2;
 }
-message tradeOperationListResponse{
+message TradeOperationListResponse{
   string response = 1;
   int32 status = 2;
 }
 service TradeService{
-  rpc operateTradeSession(operateTradeSessionRequest) returns(operateTradeSessionResponse);
-  rpc operateTrade(operateTradeRequest) returns(operateTradeResponse);
-  rpc tradeOperationList(tradeOperationListRequest) returns(tradeOperationListResponse);
+  rpc operateTradeSession(TradeSessionRequest) returns(TradeSessionResponse);
+  rpc operateTrade(TradeOperationRequest) returns(TradeOperationResponse);
+  rpc tradeOperationList(TradeOperationListRequest) returns(TradeOperationListResponse);
 }

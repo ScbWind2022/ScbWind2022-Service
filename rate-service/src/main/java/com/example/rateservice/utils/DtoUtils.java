@@ -1,7 +1,7 @@
 package com.example.rateservice.utils;
 
 import com.example.rateservice.dto.AccountResponseDto;
-import com.example.rateservice.dto.maindto.AccountDto;
+import com.example.rateservice.dto.domestic.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

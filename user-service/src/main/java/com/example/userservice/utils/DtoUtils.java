@@ -62,7 +62,7 @@ public class DtoUtils {
         return user;
     }
 
-    public AccountDto checkToCheckDto(final Account check) {
+    public AccountDto accountToAccountDto(final Account check) {
         final AccountDto checkDto = AccountDto.builder()
                 .id(Integer.parseInt(String.valueOf(check.getId())))
                 .userId(check.getUser().getId())
