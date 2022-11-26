@@ -20,9 +20,9 @@ public class RateGrpcService extends RateServiceGrpc.RateServiceImplBase {
     private final Gson gson = new Gson();
 
     @Override
-    public void getCurrentCurrencyRate(Rate.getCurrencyRateRequest request,
-                                       StreamObserver<Rate.getCurrencyRateResponse> responseObserver) {
-        Rate.getCurrencyRateResponse response = Rate.getCurrencyRateResponse.newBuilder()
+    public void getCurrentCurrencyRate(Rate.CurrencyRateRequest request,
+                                       StreamObserver<Rate.CurrencyRateResponse> responseObserver) {
+        Rate.CurrencyRateResponse response = Rate.CurrencyRateResponse.newBuilder()
                 .setResponse(gson.toJson(currencyRateService.getCurrentCurrencyRate(
                         gson.fromJson(request.getRequest(), CurrencyRateRequest.class)
                 )))
@@ -33,9 +33,9 @@ public class RateGrpcService extends RateServiceGrpc.RateServiceImplBase {
     }
 
     @Override
-    public void getRangeCurrencyRate(Rate.getRangeCurrencyRateRequest request,
-                                     StreamObserver<Rate.getRangeCurrencyRateResponse> responseObserver) {
-        Rate.getRangeCurrencyRateResponse response = Rate.getRangeCurrencyRateResponse.newBuilder()
+    public void getRangeCurrencyRate(Rate.RangeCurrencyRateRequest request,
+                                     StreamObserver<Rate.RangeCurrencyRateResponse> responseObserver) {
+        Rate.RangeCurrencyRateResponse response = Rate.RangeCurrencyRateResponse.newBuilder()
                 .setResponse(gson.toJson(currencyRateService.getRangeCurrencyRate(
                         gson.fromJson(request.getRequest(), RangeCurrencyRateRequest.class)
                 )))
@@ -46,12 +46,13 @@ public class RateGrpcService extends RateServiceGrpc.RateServiceImplBase {
     }
 
     @Override
-    public void getCurrencyList(Rate.emptyRequest request, StreamObserver<Rate.getListCurrencyResponse> responseObserver) {
-        Rate.getListCurrencyResponse response = Rate.getListCurrencyResponse.newBuilder()
+    public void getCurrencyList(Rate.emptyRequest request, StreamObserver<Rate.ListCurrencyResponse> responseObserver) {
+        Rate.ListCurrencyResponse response = Rate.ListCurrencyResponse.newBuilder()
                 .setResponse(gson.toJson(currencyRateService.getCurrencyList()))
                 .build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
 }

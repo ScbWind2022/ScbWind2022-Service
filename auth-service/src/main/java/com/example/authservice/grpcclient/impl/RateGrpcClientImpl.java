@@ -22,10 +22,10 @@ public class RateGrpcClientImpl implements RateGrpcClient {
     @Override
     public CurrencyRateResponse getCurrentCurrencyRate(CurrentCurrencyRateRequest request) {
         try {
-            final ListenableFuture<Rate.getCurrencyRateResponse> response = futureStub.getCurrentCurrencyRate(
-                    Rate.getCurrencyRateRequest.newBuilder()
+            final ListenableFuture<Rate.CurrencyRateResponse> response = futureStub.getCurrentCurrencyRate(
+                    Rate.CurrencyRateRequest.newBuilder()
                             .setRequest(gson.toJson(request)).build());
-            final Rate.getCurrencyRateResponse res = response.get();
+            final Rate.CurrencyRateResponse res = response.get();
             return gson.fromJson(res.getResponse(), CurrencyRateResponse.class);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -37,10 +37,10 @@ public class RateGrpcClientImpl implements RateGrpcClient {
     @Override
     public RangeCurrencyRateResponse getRangeCurrencyRate(RangeCurrencyRateRequest request) {
         try {
-            final ListenableFuture<Rate.getRangeCurrencyRateResponse> response = futureStub.getRangeCurrencyRate(
-                    Rate.getRangeCurrencyRateRequest.newBuilder()
+            final ListenableFuture<Rate.RangeCurrencyRateResponse> response = futureStub.getRangeCurrencyRate(
+                    Rate.RangeCurrencyRateRequest.newBuilder()
                             .setRequest(gson.toJson(request)).build());
-            final Rate.getRangeCurrencyRateResponse res = response.get();
+            final Rate.RangeCurrencyRateResponse res = response.get();
             System.out.println(res.getResponse());
             return gson.fromJson(res.getResponse(), RangeCurrencyRateResponse.class);
         } catch (InterruptedException e) {
@@ -53,9 +53,9 @@ public class RateGrpcClientImpl implements RateGrpcClient {
     @Override
     public CurrencyResponse[] getCurrencyList() {
         try {
-            final ListenableFuture<Rate.getListCurrencyResponse> responseListenableFuture = futureStub.getCurrencyList(
+            final ListenableFuture<Rate.ListCurrencyResponse> responseListenableFuture = futureStub.getCurrencyList(
                     Rate.emptyRequest.newBuilder().getDefaultInstanceForType());
-            final Rate.getListCurrencyResponse res = responseListenableFuture.get();
+            final Rate.ListCurrencyResponse res = responseListenableFuture.get();
             return gson.fromJson(res.getResponse(), CurrencyResponse[].class);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

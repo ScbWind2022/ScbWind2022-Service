@@ -1,19 +1,19 @@
 syntax = "proto3";
 option java_package = "grpc";
 
-message getCurrencyRateRequest{
+message CurrencyRateRequest{
   string request = 1;
 }
 
-message getCurrencyRateResponse{
+message CurrencyRateResponse{
   string response = 1;
 }
 
-message getRangeCurrencyRateRequest{
+message RangeCurrencyRateRequest{
   string request = 1;
 }
 
-message getRangeCurrencyRateResponse{
+message RangeCurrencyRateResponse{
   string response = 1;
 }
 
@@ -21,12 +21,12 @@ message emptyRequest{
   string request = 1;
 }
 
-message getListCurrencyResponse{
+message ListCurrencyResponse{
   string response = 1;
 }
 
 service RateService{
-  rpc getCurrentCurrencyRate(getCurrencyRateRequest) returns(getCurrencyRateResponse);
-  rpc getRangeCurrencyRate(getRangeCurrencyRateRequest) returns(getRangeCurrencyRateResponse);
-  rpc getCurrencyList(emptyRequest) returns(getListCurrencyResponse);
+  rpc getCurrentCurrencyRate(CurrencyRateRequest) returns(CurrencyRateResponse);
+  rpc getRangeCurrencyRate(RangeCurrencyRateRequest) returns(RangeCurrencyRateResponse);
+  rpc getCurrencyList(emptyRequest) returns(ListCurrencyResponse);
 }
