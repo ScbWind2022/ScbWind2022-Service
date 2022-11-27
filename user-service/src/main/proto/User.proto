@@ -1,69 +1,69 @@
 syntax = "proto3";
 option java_package = "grpc";
 
-message getUserByEmailRequest{
+message UserByEmailRequest{
   string request = 1;
 }
-message getUserByEmailResponse{
+message UserByEmailResponse{
   string response = 1;
   int32 status = 2;
 }
-message registerUserRequest{
+message RegisterUserRequest{
   string request = 1;
 }
-message registerUserResponse{
+message RegisterUserResponse{
   string response = 1;
   int32 status = 2;
 }
-message getNotAcceptedUserRequest{
+message NotAcceptedUserRequest{
   string request = 1;
 }
-message getNotAcceptedUserResponse{
+message NotAcceptedUserResponse{
   string response = 1;
   int32 status = 2;
 }
-message acceptedUserRequest{
+message AcceptedUserRequest{
   string request = 1;
 }
-message accepteduserResponse{
+message AccepteduserResponse{
   string response = 1;
   int32 status = 2;
 }
-message bannedUserRequest{
+message BannedUserRequest{
   string request = 1;
 }
-message bannedUserResponse{
+message BannedUserResponse{
   string response = 1;
   int32 status = 2;
 }
-message removeBannedUserRequest{
+message RemoveBannedUserRequest{
   string request = 1;
 }
-message removeBannedUserResponse{
+message RemoveBannedUserResponse{
   string response = 1;
   int32 status = 2;
 }
-message getBannedUserRequest{
+message BannedUserStatusRequest{
   string request = 1;
 }
-message getBannedUserResponse{
+message BannedUserStatusResponse{
   string response = 1;
   int32 status = 2;
 }
-message getAccountUserByEmailRequest{
+message AccountUserByEmailRequest{
   string request = 1;
 }
-message getAccotuntUserByEmailResponse{
+message AccountUserByEmailResponse{
   string response = 1;
   int32 status = 2;
 }
 service UserService{
-  rpc getUserAndRoleByEmail(getUserByEmailRequest) returns(getUserByEmailResponse);
-  rpc registerUser(registerUserRequest) returns(registerUserResponse);
-  rpc getNotAcceptedUser(getNotAcceptedUserRequest) returns(getNotAcceptedUserResponse);
-  rpc acceptedUser(acceptedUserRequest) returns(accepteduserResponse);
-  rpc bannedUser(bannedUserRequest) returns(bannedUserResponse);
-  rpc removeBannedUser(removeBannedUserRequest) returns(removeBannedUserResponse);
-  rpc getBannedUser(getBannedUserRequest) returns(getBannedUserResponse);
-  rpc getAccountUserByEmail(getAccountUserByEmailRequest) returns(getAccotuntUserByEmailResponse);
+  rpc getUserAndRoleByEmail(UserByEmailRequest) returns(UserByEmailResponse);
+  rpc registerUser(RegisterUserRequest) returns(RegisterUserResponse);
+  rpc getNotAcceptedUser(NotAcceptedUserRequest) returns(NotAcceptedUserResponse);
+  rpc acceptedUser(AcceptedUserRequest) returns(AccepteduserResponse);
+  rpc bannedUser(BannedUserRequest) returns(BannedUserResponse);
+  rpc removeBannedUser(RemoveBannedUserRequest) returns(RemoveBannedUserResponse);
+  rpc getBannedUser(BannedUserStatusRequest) returns(BannedUserStatusResponse);
+  rpc getAccountUserByEmail(AccountUserByEmailRequest) returns(AccountUserByEmailResponse);
 }

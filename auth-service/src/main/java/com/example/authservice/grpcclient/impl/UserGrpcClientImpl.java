@@ -1,13 +1,12 @@
 package com.example.authservice.grpcclient.impl;
 
-import grpc.User;
-import grpc.UserServiceGrpc;
 import com.example.authservice.dto.domestic.UserDto;
 import com.example.authservice.exception.NotValidRequestException;
 import com.example.authservice.grpcclient.UserGrpcClient;
-
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
+import grpc.User;
+import grpc.UserServiceGrpc;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -20,22 +19,21 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @GrpcClient("user-service")
     private UserServiceGrpc.UserServiceFutureStub futureStub;
     private final Gson gson;
+
     @Override
     public UserDto loginUser(UserDto userDTO) {
         try {
-            final ListenableFuture<grpc.User.getUserByEmailResponse> response = futureStub.getUserAndRoleByEmail(
-                    User.getUserByEmailRequest.newBuilder()
+            final ListenableFuture<grpc.User.UserByEmailResponse> response = futureStub.getUserAndRoleByEmail(
+                    User.UserByEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final User.getUserByEmailResponse res = response.get();
-            switch (res.getStatus()){
-                case(400):
+            final User.UserByEmailResponse res = response.get();
+            switch (res.getStatus()) {
+                case (400):
                     throw new NotValidRequestException();
                 default:
                     return gson.fromJson(res.getResponse(), UserDto.class);
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -43,15 +41,13 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public String registerUser(UserDto userDTO) {
         try {
-            final ListenableFuture<User.registerUserResponse> response = futureStub.registerUser(
-                    User.registerUserRequest.newBuilder()
+            final ListenableFuture<User.RegisterUserResponse> response = futureStub.registerUser(
+                    User.RegisterUserRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final User.registerUserResponse res = response.get();
+            final User.RegisterUserResponse res = response.get();
 
             return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -59,14 +55,12 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public UserDto[] getNotAcceptedUser() {
         try {
-            final ListenableFuture<User.getNotAcceptedUserResponse> response = futureStub.getNotAcceptedUser(
-                    User.getNotAcceptedUserRequest.newBuilder().build());
-            final User.getNotAcceptedUserResponse res = response.get();
+            final ListenableFuture<User.NotAcceptedUserResponse> response = futureStub.getNotAcceptedUser(
+                    User.NotAcceptedUserRequest.newBuilder().build());
+            final User.NotAcceptedUserResponse res = response.get();
 
             return gson.fromJson(res.getResponse(), UserDto[].class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -74,15 +68,13 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public String acceptedUser(UserDto userDTO) {
         try {
-            final ListenableFuture<User.accepteduserResponse> response = futureStub.acceptedUser(
-                    User.acceptedUserRequest.newBuilder()
+            final ListenableFuture<User.AccepteduserResponse> response = futureStub.acceptedUser(
+                    User.AcceptedUserRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final User.accepteduserResponse res = response.get();
+            final User.AccepteduserResponse res = response.get();
 
             return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
 
@@ -91,15 +83,13 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public String bannedUser(UserDto userDTO) {
         try {
-            final ListenableFuture<User.bannedUserResponse> response = futureStub.bannedUser(
-                    User.bannedUserRequest.newBuilder()
+            final ListenableFuture<User.BannedUserResponse> response = futureStub.bannedUser(
+                    User.BannedUserRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final User.bannedUserResponse res = response.get();
+            final User.BannedUserResponse res = response.get();
 
             return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -107,14 +97,12 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public UserDto[] getBannedUser() {
         try {
-            final ListenableFuture<User.getBannedUserResponse> response = futureStub.getBannedUser(
-                    User.getBannedUserRequest.newBuilder().build());
-            final User.getBannedUserResponse res = response.get();
+            final ListenableFuture<User.BannedUserStatusResponse> response = futureStub.getBannedUser(
+                    User.BannedUserStatusRequest.newBuilder().build());
+            final User.BannedUserStatusResponse res = response.get();
 
             return gson.fromJson(res.getResponse(), UserDto[].class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
 
@@ -123,15 +111,13 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public String removeBannedUser(UserDto userDTO) {
         try {
-            final ListenableFuture<User.removeBannedUserResponse> response = futureStub.removeBannedUser(
-                    User.removeBannedUserRequest.newBuilder()
+            final ListenableFuture<User.RemoveBannedUserResponse> response = futureStub.removeBannedUser(
+                    User.RemoveBannedUserRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
 
-            final User.removeBannedUserResponse res = response.get();
+            final User.RemoveBannedUserResponse res = response.get();
             return res.getResponse();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -139,14 +125,12 @@ public class UserGrpcClientImpl implements UserGrpcClient {
     @Override
     public UserDto getAccountUserByEmail(UserDto userDTO) {
         try {
-            final ListenableFuture<User.getAccotuntUserByEmailResponse> response = futureStub.getAccountUserByEmail(
-                    User.getAccountUserByEmailRequest.newBuilder()
+            final ListenableFuture<User.AccountUserByEmailResponse> response = futureStub.getAccountUserByEmail(
+                    User.AccountUserByEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final User.getAccotuntUserByEmailResponse res = response.get();
+            final User.AccountUserByEmailResponse res = response.get();
             return gson.fromJson(res.getResponse(), UserDto.class);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }

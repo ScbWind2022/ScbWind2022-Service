@@ -17,9 +17,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     private final AccountService accountService;
 
     @Override
-    public void getAccountByEmail(Account.getAccountByUserEmailRequest request,
-                                  StreamObserver<Account.getAccountByUserEmailResponse> responseObserver) {
-        final Account.getAccountByUserEmailResponse response = Account.getAccountByUserEmailResponse.newBuilder()
+    public void getAccountByEmail(Account.AccountByUserEmailRequest request,
+                                  StreamObserver<Account.AccountByUserEmailResponse> responseObserver) {
+        final Account.AccountByUserEmailResponse response = Account.AccountByUserEmailResponse.newBuilder()
                 .setResponse(gson.toJson(accountService.getAccountByUserEmail(
                         gson.fromJson(request.getRequest(), UserDto.class)))).build();
 
@@ -28,9 +28,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void changeSum(Account.changeSumRequest request,
-                          StreamObserver<Account.changeSumResponse> responseObserver) {
-        final Account.changeSumResponse response = Account.changeSumResponse.newBuilder()
+    public void changeSum(Account.ChangeSumRequest request,
+                          StreamObserver<Account.ChangeSumResponse> responseObserver) {
+        final Account.ChangeSumResponse response = Account.ChangeSumResponse.newBuilder()
                 .setResponse(gson.toJson(accountService.changeSumByEmail(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
@@ -39,10 +39,10 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void changeEnable(Account.changeEnableRequest request,
-                             StreamObserver<Account.changeEnableResponse> responseObserver) {
+    public void changeEnable(Account.ChangeEnableRequest request,
+                             StreamObserver<Account.ChangeEnableResponse> responseObserver) {
         accountService.changeEnableByEmail(gson.fromJson(request.getRequest(), AccountDto.class));
-        final Account.changeEnableResponse response = Account.changeEnableResponse.newBuilder()
+        final Account.ChangeEnableResponse response = Account.ChangeEnableResponse.newBuilder()
                 .setResponse("true").build();
 
         responseObserver.onNext(response);
@@ -50,9 +50,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void createAccount(Account.createAccountRequest request,
-                              StreamObserver<Account.createAccountResponse> responseObserver) {
-        final Account.createAccountResponse response = Account.createAccountResponse.newBuilder()
+    public void createAccount(Account.CreateAccountRequest request,
+                              StreamObserver<Account.CreateAccountResponse> responseObserver) {
+        final Account.CreateAccountResponse response = Account.CreateAccountResponse.newBuilder()
                 .setResponse(gson.toJson(accountService.createAccount(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
@@ -61,9 +61,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void changeSumInSession(Account.changeSumInSessionRequest request,
-                                   StreamObserver<Account.chandeSumInSessionResponse> responseObserver) {
-        final Account.chandeSumInSessionResponse response = Account.chandeSumInSessionResponse.newBuilder()
+    public void changeSumInSession(Account.ChangeSumInSessionRequest request,
+                                   StreamObserver<Account.ChandeSumInSessionResponse> responseObserver) {
+        final Account.ChandeSumInSessionResponse response = Account.ChandeSumInSessionResponse.newBuilder()
                 .setResponse(gson.toJson(accountService.changeSumByEmailInSession(
                         gson.fromJson(request.getRequest(), AccountDto.class)))).build();
 
@@ -72,8 +72,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void openSession(Account.openSessionRequest request, StreamObserver<Account.openSessionResponse> responseObserver) {
-        final Account.openSessionResponse response = Account.openSessionResponse.newBuilder()
+    public void openSession(Account.OpenSessionRequest request,
+                            StreamObserver<Account.OpenSessionResponse> responseObserver) {
+        final Account.OpenSessionResponse response = Account.OpenSessionResponse.newBuilder()
                 .setResponse(accountService.openSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);
@@ -81,8 +82,9 @@ public class AccountGrpcService extends AccountServiceGrpc.AccountServiceImplBas
     }
 
     @Override
-    public void closeSession(Account.closeSessionRequest request, StreamObserver<Account.closeSessionResponse> responseObserver) {
-        final Account.closeSessionResponse response = Account.closeSessionResponse.newBuilder()
+    public void closeSession(Account.CloseSessionRequest request,
+                             StreamObserver<Account.CloseSessionResponse> responseObserver) {
+        final Account.CloseSessionResponse response = Account.CloseSessionResponse.newBuilder()
                 .setResponse(accountService.closeSession(gson.fromJson(request.getRequest(), UserDto.class))).build();
 
         responseObserver.onNext(response);

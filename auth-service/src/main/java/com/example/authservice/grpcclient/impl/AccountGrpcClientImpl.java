@@ -24,10 +24,10 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     @Override
     public AccountDto[] getAccountByEmail(UserDto userDTO) {
         try {
-            final ListenableFuture<Account.getAccountByUserEmailResponse> response = futureStub.getAccountByEmail(
-                    Account.getAccountByUserEmailRequest.newBuilder()
+            final ListenableFuture<Account.AccountByUserEmailResponse> response = futureStub.getAccountByEmail(
+                    Account.AccountByUserEmailRequest.newBuilder()
                             .setRequest(gson.toJson(userDTO)).build());
-            final Account.getAccountByUserEmailResponse res = response.get();
+            final Account.AccountByUserEmailResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto[].class);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
@@ -37,10 +37,10 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     @Override
     public AccountDto changeSumByIdAndEmail(AccountDto accountDto) {
         try {
-            final ListenableFuture<Account.changeSumResponse> response = futureStub.changeSum(
-                    Account.changeSumRequest.newBuilder()
+            final ListenableFuture<Account.ChangeSumResponse> response = futureStub.changeSum(
+                    Account.ChangeSumRequest.newBuilder()
                             .setRequest(gson.toJson(accountDto)).build());
-            final Account.changeSumResponse res = response.get();
+            final Account.ChangeSumResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto.class);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
@@ -50,10 +50,10 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     @Override
     public String changeEnableByIdAndEmail(AccountDto accountDto) {
         try {
-            final ListenableFuture<Account.changeEnableResponse> response = futureStub.changeEnable(
-                    Account.changeEnableRequest.newBuilder()
+            final ListenableFuture<Account.ChangeEnableResponse> response = futureStub.changeEnable(
+                    Account.ChangeEnableRequest.newBuilder()
                             .setRequest(gson.toJson(accountDto)).build());
-            final Account.changeEnableResponse res = response.get();
+            final Account.ChangeEnableResponse res = response.get();
             return res.getResponse();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
@@ -63,10 +63,10 @@ public class AccountGrpcClientImpl implements AccountGrpcClient {
     @Override
     public AccountDto createAccountByEmail(AccountDto accountDto) {
         try {
-            final ListenableFuture<Account.createAccountResponse> response = futureStub.createAccount(
-                    Account.createAccountRequest.newBuilder()
+            final ListenableFuture<Account.CreateAccountResponse> response = futureStub.createAccount(
+                    Account.CreateAccountRequest.newBuilder()
                             .setRequest(gson.toJson(accountDto)).build());
-            final Account.createAccountResponse res = response.get();
+            final Account.CreateAccountResponse res = response.get();
             return gson.fromJson(res.getResponse(), AccountDto.class);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);

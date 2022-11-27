@@ -1,60 +1,60 @@
 syntax = "proto3";
 option java_package = "grpc";
-message getAccountByUserEmailRequest{
+message AccountByUserEmailRequest{
   string request = 1;
 }
-message getAccountByUserEmailResponse{
+message AccountByUserEmailResponse{
   string response = 1;
   int32 status = 2;
 }
-message changeSumRequest{
+message ChangeSumRequest{
   string request = 1;
 }
-message changeSumResponse{
+message ChangeSumResponse{
   string response = 1;
   int32 status = 2;
 }
-message changeEnableRequest{
+message ChangeEnableRequest{
   string request = 1;
 }
-message changeEnableResponse{
+message ChangeEnableResponse{
   string response = 1;
   int32 status = 2;
 }
-message createAccountRequest{
+message CreateAccountRequest{
   string request = 1;
 }
-message createAccountResponse{
+message CreateAccountResponse{
   string response = 1;
   int32 status = 2;
 }
-message changeSumInSessionRequest{
+message ChangeSumInSessionRequest{
   string request = 1;
 }
-message chandeSumInSessionResponse{
+message ChandeSumInSessionResponse{
   string response = 1;
   int32 status = 2;
 }
-message openSessionRequest{
+message OpenSessionRequest{
   string request = 1;
 }
-message openSessionResponse{
+message OpenSessionResponse{
   string response = 1;
   int32 status = 2;
 }
-message closeSessionRequest{
+message CloseSessionRequest{
   string request = 1;
 }
-message closeSessionResponse{
+message CloseSessionResponse{
   string response = 1;
   int32 status = 2;
 }
 service AccountService{
-  rpc getAccountByEmail(getAccountByUserEmailRequest) returns(getAccountByUserEmailResponse);
-  rpc changeSum(changeSumRequest) returns(changeSumResponse);
-  rpc changeEnable(changeEnableRequest) returns(changeEnableResponse);
-  rpc createAccount(createAccountRequest) returns(createAccountResponse);
-  rpc changeSumInSession(changeSumInSessionRequest) returns(chandeSumInSessionResponse);
-  rpc openSession(openSessionRequest) returns(openSessionResponse);
-  rpc closeSession(closeSessionRequest) returns(closeSessionResponse);
+  rpc getAccountByEmail(AccountByUserEmailRequest) returns(AccountByUserEmailResponse);
+  rpc changeSum(ChangeSumRequest) returns(ChangeSumResponse);
+  rpc changeEnable(ChangeEnableRequest) returns(ChangeEnableResponse);
+  rpc createAccount(CreateAccountRequest) returns(CreateAccountResponse);
+  rpc changeSumInSession(ChangeSumInSessionRequest) returns(ChandeSumInSessionResponse);
+  rpc openSession(OpenSessionRequest) returns(OpenSessionResponse);
+  rpc closeSession(CloseSessionRequest) returns(CloseSessionResponse);
 }
